@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>平板硬件情报日报 · 2026-08-06</title>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --border: #e4e7ed;
+    --text: #303133;
+    --text-secondary: #606266;
+    --text-tertiary: #909399;
+    --primary: #409eff;
+    --success: #67c23a;
+    --warning: #e6a23c;
+    --danger: #f56c6c;
+    --info: #909399;
+    --tag-a: #67c23a;
+    --tag-b: #409eff;
+    --tag-c: #e6a23c;
+    --tag-d: #f56c6c;
+    --tag-e: #aa55ff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .header h1 { font-size: 24px; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; opacity: 0.9; }
+  .header .meta { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  .meta-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Summary Table */
+  .summary-section {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: #f0f2f5;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:hover { background: #f5f7fa; }
+  tbody tr:last-child td { border-bottom: none; }
+  .td-title { font-weight: 600; color: var(--text); }
+  .td-region {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .region-cn { background: #ecf5ff; color: #409eff; }
+  .region-intl { background: #fdf6ec; color: #e6a23c; }
+
+  /* Source Level Tags */
+  .source-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .source-a { background: #f0f9eb; color: var(--tag-a); border: 1px solid #c2e7b0; }
+  .source-b { background: #ecf5ff; color: var(--tag-b); border: 1px solid #b3d8ff; }
+  .source-c { background: #fdf6ec; color: var(--tag-c); border: 1px solid #f5dab1; }
+  .source-d { background: #fef0f0; color: var(--tag-d); border: 1px solid #fbc4c4; }
+  .source-e { background: #f3f0ff; color: var(--tag-e); border: 1px solid #d3c2ff; }
+
+  /* Intelligence Cards */
+  .intel-section { margin-bottom: 24px; }
+  .intel-cards { display: grid; gap: 16px; }
+  .intel-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    border-left: 4px solid var(--primary);
+  }
+  .intel-card.cn { border-left-color: var(--tag-b); }
+  .intel-card.intl { border-left-color: var(--tag-c); }
+  .intel-card:hover { box-shadow: var(--shadow-hover); }
+
+  .card-header {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    user-select: none;
+  }
+  .card-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f0f2f5;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .intel-card.cn .card-num { background: #ecf5ff; color: var(--tag-b); }
+  .intel-card.intl .card-num { background: #fdf6ec; color: var(--tag-c); }
+
+  .card-title-area { flex: 1; }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .card-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .card-badges .stars { font-size: 12px; color: var(--warning); letter-spacing: 1px; }
+  .card-domain {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    background: #f5f7fa;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .card-toggle {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    font-size: 14px;
+    transition: transform 0.3s;
+    margin-top: 4px;
+  }
+  .intel-card.expanded .card-toggle { transform: rotate(180deg); }
+
+  .card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .intel-card.expanded .card-body { max-height: 2000px; }
+
+  .card-content {
+    padding: 0 20px 18px 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .field.full { grid-column: 1 / -1; }
+  .field-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .field-value {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .field-value a {
+    color: var(--primary);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .field-value a:hover { text-decoration: underline; }
+  .field-value .tech-list { padding-left: 0; list-style: none; }
+  .field-value .tech-list li {
+    padding: 2px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .field-value .tech-list li::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-item {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    box-shadow: var(--shadow);
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--primary); }
+  .stat-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+
+  @media (max-width: 768px) {
+    .field-grid { grid-template-columns: 1fr; }
+    table { font-size: 12px; }
+    thead th, tbody td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>平板硬件情报日报 · 2026-08-06</h1>
+    <div class="subtitle">采集口径：5 国内 + 5 国际 ｜ 信源以 A/B 级为主，1-2 条 D/E 级标注 watchlist</div>
+    <div class="meta">
+      <span class="meta-badge">📊 10 条情报</span>
+      <span class="meta-badge">🇨🇳 国内 5 条</span>
+      <span class="meta-badge">🌍 国际 5 条</span>
+      <span class="meta-badge">📡 A级4 / B级6</span>
+      <span class="meta-badge">⏰ 搜索窗口 30 天</span>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">10</div>
+      <div class="stat-label">总情报数</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">A级信源</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">B级信源</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">12</div>
+      <div class="stat-label">覆盖领域</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2</div>
+      <div class="stat-label">⭐⭐⭐⭐⭐</div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="summary-section">
+    <div class="section-title">今日概要表</div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>标题</th>
+          <th>区域</th>
+          <th>领域</th>
+          <th>信源</th>
+          <th>时间</th>
+          <th>重要度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="td-title">小米平板 8S Pro 入网 + 玄戒 O3 3nm 自研 SoC 首发</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>SoC/电池快充/认证/供应链</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>08-03</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="td-title">vivo Pad 6 Pro 安兔兔7月平板TOP1（4K屏+410万跑分）</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>SoC/电池快充/电芯</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>08-04</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="td-title">比亚迪电子 iPad 30%+份额 + 8-03西安代工小米双旗舰</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>供应链/认证</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>08-03</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="td-title">鸿蒙6.1.0.125 SP15不限量升级推送（MatePad多款）</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>充电器/供应链/SoC</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>08月</td>
+          <td><span class="stars" style="color:#e6a23c">★★★</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="td-title">REDMI K Pad 2 安兔兔7月TOP7 + 天玑9500（小平板性能王）</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>SoC/散热/电池快充</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>08-04</td>
+          <td><span class="stars" style="color:#e6a23c">★★★</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td class="td-title">高通第五代骁龙8集成X80 NB-NTN卫星基带（业界首款）</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>SoC/通信互联/通信芯片</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>11-26</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td class="td-title">Apple Pencil B582/B632 可换电池架构应对欧盟2027法规</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>可维修性/供应链</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>07-13</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td class="td-title">京东方B12 8.6代AMOLED 2026年中量产（中国首条IT OLED）</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>OLED/供应链</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>06-29</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td class="td-title">iPhone Ultra折叠屏2026-09发布 + 1000万备货</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>折叠OLED/供应链</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>08-05</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td class="td-title">M5 iPad Pro 2025 H2量产 + 比亚迪电子独供</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>SoC/供应链</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>2025-02</td>
+          <td><span class="stars" style="color:#e6a23c">★★★</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- 国内情报 -->
+  <div class="intel-section">
+    <div class="section-title">一、国内情报（5条）</div>
+    <div class="intel-cards">
+
+      <!-- Card 1 -->
+      <div class="intel-card cn expanded">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">1</div>
+          <div class="card-title-area">
+            <div class="card-title">小米平板 8S Pro 入网 + 玄戒 O3 3nm 自研 SoC 首发</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC / 电池快充 / 认证 / 供应链</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">监管认证</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">M367FC（120W）+ 2612CRPFFC（67W）两款8-03通过3C认证；M367FC即小米平板8S Pro：12.5寸3.2K LCD + 5000万后摄 + 3200万前摄 + 12000mAh+120W；玄戒O3（台积电3nm，三丛集：超大核4.05GHz / 大核3.42GHz / 小核3.02GHz，GPU 1.49GHz，内存带宽9600MT/s）+ 澎湃OS 4；西安比亚迪电子集贤分公司代工</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">玄戒O3：小米第二代自研SoC，从O1（仅折叠屏）扩展到平板+折叠屏同步首发——"自研芯片走量"战略</li>
+                  <li data-num="②">120W快充+12000mAh：平板行业最高快充功率+最大容量组合</li>
+                  <li data-num="③">比亚迪电子代工：西安集贤分公司同时代工8S Pro+9 Pro双旗舰</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">玄戒O3是小米第二代自研SoC，从O1（仅折叠屏）扩展到平板+折叠屏同步首发——明确"自研芯片走量"战略；中国大陆首批3nm自研芯片厂商；120W+12000mAh直指iPad Pro M4 + 华为MatePad Pro 12 2026（4.7mm/10400mAh/66W）的高端区间</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比MatePad Pro 12 2026（10400mAh/66W/4.7mm）：8S Pro 12000mAh+120W更激进但LCD略输OLED；对比iPad Pro 13 M4（5.1mm/双层Tandem OLED/M4）：8S Pro 3nm自研+120W是差异化</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">小米 / 平板8S Pro（M367FC）、2612CRPFFC</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08-03</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.ithome.com/0/893/001.htm" target="_blank">ithome.com/0/893/001.htm</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">IT之家(A)、腾讯QQ(B)、QQ搜索(B)×2</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">玄戒O3实测跑分（待发布会）；8S Pro整机厚度/重量（待工信部入网）；8S Pro UFCS协议兼容（待充电协议公示）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">2</div>
+          <div class="card-title-area">
+            <div class="card-title">vivo Pad 6 Pro 安兔兔7月平板TOP1（4K屏+410万跑分）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC / 电池快充 / 电芯</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产业新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">2</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">安兔兔7月安卓平板性能TOP10：vivo Pad6 Pro以16+512GB / 平均跑分4,101,149拿下榜首——首破410万；前6全部搭载第五代骁龙8E5；vivo Pad6 Pro 13.2寸4K LCD原彩屏（行业首款）+ 骁龙8E5 + 13000mAh硅碳负极大电池 + 80W/90W闪充（行业首发90W平板）</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">13000mAh硅碳负极：当前安卓平板最大容量之一，电芯进入硅碳时代</li>
+                  <li data-num="②">80/90W平板快充首推：行业首发90W平板快充</li>
+                  <li data-num="③">13.2寸4K LCD原彩屏：苹果iPad Pro 13 M4切换Tandem OLED后，LCD高端化路线最后坚守者</li>
+                  <li data-num="④">4,101,149安兔兔跑分首破410万：安卓平板性能天花板</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">13000mAh硅碳负极是当前安卓平板最大容量之一；80/90W平板快充首推；13.2寸4K LCD在苹果iPad Pro 13 M4切换到Tandem OLED后，LCD高端化路线的最后坚守者；4,101,149安兔兔跑分首破410万是安卓平板性能天花板</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比iPad Pro 13 M4（M4约274万）：vivo跑分领先50%，但单核+iPadOS生态iPad强；对比REDMI K Pad 2：同价位性能差距约14%，但vivo 4K屏+13000mAh体验更完整</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">vivo / Pad 6 Pro</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08-04</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://new.qq.com/rain/a/20260804A0021200" target="_blank">new.qq.com/rain/a/20260804A0021200</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">腾讯QQ(B)、QQ搜索(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">13000mAh硅碳电芯供应商（待拆解）；骁龙8E5工艺节点（3nm还是2nm）；4K LCD屏供应商（京东方B12还是LG Display）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">3</div>
+          <div class="card-title-area">
+            <div class="card-title">比亚迪电子 iPad 30%+份额 + 8-03西安代工小米双旗舰</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">供应链 / 认证</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">供应链新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">比亚迪电子已发展为苹果最大iPad组装商之一，市场份额>30%，仅次于鸿海+仁宝；约10万员工服务苹果（iPad+iPhone Pro钛合金框架+Watch陶瓷后盖）；深圳坪山14条产线（5条已量产）+ 印度15-20条+越南产线；8-03新增：西安比亚迪电子集贤分公司同时代工小米平板8S Pro（M367FC，120W）和9 Pro（2612CRPFFC，67W）</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">iPad 30%+份额：从2020年0到2024年30%+的快速跃迁</li>
+                  <li data-num="②">8-03同日代工小米8S Pro+9 Pro：苹果+国产品牌双线策略</li>
+                  <li data-num="③">M5 iPad Pro独供：苹果"中国大陆制造"战略深化</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">比亚迪电子iPad 30%+份额是从2020年0到2024年30%+的快速跃迁；8-03同日代工小米8S Pro+9 Pro标志"苹果+国产"双线策略；西安集贤分公司是中西部EMS重要节点；比亚迪电子在M5 iPad Pro独供=苹果"中国大陆制造"战略深化</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">比亚迪电子iPad Pro M5（独供）+ iPhone Ultra折叠屏（潜在代工）+ 小米8S Pro/9 Pro（8-03集贤代工）= 比亚迪在平板代工"通吃"国际+国内双端</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">比亚迪电子 / iPad + 小米8S Pro + 9 Pro</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08-03（增量）/ 2024-12（基础）</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://new.qq.com/rain/a/20260804A09LSE00" target="_blank">new.qq.com/rain/a/20260804A09LSE00</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">腾讯QQ(B)、网易(B)、腾讯云(B)、今日头条(B)、新浪科技(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">比亚迪电子2026 H2平板代工总份额（待季报）；集贤分公司双机代工具体产线布局（待拆解）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">4</div>
+          <div class="card-title-area">
+            <div class="card-title">鸿蒙6.1.0.125 SP15不限量升级推送（MatePad多款）</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">充电器 / 供应链 / SoC</span>
+              <span class="stars">★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产品更新</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">2</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">华为向多款MatePad推送鸿蒙6.1.0.125 SP15不限量升级，覆盖MatePad 11.5 S 2025系列+MatePad Air 2025（SP9→SP15）、MatePad 11.5 2026（SP11→SP15）、MatePad Mini（8月新加入）；升级包~1GB；更新：显示/音效/系统优化；11.5 2026新增"教育空间"和"手写笔"优化；后续SP20新增全局防误触模式+应用内防误触模式</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">MatePad 11.5 2026最新款主流平板加入鸿蒙6.1适配（麒麟9010系列/12.1寸/10100mAh）</li>
+                  <li data-num="②">UFCS持续支持：鸿蒙6.1持续支持UFCS（MatePad Pro 12 2026已公示66W+UFCS/PD/PPS/SCP）</li>
+                  <li data-num="③">手写笔优化对标Apple Pencil B582/B632</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">MatePad 11.5 2026是华为最新款主流平板加入鸿蒙6.1适配；充电器（UFCS）维度：鸿蒙6.1持续支持UFCS；手写笔优化对标Apple Pencil B582/B632</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比MatePad Pro 12 2026：同属鸿蒙6.1体系，Pro 12已支持UFCS全协议；对比Apple Pencil B582/B632：华为手写笔走"优化防误触"路线，苹果走"可换电池"路线</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">华为 / MatePad 11.5 S / Air / 11.5 2026 / Mini</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_7876a2e662b48352" target="_blank">QQ搜索</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">QQ搜索(B)×3</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">鸿蒙6.1 PC级WPS/CAJViewer升级内容（待官方日志）；MatePad Mini 2 9-10月发布计划</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">5</div>
+          <div class="card-title-area">
+            <div class="card-title">REDMI K Pad 2 安兔兔7月TOP7 + 天玑9500（小平板性能王）</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC / 散热 / 电池快充</span>
+              <span class="stars">★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产业新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">3</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">天玑9500（全大核CPU：1×C1-Ultra 4.21GHz+3×C1-Premium+4×C1-Pro；SME2矩阵指令集；安兔兔单芯片跑分400万+）；8.8" 165Hz 3K电竞屏（3008×1880/1100nit/540Hz触控报点率）；9100mAh电池；15300mm²铝合金液冷VC+SoC中置（握持区温度-4°C/均热速度+75%）；双USB-C接口（行业罕见）；旁路充电；双X轴线性马达；345g/6.62mm；8-04安兔兔7月榜：跑分3,605,756排第7——榜单前10唯一非骁龙旗舰</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">天玑9500全大核架构首次在8.8寸小尺寸平板跑出360万+</li>
+                  <li data-num="②">8.8寸+165Hz+540Hz触控报点率：当前小尺寸电竞平板顶配</li>
+                  <li data-num="③">双USB-C接口+旁路充电：小米独家创新（K Pad一代首创，二代延续）</li>
+                  <li data-num="④">9100mAh在345g机身内：高能量密度+大容量+强散热三角平衡</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">天玑9500全大核架构首次在8.8寸小尺寸平板跑出360万+；8.8寸+165Hz+540Hz触控报点率是当前小尺寸电竞平板顶配；双USB-C接口+旁路充电是小米独家创新；9100mAh在345g机身内——高能量密度+大容量+强散热的三角平衡</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比联想拯救者Y700五代（同榜第3，4,011,011）：天玑9500 vs 骁龙8E5，跑分差距14%，但K Pad 2价格便宜约30%；对比iPad mini 7（A17 Pro）：安卓小平板性能已超越（A17 Pro安兔兔约200万）</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">REDMI / K Pad 2</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08-04</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://new.qq.com/rain/a/20260804A0021200" target="_blank">new.qq.com/rain/a/20260804A0021200</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">腾讯QQ(B)、腾讯QQ(B)、微博(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">9100mAh电池电芯供应商（待拆解）；165Hz散热实测（待测评）；REDMI K Pad 2发布时间（待官宣）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 国际情报 -->
+  <div class="intel-section">
+    <div class="section-title">二、国际情报（5条）</div>
+    <div class="intel-cards">
+
+      <!-- Card 6 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">6</div>
+          <div class="card-title-area">
+            <div class="card-title">高通第五代骁龙8集成X80 NB-NTN卫星基带（业界首款集成卫星5G）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC / 通信互联 / 通信芯片</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产品发布</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">2025-11-26高通发布第五代骁龙8（骁龙8E5），集成骁龙X80调制解调器——业界首款集成NB-NTN（非地面网络）卫星通信的5G基带；X80关键创新：6路接收天线（6Rx）、6路下行载波聚合（6CA）、NB-NTN卫星（5G基带集成）、AI 5G Advanced架构；第五代骁龙8=台积电3nm+Oryon CPU 3.8GHz+Adreno切片架构GPU；2026-04德国电信+高通+Skylo实现欧洲首次运营商原生NB-NTN短信验证</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">X80 NB-NTN集成：业界首款5G基带集成卫星通信，无需独立卫星芯片</li>
+                  <li data-num="②">6Rx+6CA：业界首款面向智能手机支持6路接收天线+6路下行载波聚合，弱网环境连接+20%</li>
+                  <li data-num="③">AI 5G Advanced架构：专用张量加速器，通信芯片+AI融合标志</li>
+                  <li data-num="④">vivo Pad 6 Pro首批搭载：安卓平板首次进入"卫星通信"时代</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">X80 NB-NTN集成是业界里程碑——此前卫星通信需独立芯片（华为北斗/苹果Globalstar）；vivo Pad 6 Pro 4K屏+X80 NB-NTN是安卓平板首次进入"卫星通信"时代；5G-A集成AI引擎是通信芯片+AI融合标志；欧洲首次运营商原生NB-NTN验证=卫星通信从"专业设备"走向"消费级"拐点</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比华为Mate60 Pro北斗卫星：高通X80集成度更高；对比苹果iPhone 14+ Globalstar：高通+Skylo联盟对标苹果+Globalstar；vivo Pad 6 Pro是首批搭载平板，iQOO/OPPO/一加/荣耀同芯片</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">高通 / 骁龙8E5 + X80</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2025-11-26</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://new.qq.com/rain/a/20251126A068OP00" target="_blank">new.qq.com/rain/a/20251126A068OP00</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">腾讯QQ(B)、网易(B)、中关村在线(B)、C114(B)、通信世界(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">X80 NB-NTN国内运营商适配进度（待电信/移动/联通）；vivo Pad 6 Pro卫星通信实测性能（待测评）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">7</div>
+          <div class="card-title-area">
+            <div class="card-title">Apple Pencil B582/B632 可换电池架构应对欧盟2027法规</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">可维修性 / 供应链</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">爆料</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">2026-07-13彭博社Mark Gurman独家：苹果正在开发两款全新Apple Pencil（代号B582+B632），首次采用可更换电池架构，2027春季与下一代iPad Pro同步发布；B582=2023 USB-C款升级，B632=2024 Pencil Pro升级；关键背景：欧盟《电池法规》Regulation (EU) 2023/1670第11条要求2027-02-18起所有消费电子产品的便携电池必须便于终端用户拆卸更换；Apple Pencil不在豁免清单</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">可维修性首次进入国际平板配件核心议程——欧盟"维修权"运动最新胜利</li>
+                  <li data-num="②">苹果被迫为单一产品线（Pencil）反向工程</li>
+                  <li data-num="③">旧Pencil因胶水无法换电池（2-3年报废），新Pencil寿命延长到5-7年</li>
+                  <li data-num="④">可能为欧盟单独设计可换电池版——继USB-C之后的第二次"欧盟强制"事件</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">可维修性首次进入国际平板配件核心议程——欧盟"维修权"运动最新胜利；苹果被迫为单一产品线（Pencil）反向工程；旧Pencil因胶水无法换电池（2-3年报废），新Pencil寿命延长到5-7年；可能为欧盟单独设计可换电池版——继USB-C之后的第二次"欧盟强制"事件</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比华为M-Pencil Pro：华为走"低功耗+磁吸快充"路线，电池设计相对友好；对比三星S Pen（EMR电磁感应，无电池设计）：三星是最彻底的"免电池"方案，欧盟法规对S Pen无影响</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">苹果 / Apple Pencil B582、B632</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-13</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://new.qq.com/rain/a/20260713A02YPY00" target="_blank">new.qq.com/rain/a/20260713A02YPY00</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">腾讯QQ(B)、QQ搜索(B)×2、EETimes(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">新款Apple Pencil电池类型（CR2032纽扣/拉条电池/磁吸触点）；2027春季是否同步M6 iPad Pro/折叠屏iPad；"欧盟专用可换电池版" vs "全球统一版"策略</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">8</div>
+          <div class="card-title-area">
+            <div class="card-title">京东方B12 8.6代AMOLED 2026年中量产（中国首条IT OLED）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">OLED / 供应链</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产业新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">京东方B12 8.6代AMOLED生产线位于成都高新西区，总投资630亿元（四川工业史上单体投资额最大）；2024-03奠基→2024-09封顶→2025-05设备搬入→2025-12点亮→2026-06-29量产暨客户交付（提前6个月）；中国首条、全球第二条8.6代AMOLED产线；设计产能每月3.2万片玻璃基板（2290×2620mm），LTPO背板+叠层发光器件（Tandem），主要面向中高端笔电+平板电脑；2029年满产，全球中尺寸OLED份额目标20%</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">中国首条8.6代AMOLED产线：中国在IT OLED领域从"跟跑"到"并跑"</li>
+                  <li data-num="②">8.6代基板切割效率比6代提升80%——特别适合11~16寸中尺寸OLED</li>
+                  <li data-num="③">LTPO+Tandem技术：面向iPad Pro 11/13+MacBook Pro 14/16+华为MatePad Pro 12/13.2</li>
+                  <li data-num="④">量产时间2026-06-29与苹果M5 iPad Pro+M6完美吻合——有望进入iPad Pro OLED供应链</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">中国在IT OLED领域从"跟跑"到"并跑"；8.6代基板切割效率比6代提升80%——特别适合11~16寸中尺寸OLED；量产时间2026-06-29与苹果M5 iPad Pro+M6完美吻合——京东方B12有望进入iPad Pro OLED供应链，对抗三星显示</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比三星显示A6 8.6代（2025量产）：京东方B12晚1年量产但产能规模相当；对比苹果iPad Pro 13 M4（三星独家）：B12量产后可能进入iPad Pro M5/M6供应链——苹果OLED供应链去三星化信号；对比华为MatePad Pro 12 2026柔性OLED：B12是华为OLED屏幕潜在供应商</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">京东方 / B12 8.6代AMOLED</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-06-29</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_4596a028a7a70552" target="_blank">QQ搜索</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">QQ搜索(B)×2、经济日报(B)、搜狐(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">B12首批客户名单（待官方公告）；B12量产初期vs满产良率（待季报）；B12在M5/M6 iPad Pro实际供货时间（待产业链消息）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">9</div>
+          <div class="card-title-area">
+            <div class="card-title">iPhone Ultra折叠屏2026-09发布 + 1000万备货（苹果首次入局折叠屏）</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">折叠OLED / 供应链</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">爆料</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">苹果首款折叠屏iPhone Ultra（暂定名/也称iPhone Fold）将于2026-09与iPhone 18 Pro同台发布，全年备货1000万部（较此前700-800万上调近30%）；横向书本式内折/5.5"外屏+7.8"内屏（接近iPad mini尺寸）/展开4.5mm（史上最薄iPhone）/折叠9-9.5mm/A20 Pro 2nm/12GB RAM/双4800万后摄/3000nit内屏峰值/超瓷晶玻璃/取消Face ID改Touch ID电源键/5400-5800mAh电池/钛金属中框+液态金属铰链/eSIM/起售2000-2399美元</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">苹果首次入局折叠屏=iPhone X以来最大改款</li>
+                  <li data-num="②">1000万备货首年接近三星Z Fold 7全球年销量（2025约800-900万）</li>
+                  <li data-num="③">A20 Pro 2nm是2026旗舰标杆（高通/联发科/麒麟均未达2nm量产）</li>
+                  <li data-num="④">4.5mm展开厚度挑战结构工程极限，与iPad Pro 13 M4/华为MatePad Pro 12 2026接近</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">苹果首次入局折叠屏=iPhone X以来最大改款；1000万备货首年就接近三星Z Fold 7全球年销量；Counterpoint预测2026全球折叠屏29%份额——苹果折叠屏首年即破30%份额是"苹果现象"再验证；A20 Pro 2nm是2026旗舰标杆；4.5mm展开厚度挑战结构工程极限</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比三星Galaxy Z Fold 8 Ultra：iPhone Ultra折叠态更厚（9mm vs 8.9mm）但展开更薄（4.5mm vs 4.9mm）；对比华为Mate X7：尺寸接近；iPad mini 7（OLED版）+iPhone Ultra内屏=苹果首次将iPad mini尺寸移动到iPhone，可视为"iPad mini折叠化"</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">苹果 / iPhone Ultra（iPhone Fold）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08-05/06</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_0556a73d56587052" target="_blank">QQ搜索</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">QQ搜索(B)×3、腾讯云(B)、QQ搜索(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">iPhone Ultra实际命名（Ultra/Fold/Pro Fold）；2026实际首年出货量（700-800万 vs 1000万备货差距）；液态金属铰链供应商（东莞宜安/铭利达/三井金属）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">10</div>
+          <div class="card-title-area">
+            <div class="card-title">M5 iPad Pro 2025 H2量产 + 比亚迪电子独供（性能+封装双升级）</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC / 供应链</span>
+              <span class="stars">★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产业新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">2024-12-04郭明錤报告：M5 iPad Pro 2025 H2进入量产，比亚迪电子独供组装；M5芯片=台积电3nm N3P工艺（性能+5%/功耗-5~-10%）+台积电SoIC-MH 3D封装（混合键合Hybrid Bonding，无凸点键合结构）；M5产品线：M5/M5 Pro/M5 Max/M5 Ultra，M5标准版率先应用于iPad Pro；2025-02-05快科技确认M5芯片开始量产；苹果连续4代iPad Pro都由比亚迪电子独供组装（从M2 iPad Pro 2022开始）</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">比亚迪电子独供M5 iPad Pro：苹果iPad Pro旗舰组装从"鸿海+仁宝"双供转向"比亚迪独供"——历史性突破</li>
+                  <li data-num="②">M5+SoIC：业界首批SoIC封装的PC级芯片（与AMD MI300同代）——苹果+台积电联合推进封装技术</li>
+                  <li data-num="③">N3P工艺选择避开2nm高成本：M5性能+5%/功耗-10%稳扎稳打，2nm留给A20 Pro首发</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">比亚迪电子独供M5 iPad Pro=苹果iPad Pro旗舰组装历史性突破；M5+SoIC是业界首批SoIC封装的PC级芯片；N3P工艺选择避开2nm高成本——M5性能+5%/功耗-10%稳扎稳打，2nm留给A20 Pro（iPhone 18/折叠iPhone Ultra）首发</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">对比iPhone Ultra A20 Pro：M5 iPad Pro 3nm N3P vs A20 Pro 2nm N2——iPad Pro工艺落后iPhone旗舰一代（苹果传统）；对比华为麒麟T93：M5 N3P+SoIC是国际先进封装标杆；对比小米玄戒O3：玄戒O3 3nm自研SoC首发平板——与M5 iPad Pro形成"国际vs国产"双3nm平板SoC竞争</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">苹果 / iPad Pro M5</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2025-02-05</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://finance.sina.cn/tech/2024-12-04/detail-incyimai3665630.d.html" target="_blank">finance.sina.cn</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">新浪科技(B)、ITBear(B)、网易(B)、今日头条(B)、快科技(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">M5 iPad Pro实际发布时间（与iPhone 17同台？还是单独10月）；比亚迪电子M5独供具体比例（独家100% vs 70%+）；M5 SoIC量产初期良率</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleCard(header) {
+  const card = header.parentElement;
+  card.classList.toggle('expanded');
+}
+</script>
+</body>
+</html>

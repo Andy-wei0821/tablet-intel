@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>平板硬件情报日报 · 2026-08-05</title>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --border: #e4e7ed;
+    --text: #303133;
+    --text-secondary: #606266;
+    --text-tertiary: #909399;
+    --primary: #409eff;
+    --success: #67c23a;
+    --warning: #e6a23c;
+    --danger: #f56c6c;
+    --info: #909399;
+    --tag-a: #67c23a;
+    --tag-b: #409eff;
+    --tag-c: #e6a23c;
+    --tag-d: #f56c6c;
+    --tag-e: #aa55ff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .header h1 { font-size: 24px; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; opacity: 0.9; }
+  .header .meta { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  .meta-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Summary Table */
+  .summary-section {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: #f0f2f5;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:hover { background: #f5f7fa; }
+  tbody tr:last-child td { border-bottom: none; }
+  .td-title { font-weight: 600; color: var(--text); }
+  .td-region {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .region-cn { background: #ecf5ff; color: #409eff; }
+  .region-intl { background: #fdf6ec; color: #e6a23c; }
+
+  /* Source Level Tags */
+  .source-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .source-a { background: #f0f9eb; color: var(--tag-a); border: 1px solid #c2e7b0; }
+  .source-b { background: #ecf5ff; color: var(--tag-b); border: 1px solid #b3d8ff; }
+  .source-c { background: #fdf6ec; color: var(--tag-c); border: 1px solid #f5dab1; }
+  .source-d { background: #fef0f0; color: var(--tag-d); border: 1px solid #fbc4c4; }
+  .source-e { background: #f3f0ff; color: var(--tag-e); border: 1px solid #d3c2ff; }
+
+  /* Intelligence Cards */
+  .intel-section { margin-bottom: 24px; }
+  .intel-cards { display: grid; gap: 16px; }
+  .intel-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    border-left: 4px solid var(--primary);
+  }
+  .intel-card.cn { border-left-color: var(--tag-b); }
+  .intel-card.intl { border-left-color: var(--tag-c); }
+  .intel-card:hover { box-shadow: var(--shadow-hover); }
+
+  .card-header {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    user-select: none;
+  }
+  .card-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f0f2f5;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .intel-card.cn .card-num { background: #ecf5ff; color: var(--tag-b); }
+  .intel-card.intl .card-num { background: #fdf6ec; color: var(--tag-c); }
+
+  .card-title-area { flex: 1; }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .card-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .card-badges .stars { font-size: 12px; color: var(--warning); letter-spacing: 1px; }
+  .card-domain {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    background: #f5f7fa;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .card-toggle {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    font-size: 14px;
+    transition: transform 0.3s;
+    margin-top: 4px;
+  }
+  .intel-card.expanded .card-toggle { transform: rotate(180deg); }
+
+  .card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .intel-card.expanded .card-body { max-height: 2000px; }
+
+  .card-content {
+    padding: 0 20px 18px 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .field.full { grid-column: 1 / -1; }
+  .field-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .field-value {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .field-value a {
+    color: var(--primary);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .field-value a:hover { text-decoration: underline; }
+  .field-value .tech-list { padding-left: 0; list-style: none; }
+  .field-value .tech-list li {
+    padding: 2px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .field-value .tech-list li::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-item {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    box-shadow: var(--shadow);
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--primary); }
+  .stat-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+
+  @media (max-width: 768px) {
+    .field-grid { grid-template-columns: 1fr; }
+    table { font-size: 12px; }
+    thead th, tbody td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>平板硬件情报日报 · 2026-08-05</h1>
+    <div class="subtitle">采集口径：5 国内 + 5 国际 ｜ 信源以 A/B/C 级为主，1-2 条 D/E 级标注 watchlist</div>
+    <div class="meta">
+      <span class="meta-badge">📊 10 条情报</span>
+      <span class="meta-badge">🇨🇳 国内 5 条</span>
+      <span class="meta-badge">🌍 国际 5 条</span>
+      <span class="meta-badge">📡 信源 A/B 为主</span>
+      <span class="meta-badge">⏰ 搜索窗口 30 天</span>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">10</div>
+      <div class="stat-label">总情报数</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">A级信源</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">B级信源</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">8+</div>
+      <div class="stat-label">覆盖领域</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2</div>
+      <div class="stat-label">⭐⭐⭐⭐⭐</div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="summary-section">
+    <div class="section-title">今日概要表</div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>标题</th>
+          <th>区域</th>
+          <th>领域</th>
+          <th>信源</th>
+          <th>时间</th>
+          <th>重要度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="td-title">华为 MatePad Pro 12英寸 2026 发布</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>SoC/OLED/电池/散热/结构</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>08-05</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="td-title">小米两款旗舰平板通过3C认证 玄戒O3+120W</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>认证/SoC/电池快充</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>08-03</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="td-title">8月平板新品扎堆发布 联想/iQOO/vivo/荣耀</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>SoC/OLED/散热</td>
+          <td><span class="source-tag source-c">C</span></td>
+          <td>08月</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="td-title">瑞声科技VC散热供应iPhone 18 Pro 市占率超50%</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>散热/供应链</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>07-06</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="td-title">荣耀MagicPad 4欧洲发布 全球最薄4.8mm+硅碳电池</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>结构/电池/OLED</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>03月</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td class="td-title">Samsung Galaxy Tab S12+ 通过FCC认证 天玑9500</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>认证/SoC/OLED</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>07-29</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td class="td-title">Samsung Galaxy Tab S12 Ultra CAD渲染图泄露</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>OLED/结构/SoC</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>07-16</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td class="td-title">Apple M6 iPad Pro 爆料 Tandem OLED+VC散热</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>SoC/OLED/散热</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>下半年</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td class="td-title">Samsung SDI 开发12000-20000mAh硅碳电池</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>电池</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>03-11</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td class="td-title">Samsung Tab S12确认搭载天玑9500 弃用高通</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>SoC/供应链</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>05-14</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- 国内情报 -->
+  <div class="intel-section">
+    <div class="section-title">一、国内情报（5条）</div>
+    <div class="intel-cards">
+
+      <!-- Card 1 -->
+      <div class="intel-card cn expanded">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">1</div>
+          <div class="card-title-area">
+            <div class="card-title">华为 MatePad Pro 12英寸 2026 发布：全球最轻10英寸以上平板</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC / OLED / 电池 / 散热 / 结构</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产品发布</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">麒麟T93芯片；12英寸3K柔性OLED，144Hz，1600nits，2000000:1；10400mAh硅负极电池，66W快充，40W反充；4.7mm/439g；双VC均热板；鸿蒙6.1</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">云隼架构：全金属一体化机身，四层变三层堆叠，CNC精密加工</li>
+                  <li data-num="②">硅负极电池：10400mAh在4.7mm机身内实现，本地视频18.5小时</li>
+                  <li data-num="③">双VC均热板：SoC热源主板中置布局，VC均温面积同比+60%，散热能力+30%</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">全球10英寸以上最轻平板（439g），在4.7mm极限厚度内同时实现硅负极大电池+双VC散热，树立轻薄旗舰平板结构工艺标杆；麒麟T93性能+25%但工艺节点未披露</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">直接竞品对标——结构堆叠方案（三层架构/主板中置）、硅负极电池选型、双VC散热设计均可供参考；UFCS/PD/PPS/SCP全协议快充覆盖</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">华为 / MatePad Pro 12英寸 2026（5999元起）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08-05</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.ithome.com/0/986/155.htm" target="_blank">ithome.com/0/986/155.htm</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">IT之家(A)、CNMO科技(B)、中关村在线(B)、太平洋科技(B)、驱动中国(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">麒麟T93工艺节点未官方披露（业内推测5nm/4nm）；双VC具体面积数值未公布</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">2</div>
+          <div class="card-title-area">
+            <div class="card-title">小米两款旗舰平板通过3C认证 玄戒O3+120W快充</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">认证 / SoC / 电池快充</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">监管认证</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">型号2612CRPFFC（67W）+ M367FC（120W）；玄戒O3 3nm处理器；12000mAh电池（M367FC）；12.5英寸3.2K LCD；3200万前摄+5000万主摄；代工：西安比亚迪电子</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">玄戒O3：小米第二款3nm自研SoC进入平板，延续玄戒O1路线（出货超100万颗）</li>
+                  <li data-num="②">120W快充+12000mAh：平板行业最高快充功率</li>
+                  <li data-num="③">比亚迪电子代工：供应链布局确认</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">小米第二款自研3nm SoC进入平板终端，验证芯片产品线节奏（手机验证→平板导入）；120W快充为平板行业最高功率；小米累计芯片投入超135亿元，团队约2500人</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">SoC竞争格局变化——自研芯片路线对标麒麟/苹果；快充功率天花板提升（120W）；供应链代工选择参考</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">小米 / 2612CRPFFC、M367FC</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08-03</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.163.com/dy/article/L3FVE1I105561FZY.html" target="_blank">163.com/dy/article/L3FVE1I105561FZY.html</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">IT之家(A)、网易(B)、新浪科技(B)、泡泡网(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">玄戒O3具体规格（CPU/GPU/NPU配置）未确认；型号与产品名对应关系为推测；发布时间传闻8月与MIX Fold5同场</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">3</div>
+          <div class="card-title-area">
+            <div class="card-title">8月平板新品扎堆发布：联想/iQOO/vivo/荣耀密集登场</div>
+            <div class="card-badges">
+              <span class="source-tag source-c">C</span>
+              <span class="card-domain">SoC / OLED / 散热</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产业新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">1</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">联想Y700六代：8.8" 3K OLED 165Hz，骁龙8 Elite Gen5，8600mAh/65W，VC散热，预估3899元起；iQOO Pad mini：8.3" 3K LCD 144Hz，骁龙8 Elite Gen6（2nm），8500mAh/90W；vivo小平板：8.1" 2.8K OLED，天玑7400，9200mAh/80W；荣耀WIN Pad mini：8.7" OLED 120Hz，MagicOS+Windows双系统</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">8英寸电竞小平板赛道爆发：4款产品同月发布</li>
+                  <li data-num="②">骁龙8 Elite Gen6 2nm首次进入平板（iQOO Pad mini）</li>
+                  <li data-num="③">荣耀WIN Pad mini创新MagicOS/Windows双系统切换</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">8英寸小平板赛道竞争白热化，4款产品同月密集发布；2nm SoC首发进入平板终端；Windows/Android双系统平板为形态创新</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">小尺寸平板赛道竞争格局；2nm SoC散热/功耗设计挑战；双系统架构参考；各产品定价策略参考</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">联想 / iQOO / vivo / 荣耀</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-08</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.toutiao.com/article/7662978594834022956" target="_blank">toutiao.com/article/7662978594834022956</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">今日头条(C)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">各产品具体发布日期和最终规格待官方确认；iQOO Pad mini 2nm工艺待官方确认；荣耀双系统实际体验待评测</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">4</div>
+          <div class="card-title-area">
+            <div class="card-title">瑞声科技VC散热供应iPhone 18 Pro 国内高端市占率超50%</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">散热 / 供应链</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">供应链新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">1</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">瑞声科技超薄VC均热板国内高端机型市占率超50%；2026年新增1.5亿片产能，全年总产能突破3亿片；2025年散热营收16.7亿元（同比+410.9%）；AI服务器液冷CDU（2.2MW/2.6MW）量产</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">超薄VC均热板技术：国内高端机型市占率>50%</li>
+                  <li data-num="②">产能扩张：2026年新增1.5亿片→总产能3亿片</li>
+                  <li data-num="③">AI服务器液冷CDU规模化量产，切入智算中心供应链</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">VC均热板从手机向平板/iPad渗透趋势明确（苹果iPad Pro也有引入VC传闻）；供应商产能大幅扩张验证散热升级产业趋势；瑞声散热业务2025年增410.9%，中长期百亿级营收空间</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">VC散热方案在平板中的应用趋势——供应商选择、产能保障、成本趋势；瑞声作为潜在平板VC供应商的可选性</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">瑞声科技(02018.HK) / iPhone 18 Pro</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-06</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://new.qq.com/rain/a/20260706A08HDH00" target="_blank">new.qq.com/rain/a/20260706A08HDH00</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">腾讯QQ(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">iPhone 18 Pro VC面积具体数值待2026年9月发布会/iFixit拆解</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">5</div>
+          <div class="card-title-area">
+            <div class="card-title">荣耀MagicPad 4欧洲发布：全球最薄平板4.8mm+10100mAh硅碳电池</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">结构 / 电池 / OLED</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产品发布</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">3</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">12.3英寸OLED，3K（1920×3000），165Hz，2400nits峰值，5280Hz PWM调光；骁龙8 Gen 5（3nm）；10100mAh硅碳电池，66W快充；4.8mm/450g（全球最薄平板）；8扬声器；MagicOS 10</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">4.8mm全球最薄平板（比iPad Pro 13"的5.1mm更薄）</li>
+                  <li data-num="②">10100mAh硅碳电池在4.8mm机身内实现</li>
+                  <li data-num="③">2400nits峰值亮度+5280Hz PWM调光OLED</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">全球最薄平板记录，硅碳电池与极致薄度共存，为平板厚度/电池平衡设立新标杆；骁龙8 Gen 5首入平板品类</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">直接竞品结构工艺对标——4.8mm堆叠方案、硅碳电池选型、高亮度OLED面板规格</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">荣耀 / MagicPad 4（£600起）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-03（MWC 2026）</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="http://www.gadgetbytenepal.com/honor-magicpad-4-price-nepal" target="_blank">gadgetbytenepal.com/honor-magicpad-4-price-nepal</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">GadgetByte(B)、TechNetBooks(B)、Opera News(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">国内上市时间和价格待确认；无蜂窝版本</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 国际情报 -->
+  <div class="intel-section">
+    <div class="section-title">二、国际情报（5条）</div>
+    <div class="intel-cards">
+
+      <!-- Card 6 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">6</div>
+          <div class="card-title-area">
+            <div class="card-title">Samsung Galaxy Tab S12+ 通过FCC认证：天玑9500+12.4"AMOLED</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">认证 / SoC / OLED</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">监管认证</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">3</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">型号SM-X848U（US 5G版）；12.4英寸AMOLED，120Hz自适应；天玑9500（MT6993）3nm；12GB RAM，256GB起；10500mAh电池，45W充电；S Pen+microSD；Wi-Fi 6，BT，GNSS，5G/LTE；前置1200万（4K录制）；Android 17/One UI 9.0</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">天玑9500 3nm首次进入三星旗舰平板（连续三代选择联发科）</li>
+                  <li data-num="②">FCC确认5G/LTE/Wi-Fi 6/BT/GNSS全频段</li>
+                  <li data-num="③">Plus尺寸回归（填补标准版与Ultra之间空档）</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">三星旗舰平板SoC选择正式确认——联发科替代高通；12.4" Plus尺寸回归填补产品线空档；认证时间线指向9月IFA发布</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">竞品SoC选择策略（联发科vs高通）；12.4" AMOLED供应链；FCC认证时间线参考（从认证到发布约2-3个月）</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">三星 / Galaxy Tab S12+（SM-X848U）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-29</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://samsung.gadgethacks.com/news/samsung-galaxy-tab-s12-fcc-certification-what-sm-x848u-reveals/" target="_blank">samsung.gadgethacks.com</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">Android Headline(B)、NotebookCheck(B)、Gadget Hacks(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">天玑9500 vs 天玑9500+版本待确认；Wi-Fi 6（非Wi-Fi 7）待验证；发布时间预计9月</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">7</div>
+          <div class="card-title-area">
+            <div class="card-title">Samsung Galaxy Tab S12 Ultra CAD渲染图泄露：设计延续 保留刘海</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">OLED / 结构 / SoC</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">爆料</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">14.6英寸Dynamic AMOLED 2X，120Hz，1848×2960，1600nits；326.34×208.46×5.12mm；天玑9500（MT6993）；12/16GB LPDDR5X，256GB-1TB；11600mAh，45W充电；S Pen（4096级压感），IP68；Wi-Fi 7，BT 6.0；Android 17/One UI 9.0；预计7年OS升级</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">保留V字形屏幕刘海（未升级打孔方案）</li>
+                  <li data-num="②">尺寸/电池/厚度与前代Tab S11 Ultra完全一致</li>
+                  <li data-num="③">仅SoC升级（天玑9400+→9500），外观/电池/屏幕无变化</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">三星旗舰平板设计延续而非革新，SoC升级为唯一主要卖点；反映大屏平板更新节奏放缓——与iPad Pro"挤牙膏"趋势一致</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">竞品旗舰平板设计趋势——迭代放缓、SoC为核心升级点；14.6" AMOLED供应链规格参考；5.12mm厚度/11600mAh电池平衡</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">三星 / Galaxy Tab S12 Ultra</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-16</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.androidauthority.com/samsung-galaxy-tab-s12-ultra-image-leak-3688098" target="_blank">androidauthority.com</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">OnLeaks(B)、Android Authority(B)、SamMobile(B)、Mashable(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">发布时间预计2026年9月IFA前后；价格预计$1400起（256GB），受RAM涨价可能上调</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">8</div>
+          <div class="card-title-area">
+            <div class="card-title">Apple M6 iPad Pro 爆料：Tandem OLED延续+M6芯片+VC散热可能引入</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC / OLED / 散热</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">爆料</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">M6芯片（2nm，CPU+15-20%，GPU 10→12核，16GB RAM标配）；13英寸Tandem OLED，5.3mm厚；卫星通信（可能）；VC均热板散热（可能引入）；N1/C1X自研网络芯片（Wi-Fi 7+BT 6）；预计2026下半年-2027春发布</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">M6 2nm工艺：CPU+15-20%，GPU升级至12核</li>
+                  <li data-num="②">Tandem OLED设计冻结——OLED成本高+2024款销量不及预期</li>
+                  <li data-num="③">VC均热板散热可能引入（与iPhone 18 Pro同步）</li>
+                  <li data-num="④">卫星通信首入iPad</li>
+                  <li data-num="⑤">自研N1/C1X网络芯片</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">iPad Pro进入"挤牙膏"小迭代期，OLED设计冻结数年；VC散热若引入标志着平板散热升级趋势确认（华为/三星/苹果三方共识）；M6 2nm将拉开SoC性能差距</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">竞品旗舰SoC/散热趋势——Tandem OLED方案参考、VC散热引入平板的信号、自研网络芯片策略</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">苹果 / iPad Pro M6（11"/13"）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026下半年-2027春（预计）</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.geeky-gadgets.com/m6-ipad-pro-specs" target="_blank">geeky-gadgets.com/m6-ipad-pro-specs</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">Geeky Gadgets(B)、IT之家(B)、Gadgeek(B)、SlatePad(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">M6 2nm工艺、VC散热、卫星通信均未确认；发布时间不确定；价格因零部件成本上涨或涨20-25%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">9</div>
+          <div class="card-title-area">
+            <div class="card-title">Samsung SDI 开发12000-20000mAh硅碳电池原型</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">电池</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产业新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">2</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">12000mAh原型（SDI-DC12K-SiC-V2）：双电芯（6800mAh/4.7mm + 5200mAh/3.2mm），堆叠目标<9.3mm，960循环（目标1500）；18000mAh原型（SDI-TC18K-SiC）：三电芯，堆叠~12.3-12.8mm，960循环；20000mAh（目标，无技术数据）；纳米硅技术</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">12000mAh双电芯设计：面向手机/平板，20-25小时屏幕亮屏</li>
+                  <li data-num="②">18000mAh三电芯设计：面向大屏设备</li>
+                  <li data-num="③">纳米硅技术解决膨胀问题</li>
+                  <li data-num="④">循环寿命960次仍需改进（目标1500次）</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">三星SDI量产硅碳电池的前兆，面向平板/大屏设备；循环寿命960次是量产主要瓶颈；三星此前因Note7事件对电池技术保守，此次为态度转变信号</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">大容量硅碳电池在平板中的应用前景——12000-18000mAh可大幅提升平板续航；厚度/容量/循环寿命三角平衡；三星若量产将改变平板电池供应链格局</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">三星SDI / SDI-DC12K-SiC-V2、SDI-TC18K-SiC</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-03-11</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://cincodias.elpais.com/smartlife/smartphones/2026-03-11/samsung-baterias-silicio-carbono-hasta-20000-mah.html" target="_blank">cincodias.elpais.com</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">El País Cinco Días(A)、Opera News(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">量产时间未确定；20000mAh版本无技术数据；2/7样品厚度超标；循环寿命未达标（960 vs 1500目标）</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">10</div>
+          <div class="card-title-area">
+            <div class="card-title">Samsung Tab S12系列确认搭载联发科天玑9500 弃用高通</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC / 供应链</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产业新闻</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">3</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">天玑9500（MT6993），TSMC 3nm，最高4.21GHz，12核Mali-G1 Ultra GPU，MediaTek NPU 990；三星AI Core应用代码中发现MT6993引用；联发科持续性能/温控优于高通骁龙</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">三星平板连续三代选择联发科（Tab S10/S11/S12）</li>
+                  <li data-num="②">天玑9500 3nm 4.21GHz——联发科在高端平板正式替代高通</li>
+                  <li data-num="③">联发科温控/持续性能优于高通骁龙——大屏设备长时间使用场景关键优势</li>
+                  <li data-num="④">三星统一平板芯片供应商→减少软件碎片化</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">平板SoC竞争格局重大变化——联发科在三星高端平板线全面替代高通；影响供应链定价和产品策略；联发科在持续性能/温控的优势对平板场景意义重大</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">SoC选型策略参考——联发科vs高通在平板场景的持续性能/散热表现；芯片供应商集中化对软件适配/更新的影响</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">三星 / 联发科 / Galaxy Tab S12系列</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-05-14</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://gagadget.com/en/710650-samsung-picks-mediatek-again-galaxy-tab-s12-tipped-to-run-dimensity-9500" target="_blank">gagadget.com</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">Android Authority(B)、GaGaGadget(B)、SamMobile(B)</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">实际性能对比待Tab S12发布后评测；AI Core代码中发现的AI功能未确认为出货功能</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleCard(header) {
+  const card = header.parentElement;
+  card.classList.toggle('expanded');
+}
+</script>
+</body>
+</html>
