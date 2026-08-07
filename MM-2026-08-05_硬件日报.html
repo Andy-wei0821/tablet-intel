@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>平板硬件情报日报 · 2026-08-05 看板 | Mavis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['SF Mono', 'Cascadia Code', 'Consolas', 'Menlo', 'monospace'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .gradient-text {
+      background: linear-gradient(135deg, #2563EB 0%, #7C3AED 50%, #DB2777 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .glow-card {
+      transition: all 0.2s ease;
+      border: 1px solid rgb(226, 232, 240);
+    }
+    .glow-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px -8px rgba(59, 130, 246, 0.18), 0 4px 12px -4px rgba(0, 0, 0, 0.06);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    .card-shine {
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59,130,246,0.08), transparent);
+      transition: opacity 0.3s, left 0.6s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .glow-card:hover .card-shine { left: 100%; }
+    .star-glow { text-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: rgba(241, 245, 249, 1); }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 1); border-radius: 3px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 1); }
+    .bg-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.18) 1px, transparent 0);
+      background-size: 32px 32px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-white to-blue-50/30 text-slate-800 min-h-screen bg-grid" x-data="dashboardData()">
+
+  <!-- Top Alert / Quick Nav -->
+  <div class="border-b border-blue-200 bg-blue-50/70 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-emerald-700 font-medium">cron active</span>
+        </span>
+        <span class="text-slate-500 font-mono">next run: 2026-08-06 10:00:00</span>
+        <span class="text-slate-400">·</span>
+        <span class="text-slate-500 font-mono">task: intel-daily-1000</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="MM-2026-08-05_daily.md" class="text-blue-600 hover:text-blue-700">查看日报原文 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="border-b border-slate-200/80 bg-white/70 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-5">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs font-mono text-blue-700 bg-blue-100 px-2 py-0.5 rounded border border-blue-200">MM-2026-08-05</span>
+            <span class="text-xs text-slate-500">·</span>
+            <span class="text-xs text-slate-600">Mavis 推送</span>
+            <span class="text-xs text-slate-500">·</span>
+            <span class="text-xs text-slate-600">2026-08-05 18:32 生成</span>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-bold tracking-tight">
+            <span class="gradient-text">平板硬件情报日报</span>
+          </h1>
+          <p class="text-sm text-slate-600 mt-2">60 天时间窗 · 8-10 领域覆盖 · 5 国内 + 5 国际 · A 级 5 条 + B 级 4 条</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button @click="exportData()" class="px-3 py-1.5 text-xs bg-white hover:bg-slate-50 rounded border border-slate-300 text-slate-700 shadow-sm">导出 JSON</button>
+          <button @click="window.print()" class="px-3 py-1.5 text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 rounded border border-blue-200">打印 / PDF</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Metrics Tiles -->
+  <section class="max-w-7xl mx-auto px-6 py-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="relative bg-white border border-slate-200 rounded-lg p-5 shadow-sm overflow-hidden">
+        <div class="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-blue-100/60 blur-2xl"></div>
+        <div class="relative">
+          <div class="text-xs text-slate-500 uppercase tracking-wider font-mono">总情报数</div>
+          <div class="text-4xl font-bold mt-2 font-mono text-slate-900">10</div>
+          <div class="text-xs text-slate-500 mt-2">5 国内 + 5 国际</div>
+        </div>
+      </div>
+      <div class="relative bg-white border border-slate-200 rounded-lg p-5 shadow-sm overflow-hidden">
+        <div class="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-purple-100/60 blur-2xl"></div>
+        <div class="relative">
+          <div class="text-xs text-slate-500 uppercase tracking-wider font-mono">领域覆盖</div>
+          <div class="text-4xl font-bold mt-2 font-mono text-purple-600">10</div>
+          <div class="text-xs text-slate-500 mt-2">含 3 个 P2 领域</div>
+        </div>
+      </div>
+      <div class="relative bg-white border border-slate-200 rounded-lg p-5 shadow-sm overflow-hidden">
+        <div class="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-emerald-100/60 blur-2xl"></div>
+        <div class="relative">
+          <div class="text-xs text-slate-500 uppercase tracking-wider font-mono">A 级信源</div>
+          <div class="text-4xl font-bold mt-2 font-mono text-emerald-600">5</div>
+          <div class="text-xs text-slate-500 mt-2">+ B 级 4 条</div>
+        </div>
+      </div>
+      <div class="relative bg-white border border-slate-200 rounded-lg p-5 shadow-sm overflow-hidden">
+        <div class="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-amber-100/60 blur-2xl"></div>
+        <div class="relative">
+          <div class="text-xs text-slate-500 uppercase tracking-wider font-mono">⭐ 头条</div>
+          <div class="text-4xl font-bold mt-2 font-mono text-amber-500 star-glow">2</div>
+          <div class="text-xs text-slate-500 mt-2">MatePad Pro + 三星 8.6 代</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters Bar -->
+  <section class="max-w-7xl mx-auto px-6 pb-4">
+    <div class="bg-white/80 border border-slate-200 rounded-lg p-3 shadow-sm">
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <span class="text-slate-500 mr-1 font-mono uppercase tracking-wider">Region</span>
+        <button @click="filterRegion='all'" :class="filterRegion==='all' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-300'" class="px-3 py-1 rounded border transition">全部</button>
+        <button @click="filterRegion='国内'" :class="filterRegion==='国内' ? 'bg-red-500 text-white border-red-500' : 'bg-white text-slate-600 hover:bg-red-50 border-slate-300'" class="px-3 py-1 rounded border transition">🔴 国内 (5)</button>
+        <button @click="filterRegion='国际'" :class="filterRegion==='国际' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-600 hover:bg-purple-50 border-slate-300'" class="px-3 py-1 rounded border transition">🟣 国际 (5)</button>
+
+        <span class="text-slate-300 mx-1">|</span>
+        <span class="text-slate-500 mr-1 font-mono uppercase tracking-wider">Level</span>
+        <button @click="filterLevel='all'" :class="filterLevel==='all' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-300'" class="px-2.5 py-1 rounded border transition">全部</button>
+        <button @click="filterLevel='A'" :class="filterLevel==='A' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-600 hover:bg-emerald-50 border-slate-300'" class="px-2.5 py-1 rounded border transition">A 级 (5)</button>
+        <button @click="filterLevel='B'" :class="filterLevel==='B' ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-slate-600 hover:bg-amber-50 border-slate-300'" class="px-2.5 py-1 rounded border transition">B 级 (4)</button>
+
+        <span class="text-slate-300 mx-1">|</span>
+        <span class="text-slate-500 mr-1 font-mono uppercase tracking-wider">Domain</span>
+        <button @click="filterDomain='all'" :class="filterDomain==='all' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-300'" class="px-2.5 py-1 rounded border transition">全部</button>
+        <template x-for="d in allDomains" :key="d">
+          <button @click="filterDomain=filterDomain===d ? 'all' : d" :class="filterDomain===d ? 'bg-blue-600 text-white border-blue-600' : (d.startsWith('P2') ? 'bg-purple-50 text-purple-700 hover:bg-purple-100 border-purple-300' : 'bg-white text-slate-600 hover:bg-slate-50 border-slate-300')" class="px-2 py-0.5 rounded border text-xs font-mono transition" x-text="d"></button>
+        </template>
+
+        <span class="text-slate-300 mx-1 ml-auto">|</span>
+        <span class="text-slate-500">
+          显示 <span class="text-blue-600 font-mono font-bold" x-text="filteredItems.length"></span> / 10
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card Grid -->
+  <section class="max-w-7xl mx-auto px-6 pb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <template x-for="(item, idx) in filteredItems" :key="item.id">
+        <article class="glow-card relative bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+          <div class="card-shine"></div>
+
+          <!-- Card Header -->
+          <div class="p-5 pb-3">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-xs font-mono text-slate-500" x-text="'#' + String(item.id).padStart(2,'0')"></span>
+                <span class="text-xs px-2 py-0.5 rounded font-medium" :class="item.region==='国内' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-purple-50 text-purple-700 border border-purple-200'" x-text="item.region"></span>
+                <span class="text-xs px-2 py-0.5 rounded font-bold" :class="item.level==='A' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : (item.level==='B' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-slate-100 text-slate-700')" x-text="item.level + ' 级信源'"></span>
+                <span class="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono" x-text="item.sourceCount + ' 印证源'"></span>
+              </div>
+              <div class="text-amber-500 text-sm star-glow" x-text="item.stars"></div>
+            </div>
+
+            <h3 class="text-lg font-semibold leading-snug text-slate-900" x-text="item.title"></h3>
+
+            <div class="flex flex-wrap gap-1 mt-3">
+              <template x-for="d in item.domains" :key="d">
+                <span class="text-xs px-2 py-0.5 rounded font-mono" :class="d.startsWith('P2') ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-slate-100 text-slate-600 border border-slate-200'" x-text="d"></span>
+              </template>
+            </div>
+          </div>
+
+          <!-- Card Body: Key Params + Time -->
+          <div class="px-5 pb-3 space-y-2 text-xs">
+            <div class="flex items-start gap-2">
+              <span class="text-slate-500 font-mono w-14 flex-shrink-0">⏱ 事件</span>
+              <span class="text-slate-800 font-mono" x-text="item.eventDate"></span>
+              <span class="text-slate-400">·</span>
+              <span class="text-slate-500">抓取</span>
+              <span class="text-slate-700 font-mono" x-text="item.crawlTime"></span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-slate-500 font-mono w-14 flex-shrink-0">🔧 参数</span>
+              <span class="text-slate-800 font-mono leading-relaxed" x-text="item.keyParam"></span>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div class="px-5 pb-3">
+            <p class="text-sm text-slate-700 leading-relaxed" x-text="item.summary"></p>
+          </div>
+
+          <!-- Why Important (collapsible) -->
+          <div class="px-5 pb-3">
+            <div class="bg-blue-50/70 border-l-2 border-blue-500 rounded-r px-3 py-2">
+              <div class="text-xs text-blue-700 font-mono mb-1 font-semibold">💡 为什么重要</div>
+              <p class="text-xs text-slate-700 leading-relaxed" x-text="item.whyImportant"></p>
+            </div>
+          </div>
+
+          <!-- Tablet Link -->
+          <div class="px-5 pb-3">
+            <div class="text-xs text-slate-500 font-mono mb-1">🔗 平板关联</div>
+            <p class="text-xs text-slate-600 leading-relaxed" x-text="item.tabletLink"></p>
+          </div>
+
+          <!-- Footer: Sources toggle -->
+          <div class="px-5 py-3 border-t border-slate-200 bg-slate-50/50">
+            <button @click="item._open = !item._open; if(item._open) $nextTick(() => $refs['src-'+item.id]?.scrollIntoView({behavior:'smooth', block:'nearest'}))" class="flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 transition font-medium">
+              <span x-text="item._open ? '▼ 收起信源' : '▶ 查看信源 (' + item.sources.length + ')'"></span>
+            </button>
+            <div x-show="item._open" x-transition.opacity class="mt-2 space-y-1" :ref="'src-'+item.id">
+              <template x-for="(src, i) in item.sources" :key="i">
+                <a :href="src" target="_blank" rel="noopener" class="flex items-start gap-2 text-xs text-blue-600 hover:text-blue-700 font-mono group">
+                  <span class="text-slate-400" x-text="'[' + (i+1) + ']'"></span>
+                  <span class="break-all group-hover:underline" x-text="src"></span>
+                </a>
+              </template>
+              <div x-show="item.pendingSources && item.pendingSources.length" class="mt-2 pt-2 border-t border-amber-200">
+                <div class="text-xs text-amber-700 font-medium mb-1">⏳ 待补（信源等级要求）</div>
+                <template x-for="(src, i) in item.pendingSources" :key="'p'+i">
+                  <div class="text-xs text-amber-600 font-mono" x-text="'· ' + src"></div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </article>
+      </template>
+    </div>
+
+    <!-- Empty state -->
+    <div x-show="filteredItems.length === 0" class="text-center py-16">
+      <div class="text-slate-500 text-sm">当前筛选条件下无情报</div>
+      <button @click="filterRegion='all'; filterLevel='all'; filterDomain='all'" class="mt-3 text-xs text-blue-600 hover:text-blue-700">清除筛选</button>
+    </div>
+  </section>
+
+  <!-- Watchlist Compact Summary -->
+  <section class="max-w-7xl mx-auto px-6 pb-12">
+    <div class="bg-white/80 border border-slate-200 rounded-lg p-5 shadow-sm">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold flex items-center gap-2 text-slate-900">
+          <span class="text-amber-500">📋</span>
+          <span>Watchlist 跟踪项</span>
+          <span class="text-xs text-slate-500 font-mono">D/E 级单源 + 超期工艺基线</span>
+        </h2>
+        <span class="text-xs text-slate-500 font-mono">12 条</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
+        <div class="bg-slate-50 border border-slate-200 rounded px-3 py-2">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="font-mono text-blue-600">W-01</span>
+            <span class="text-amber-600 font-bold">D</span>
+            <span class="text-slate-800 font-medium">M6 iPad Pro VC 均热板</span>
+          </div>
+          <div class="text-slate-500">Mark Gurman 爆料 · 2027 春发布 · 台积电 2nm</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded px-3 py-2">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="font-mono text-blue-600">W-02</span>
+            <span class="text-amber-600 font-bold">E</span>
+            <span class="text-slate-800 font-medium">iPhone 18 Pro VC 暴增</span>
+          </div>
+          <div class="text-slate-500">CT 扫描 · A20 Pro 2nm + WMCM · 2026-09 预测</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded px-3 py-2">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="font-mono text-blue-600">W-03</span>
+            <span class="text-amber-600 font-bold">D</span>
+            <span class="text-slate-800 font-medium">麒麟 T93 工艺节点</span>
+          </div>
+          <div class="text-slate-500">官方未披露 · 等白皮书</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded px-3 py-2">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="font-mono text-blue-600">W-04</span>
+            <span class="text-amber-600 font-bold">D</span>
+            <span class="text-slate-800 font-medium">VC 面积 +60% 基线值</span>
+          </div>
+          <div class="text-slate-500">对比上代 12.2" 散热基线 · 待拆解</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded px-3 py-2">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="font-mono text-blue-600">W-05</span>
+            <span class="text-emerald-600 font-bold">A</span>
+            <span class="text-slate-800 font-medium">三星 8.6 代良率爬坡</span>
+          </div>
+          <div class="text-slate-500">Q4 目标 80%+ · 季报 / DSCC</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded px-3 py-2">
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="font-mono text-blue-600">W-06</span>
+            <span class="text-amber-600 font-bold">D</span>
+            <span class="text-slate-800 font-medium">京东方 B12 8.6 代试产</span>
+          </div>
+          <div class="text-slate-500">2026 Q3-Q4 行业关注</div>
+        </div>
+      </div>
+      <div class="mt-2 text-xs text-slate-500">+ W-07 ~ W-12（详见日报原文 §待印证）</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white/60">
+    <div class="max-w-7xl mx-auto px-6 py-5 text-xs text-slate-500">
+      <div class="flex flex-wrap justify-between items-center gap-3">
+        <div>
+          <span class="text-slate-700">平板硬件情报日报</span>
+          <span class="text-slate-400 mx-1">·</span>
+          <span class="text-slate-700">2026-08-05</span>
+          <span class="text-slate-400 mx-1">·</span>
+          <span class="text-slate-700">由 Mavis 自动推送</span>
+        </div>
+        <div class="font-mono text-slate-500">
+          cron: <span class="text-blue-600">intel-daily-1000</span> · <span class="text-slate-500">0 10 * * *</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function dashboardData() {
+      return {
+        filterRegion: 'all',
+        filterLevel: 'all',
+        filterDomain: 'all',
+        allDomains: ['SoC', 'OLED', '电池快充', '散热', '通信互联', '认证', '结构工艺', 'P2电芯', 'P2充电器', 'P2通信芯片', '折叠OLED'],
+        items: [
+          {
+            id: 1, region: '国内', level: 'A', stars: '⭐⭐⭐⭐⭐',
+            title: '华为 MatePad Pro 12 英寸 2026 发布',
+            eventDate: '2026-08-05 14:30', crawlTime: '17:05', sourceCount: 3,
+            domains: ['SoC', 'OLED', '电池快充', '散热', '结构工艺', 'P2充电器'],
+            summary: '12 寸大尺寸平板做到 4.70mm/439g（刷新上代 11 寸 449g 行业纪录），采用云隼架构 + 主板中置 + 嵌入式封装；屏幕为 3K 柔性 OLED 云晰柔光屏（1600nits 峰值 / 1440Hz PWM / AG 抗反射 +30%）；10400mAh 硅负极电池为华为史上续航最长平板（18.5h 本地视频），66W 快充 53 分钟满电，支持 SCP/UFCS/PD/PPS 协议。',
+            keyParam: '12" OLED · 麒麟 T93 · 10400mAh · 66W · 4.7mm/439g · 双 VC',
+            whyImportant: '麒麟 T93 平板专用 SoC 首次公开亮相；国产平板首次明示双 VC 均热板数据（面积 +60% / 能力 +30%）；硅负极 + 4.7mm 体现电池密度与封装工艺新阶段；UFCS 进入高端平板标配。',
+            tabletLink: '12.9" iPad Pro M4（5.1mm / Tandem OLED）+ 12" MatePad Pro 2026 = 2026 顶级旗舰平板新基准；VC 双层 / 硅负极 / UFCS 三件套成对标立项门槛。',
+            sources: [
+              'https://new.qq.com/rain/a/20260805A0B9G800',
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_0916a72fa0906652'
+            ],
+            pendingSources: ['华为终端官博（待补）', '华为商城产品页（待补）']
+          },
+          {
+            id: 2, region: '国内', level: 'B', stars: '⭐⭐⭐⭐',
+            title: '华为 MatePad Air 2026 海外发布',
+            eventDate: '2026-08', crawlTime: '17:05', sourceCount: 1,
+            domains: ['SoC', 'OLED', '电池快充', '通信互联'],
+            summary: '12" OLED 2800×1840 + 144Hz 自适应，搭载麒麟 T93C（平板专用 SoC，非手机平移）+ HarmonyOS 4.3.0。5.3mm/509g 超薄机身塞入 10100mAh 电池 + 66W 快充。后置 5000 万 + 前置 1200 万（平板阵营激进影像），六扬声器 HUAWEI SOUND，Wi-Fi 7 首次在国产平板上海外明示。',
+            keyParam: '12" OLED · 麒麟 T93C · 10100mAh · 66W · 5.3mm/509g · Wi-Fi 7',
+            whyImportant: 'T93 平板专用 SoC 海外首次亮相；Wi-Fi 7 在国产平板中首次明示（自研路径 vs 联发科/Intel/高通）；5.3mm/509g 重量定"可单手持半小时刷视频"便携新基准。',
+            tabletLink: '与 12.9" iPad Pro M4、高通第五代骁龙 8 至尊版（vivo Pad 6 Pro）形成 2026 H2 旗舰平板 SoC 三足鼎立。',
+            sources: [
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_0486a56b98f03552'
+            ],
+            pendingSources: ['The Verge 英文官页（待补）', 'GSMArena（待补）', 'Huawei Global 官博（待补）']
+          },
+          {
+            id: 3, region: '国内', level: 'A', stars: '⭐⭐⭐⭐',
+            title: '小米平板 9 通过 3C 认证（M656BA）',
+            eventDate: '2026-07-21', crawlTime: '17:05', sourceCount: 2,
+            domains: ['SoC', '认证', '电池快充'],
+            summary: '小米平板 9 走 ODM 标准化路线，由西安比亚迪电子独家代工（与 iPad Pro M5 比亚迪独家组装形成对照）。标配 45W 充电器，电池从 9200mAh 微涨到 9720mAh（+5.6%）。3C 认证通过意味 90 天内可国内上市。爆料：标准版骁龙 8s Gen4，Pro 版骁龙 8 Gen5。',
+            keyParam: '9720mAh · 45W · 骁龙 8s Gen4/8 Gen5 · 比亚迪电子代工',
+            whyImportant: '3C 通过 = 90 天内官宣；骁龙 8 Gen5 首批平板落地；比亚迪电子代工比例上升，反映其从 iPad 代工到国内大客户全面接管的代工业务扩张。',
+            tabletLink: '与 vivo Pad 6 Pro / iQOO Pad 6 Pro 形成 2026 H2 国产旗舰平板三足鼎立。',
+            sources: [
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_5516a5f209a08652'
+            ],
+            pendingSources: ['国家 3C 认证平台原始数据截图（待补）']
+          },
+          {
+            id: 4, region: '国内', level: 'A', stars: '⭐⭐⭐⭐',
+            title: '东芯股份 Wi-Fi 7 芯片原型机样片测试通过',
+            eventDate: '2026-07-29', crawlTime: '17:05', sourceCount: 2,
+            domains: ['通信互联', 'P2通信芯片'],
+            summary: '东芯股份作为国产存储芯片厂商，Wi-Fi 7 通信芯片跨出第一步——样片测试通过意味国产 Wi-Fi 7 芯片进入原型机验证阶段，距离量产导入通常还需 6-12 个月。涉及射频基带、PA 功放、滤波器、网络协议栈等模块。',
+            keyParam: '国产 Wi-Fi 7 射频基带 · 原型机样片测试通过',
+            whyImportant: '国产 Wi-Fi 7 从概念阶段进入原型机验证 = P2 通信芯片国产化关键节点；当前 Wi-Fi 7 市场被 Intel/博通/高通/联发科主导，国产芯片若成熟将重塑平板供应链；与华为/三星整机 Wi-Fi 7 化趋势形成上游协同。',
+            tabletLink: '国产中端/高端平板立项时 Wi-Fi 7 已是硬指标；国产芯片成熟后平板 BOM 成本可降 15-25%，直接影响小米/红米/荣耀中端机型成本结构。',
+            sources: [
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_5b46a67fdc864252'
+            ],
+            pendingSources: ['上交所信息披露平台 PDF（待补）']
+          },
+          {
+            id: 5, region: '国内', level: 'A', stars: '⭐⭐⭐⭐',
+            title: '璞泰来硅碳负极 2026 扩产：35 万吨石墨 + 1000 吨硅碳',
+            eventDate: '2026-06-26', crawlTime: '17:05', sourceCount: 2,
+            domains: ['电池快充', 'P2电芯'],
+            summary: '璞泰来（603659.SH）2025 年末 25 万吨石墨 + 400 吨硅碳产能，2026 年底计划扩产至 35 万吨石墨 + 1000 吨硅碳（硅碳产能同比 +150%）。CVD 法（化学气相沉积）已取代球磨法成为主流工艺，硅碳价格从 2018 年 80 万/吨降至 2025 年 15-30 万/吨，进入"中端动力电池可用"临界点。',
+            keyParam: '1000 吨硅碳 · 35 万吨石墨 · CVD 工艺 · 掺硅 5-15% / 30-50%',
+            whyImportant: '硅碳负极进入消费电子头部电芯企业量产导入 = P2 电芯国产化标志性事件；硅碳价格临界点使 7000-10000mAh 平板 10400mAh+ 硅负极时代到来（华为 MatePad Pro 12 2026 已采用）；2026 是半固态电池规模化落地元年。',
+            tabletLink: '平板硅负极电池容量天花板 2026 年从 10000mAh 上探至 12000mAh（OPPO 路线图），未来 12-14 寸平板 + 15000mAh 组合有望 2027 H1 出现。',
+            sources: [
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_5696a3e385000352',
+              'https://finance.sina.com.cn/stock/relnews/cn/2025-03-20/doc-ineqfqqf8302794.shtml'
+            ],
+            pendingSources: []
+          },
+          {
+            id: 6, region: '国际', level: 'A', stars: '⭐⭐⭐⭐⭐',
+            title: '三星显示 8.6 代 IT OLED 生产线 7 月量产',
+            eventDate: '2026-07-30', crawlTime: '17:05', sourceCount: 2,
+            domains: ['OLED', '供应链'],
+            summary: '8.6 代（2290×2620mm 基板）是 IT 用 OLED 的"经济切割尺寸"临界点。单基板可切 18 片 12.9 寸 iPad Pro 屏（vs 6 代线仅 4-8 片），是 IT OLED 大规模商用关键经济性转折。三星使用佳能 TOKKI 蒸镀机量产，初期良率 70%+，同时为苹果 iPad 与自家 Galaxy Tab 备货。',
+            keyParam: '8.6 代 2290×2620mm · 18 片/基板 · 良率 70%+ · TOKKI 蒸镀',
+            whyImportant: '直接定义 2026-2028 年所有中大尺寸 OLED 平板供应格局；三星 8.6 代是苹果 iPad Pro / Galaxy Tab OLED 的"母基板"；京东方/华星/LG 若不能切入 IT OLED 8.6 代，未来 3 年面板成本和供货都受制于人。',
+            tabletLink: '华为 MatePad Pro 12 2026 柔性 OLED 屏幕供应商（京东方/三星）需重点跟踪；12"/14" OLED 平板面板全球供给侧直接影响国产中高端平板成本结构。',
+            sources: [
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_9846a6b308292452'
+            ],
+            pendingSources: ['财联社转引链接（待补）']
+          },
+          {
+            id: 7, region: '国际', level: 'B', stars: '⭐⭐⭐⭐',
+            title: '三星 Galaxy Tab S12 Ultra 渲染图曝光',
+            eventDate: '2026-07-16', crawlTime: '17:05', sourceCount: 3,
+            domains: ['OLED', 'SoC', '通信互联'],
+            summary: 'CAD 渲染图（OnLeaks 曝光）显示设计延续 S11 Ultra，V 形屏幕缺口放前摄，326.34×208.46×5.12mm。联发科天玑 9500 平板主芯片首次落地头部品牌；11600mAh 维持；峰值 1600nits 维持；6 代 Android 更新承诺对标苹果 7 年。Wi-Fi 7 + 蓝牙 5.4 安卓顶配。',
+            keyParam: '14.6" Dynamic AMOLED 2X · 天玑 9500 · 11600mAh · 5.12mm · Wi-Fi 7',
+            whyImportant: '安卓旗舰标杆 + 14.6" 大尺寸路线；联发科天玑 9500 平板主芯片首次落地头部；6 代 Android 更新对标苹果；5.12mm + 11600mAh 工程平衡。',
+            tabletLink: '14.6" vs 华为 12" 的尺寸分水岭；天玑 9500 vs 麒麟 T93 vs 高通第五代骁龙 8 至尊版 = 2026 旗舰平板 SoC 三方角力。',
+            sources: [
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_0186a589ea229152',
+              'http://www.cnmo.com/news/?t=768',
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_6416a71334a55252'
+            ],
+            pendingSources: []
+          },
+          {
+            id: 8, region: '国际', level: 'B', stars: '⭐⭐⭐⭐',
+            title: '三星 Galaxy Z Fold8 Ultra 发布（折叠屏 8" Dynamic AMOLED 2X）',
+            eventDate: '2026-07-22 21:00', crawlTime: '17:05', sourceCount: 3,
+            domains: ['OLED', 'SoC', '电池快充', '折叠OLED'],
+            summary: '三星首次将 Ultra 引入折叠屏，8.0" QXGA+ 内屏（峰值 3000nits 创折叠屏新高）+ 6.5" 外屏，双 Dynamic AMOLED 2X 120Hz 自适应。搭载骁龙 8 Elite Gen 3 for Galaxy（3nm）+ 硅碳负极 5000mAh + 45W。展开厚度仅 4.1mm / 215g。Flex Titanium 钛金属屏幕结构。影像给到 2 亿像素主摄 + 5000 万超广角 + 1000 万 3× 长焦。',
+            keyParam: '8" QXGA+ · 骁龙 8 Elite Gen 3 · 硅碳 5000mAh · 4.1mm/215g · 2 亿主摄',
+            whyImportant: '首次将 Ultra 品牌引入折叠屏 = 折叠屏 = 生产力旗舰定位；硅碳负极 + 折叠屏组合是柔性电池工艺与折叠结构设计的双重突破；3000nits + 2 亿像素标志折叠屏进入"准旗舰直板机"档位。',
+            tabletLink: '折叠屏展开 8" 接近 iPad mini 尺寸，是大尺寸便携设备的另一条路线；硅碳负极首次进入折叠屏，工艺路径对 14" 平板有借鉴价值（可弯曲电池模组）。',
+            sources: [
+              'https://so.html5.qq.com/page/real/search_news?docid=70000021_4696a60c52280252',
+              'https://new.qq.com/rain/a/20260722A0EURR00',
+              'https://news.mydrivers.com/tag/zhediepingshouji.htm'
+            ],
+            pendingSources: []
+          },
+          {
+            id: 9, region: '国际', level: 'B', stars: '⭐⭐⭐⭐',
+            title: 'Apple OLED iPad mini 2026 秋季发布爆料',
+            eventDate: '2026-07-17', crawlTime: '17:05', sourceCount: 1,
+            domains: ['OLED'],
+            summary: 'Apple iPad mini 8.3" 首次从 LCD/LED 升级到 OLED，但刷新率锁定 60Hz（不带 ProMotion 120Hz 自适应），与 iPad Pro 12.9" 的 120Hz Tandem OLED 形成明确档位区隔。预计 10 月发布，苹果 OLED 平板产品线扩展至第三款。',
+            keyParam: '8.3" OLED · 60Hz · iPad mini 6/7 同分辨率',
+            whyImportant: '苹果 OLED 平板从 11"/13" 扩展至 8.3"，覆盖中端价位段；8.3" OLED 60Hz 是 Apple 对 LCD vs OLED 代差的市场卡位；对安卓阵营三星 Tab S 11" 120Hz OLED + 华为 MatePad 11 是直接对手。',
+            tabletLink: 'iPad mini OLED 上市后 iPad mini 6/7 LCD 停产，全球 8" 平板从 LCD 主导转向 OLED 主导；京东方作为 iPad mini 8.3" OLED 二供候选需重点跟踪。',
+            sources: [
+              'http://www.zdwang.com/index.php?m=content&c=tag&a=lists&tag=Galaxy'
+            ],
+            pendingSources: ['The Elec 韩国源（待补）', '9to5Mac（待补）', 'Bloomberg 原始报道（待补）']
+          },
+          {
+            id: 10, region: '国际', level: 'A', stars: '⭐⭐⭐',
+            title: 'Intel Wi-Fi 7 BE200 / BE211 监管文件齐备',
+            eventDate: '2025-2026 持续', crawlTime: '17:05', sourceCount: 2,
+            domains: ['通信互联'],
+            summary: 'Intel Wi-Fi 7 BE200 / BE211 模组已通过 FCC、欧盟 CE、英国 UKCA 等主要市场监管文件齐备。Wi-Fi 7 (802.11be) 引入 320MHz 超宽信道、MLO 多链路操作、6GHz 频段，端侧峰值速率 5.8Gbps（vs Wi-Fi 6E 1.2Gbps），同时兼容 Wi-Fi 6E/6/5。',
+            keyParam: 'Wi-Fi 7 · 320MHz · MLO · 5.8Gbps · BE200/BE211',
+            whyImportant: '平板 Wi-Fi 7 模组进入"有芯可用"阶段，2026 H2 国产旗舰平板立项 Wi-Fi 7 已是硬指标；与高通 FastConnect 7800、联发科 Filogic 880、华为自研方案形成四方格局。',
+            tabletLink: '华为 MatePad Air 2026（首次明示 Wi-Fi 7）、三星 Tab S12 Ultra（Wi-Fi 7 + 蓝牙 5.4）已落地；vivo Pad 6 Pro / 小米平板 9 跟进只是时间问题。',
+            sources: [
+              'https://www.intel.com/content/www/us/en/download/193586/windows-10-and-windows-11-wi-fi-drivers-for-intel-be200-be201-be202-be211-products.html'
+            ],
+            pendingSources: ['Intel 多国监管 PDF 列表（待补）']
+          }
+        ],
+        get filteredItems() {
+          return this.items.filter(item => {
+            if (this.filterRegion !== 'all' && item.region !== this.filterRegion) return false;
+            if (this.filterLevel !== 'all' && item.level !== this.filterLevel) return false;
+            if (this.filterDomain !== 'all' && !item.domains.includes(this.filterDomain)) return false;
+            return true;
+          });
+        },
+        exportData() {
+          const dataStr = JSON.stringify({ generated: '2026-08-05', items: this.items }, null, 2);
+          const blob = new Blob([dataStr], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'MM-2026-08-05_daily_export.json';
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

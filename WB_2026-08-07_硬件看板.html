@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>平板硬件情报日报 · 2026-08-07</title>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --border: #e4e7ed;
+    --text: #303133;
+    --text-secondary: #606266;
+    --text-tertiary: #909399;
+    --primary: #409eff;
+    --success: #67c23a;
+    --warning: #e6a23c;
+    --danger: #f56c6c;
+    --info: #909399;
+    --tag-a: #67c23a;
+    --tag-b: #409eff;
+    --tag-c: #e6a23c;
+    --tag-d: #f56c6c;
+    --tag-e: #aa55ff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .header h1 { font-size: 24px; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; opacity: 0.9; }
+  .header .meta { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  .meta-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Summary Table */
+  .summary-section {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: #f0f2f5;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:hover { background: #f5f7fa; }
+  tbody tr:last-child td { border-bottom: none; }
+  .td-title { font-weight: 600; color: var(--text); }
+  .td-region {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .region-cn { background: #ecf5ff; color: #409eff; }
+  .region-intl { background: #fdf6ec; color: #e6a23c; }
+
+  /* Source Level Tags */
+  .source-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .source-a { background: #f0f9eb; color: var(--tag-a); border: 1px solid #c2e7b0; }
+  .source-b { background: #ecf5ff; color: var(--tag-b); border: 1px solid #b3d8ff; }
+  .source-c { background: #fdf6ec; color: var(--tag-c); border: 1px solid #f5dab1; }
+  .source-d { background: #fef0f0; color: var(--tag-d); border: 1px solid #fbc4c4; }
+  .source-e { background: #f3f0ff; color: var(--tag-e); border: 1px solid #d3c2ff; }
+
+  /* Status Tags */
+  .status-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-left: 8px;
+  }
+  .status-coming {
+    background: #ecf5ff;
+    color: #409eff;
+    border: 1px solid #b3d8ff;
+  }
+  .status-notyet {
+    background: #fdf6ec;
+    color: #e6a23c;
+    border: 1px dashed #f5dab1;
+  }
+
+  /* Intelligence Cards */
+  .intel-section { margin-bottom: 24px; }
+  .intel-cards { display: grid; gap: 16px; }
+  .intel-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    border-left: 4px solid var(--primary);
+  }
+  .intel-card.cn { border-left-color: var(--tag-b); }
+  .intel-card.intl { border-left-color: var(--tag-c); }
+  .intel-card:hover { box-shadow: var(--shadow-hover); }
+
+  .card-header {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    user-select: none;
+  }
+  .card-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f0f2f5;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .intel-card.cn .card-num { background: #ecf5ff; color: var(--tag-b); }
+  .intel-card.intl .card-num { background: #fdf6ec; color: var(--tag-c); }
+
+  .card-title-area { flex: 1; }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .card-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .card-badges .stars { font-size: 12px; color: var(--warning); letter-spacing: 1px; }
+  .card-domain {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    background: #f5f7fa;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .card-toggle {
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    font-size: 14px;
+    transition: transform 0.3s;
+    margin-top: 4px;
+  }
+  .intel-card.expanded .card-toggle { transform: rotate(180deg); }
+
+  .card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .intel-card.expanded .card-body { max-height: 2000px; }
+
+  .card-content {
+    padding: 0 20px 18px 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .field.full { grid-column: 1 / -1; }
+  .field-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .field-value {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .field-value a {
+    color: var(--primary);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .field-value a:hover { text-decoration: underline; }
+  .field-value .tech-list { padding-left: 0; list-style: none; }
+  .field-value .tech-list li {
+    padding: 2px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .field-value .tech-list li::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .stat-item {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    box-shadow: var(--shadow);
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--primary); }
+  .stat-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+
+  @media (max-width: 768px) {
+    .field-grid { grid-template-columns: 1fr; }
+    table { font-size: 12px; }
+    thead th, tbody td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>平板硬件情报日报 · 2026-08-07</h1>
+    <div class="subtitle">采集口径：5 国内 + 5 国际 ｜ 信源以 A/B 级为主 ｜ 搜索窗口 30 天 ｜ 去重窗口 14 天</div>
+    <div class="meta">
+      <span class="meta-badge">📊 10 条情报</span>
+      <span class="meta-badge">🇨🇳 国内 5 条</span>
+      <span class="meta-badge">🌍 国际 5 条</span>
+      <span class="meta-badge">📡 信源 A/B 为主</span>
+      <span class="meta-badge">⏰ 搜索窗口 30 天</span>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">10</div>
+      <div class="stat-label">总情报数</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">A级信源</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-label">B级信源</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">10+</div>
+      <div class="stat-label">覆盖领域</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">⭐⭐⭐⭐⭐</div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="summary-section">
+    <div class="section-title">今日概要表</div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>标题</th>
+          <th>区域</th>
+          <th>领域</th>
+          <th>信源</th>
+          <th>时间</th>
+          <th>重要度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="td-title">华为 MatePad Air 2026 全球发布：12" OLED 144Hz + Kirin T93C</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>显示/OLED/SoC/电池/散热</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>07-14</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="td-title">小米平板9 通过3C认证：9720mAh硅碳电芯 + 45W快充</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>电池/SoC/认证</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>07-17</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="td-title">京东方8.6代OLED产线量产：630亿投资打破韩企垄断</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>显示/OLED面板/供应链</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>05月</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="td-title">联想拯救者Y700五代：17353mm² VC均热板 + 骁龙8至尊版</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>散热/SoC/显示/电池</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>03-18</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="td-title">华为 MatePad Edge 液冷散热黑科技：0.33mm微泵液冷膜 + 28W性能释放</td>
+          <td><span class="td-region region-cn">国内</span></td>
+          <td>散热/SoC/显示/结构</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>02-02</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td class="td-title">华为 MatePad Pro Max 德国上市：4.7mm全球最薄13"平板</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>结构/OLED/电池/显示</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>06-30</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td class="td-title">iPad mini OLED面板量产：三星A2产线 8.4" LTPS混合OLED</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>显示/OLED面板</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>07-15</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td class="td-title">Samsung Galaxy Z TriFold 三折叠：10" AMOLED + 骁龙8 Elite + $2899</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>折叠屏/SoC/电池/结构</td>
+          <td><span class="source-tag source-a">A</span></td>
+          <td>01-30</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td class="td-title">端侧AI/NPU算力竞争：Qualcomm 80 TOPS vs Apple 38 TOPS</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>AI芯片/NPU/SoC</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>06-27</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td class="td-title">苹果OLED战略调整：可折叠MacBook取消，京东方2027入场</td>
+          <td><span class="td-region region-intl">国际</span></td>
+          <td>显示/OLED面板/供应链</td>
+          <td><span class="source-tag source-b">B</span></td>
+          <td>07-14</td>
+          <td><span class="stars" style="color:#e6a23c">★★★★☆</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- 国内情报 -->
+  <div class="intel-section">
+    <div class="section-title">一、国内情报（5条）</div>
+    <div class="intel-cards">
+
+      <!-- Card 1 -->
+      <div class="intel-card cn expanded">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">1</div>
+          <div class="card-title-area">
+            <div class="card-title">华为 MatePad Air 2026 全球发布：12" OLED 144Hz + Kirin T93C<span class="status-tag status-coming">即将上市</span></div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示 / OLED / SoC / 电池 / 散热</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">新品发布</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">12" OLED 2800×1840 144Hz 1200nits 2000000:1 P3广色域; Kirin T93C(八核); 10100mAh 66W快充; 5.3mm 509g; Wi-Fi 7 BT5.2 NearLink; 50MP f/1.8+12MP f/2.4; 6扬声器 HUAWEI SOUND; USB 3.1 Gen1; HarmonyOS 4.3; 8/12GB+256GB; PaperMatte柔光屏可选; €849起</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">LCD→OLED升级，首次Air产品线引入PaperMatte柔光屏（磨砂涂层减少反光，手写接近纸质）</li>
+                  <li data-num="②">麒麟T93C平板专用芯片（9030系列），原生支持端侧AI功能，流畅运行笔记/图文创作/智能办公</li>
+                  <li data-num="③">5.3mm超薄铝合金一体机身，509g，较上代更薄更轻</li>
+                  <li data-num="④">高导热石墨+定制均热板3D散热系统</li>
+                  <li data-num="⑤">星闪NearLink+M-Pencil Pro(16384级压感)配件生态</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">华为首次在Air产品线引入OLED+PaperMatte，5.3mm刷新同级轻薄记录；Kirin T93C是华为平板专用芯片首次曝光具体型号；Wi-Fi 7+星闪组合在配件互联层面形成差异化；8月1日出货为当前最新竞品动态</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">OLED渗透率提升趋势再添重磅案例；5.3mm厚度对散热设计提出更高要求；10100mAh+66W在OLED平板中属第一梯队；Kirin T93C为华为平板SoC自主化标志，对标小米玄戒O3</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">华为 / MatePad Air 2026（€849起）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-14 发布，08-01 出货</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://gadgets.beebom.com/news/huawei-matepad-air-2026-launched-globally-key-specifications-pricing-availability" target="_blank">gadgets.beebom.com/news/huawei-matepad-air-2026</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">Beebom(B)、GSMChoice(B)、ezone.hk(B)、jiuphone(B)、多个中文科技媒体(B)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value"><span class="status-tag status-coming">即将上市</span> 已发布预订，8月1日出货</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">Kirin T93C具体制程工艺未公布（推测7nm+）；PaperMatte与iPad Pro nano-texture对比待实测；Wi-Fi 7具体芯片型号未公布；ezone.hk报道为Wi-Fi 6而非Wi-Fi 7，存在版本差异</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">2</div>
+          <div class="card-title-area">
+            <div class="card-title">小米平板9 通过3C认证：9720mAh硅碳电芯 + 45W快充<span class="status-tag status-coming">即将上市</span></div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">电池 / SoC / 认证</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">监管认证 / 规格曝光</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">型号M656BA；9720mAh第三代金沙江硅碳电芯；45W快充；骁龙8s Gen4(标准版)/骁龙8 Gen5(Pro版)；11.2" 3K 165Hz；西安比亚迪电子代工；6.1mm约485g；预计2026年8月发布；澎湃OS 3.0</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">第三代金沙江硅碳电池，能量密度较传统石墨电芯+22%</li>
+                  <li data-num="②">9720mAh为同级11寸平板最大容量（对比上代9200mAh +5.7%）</li>
+                  <li data-num="③">标准版/Pro版双机型差异化定位（续航vs性能）</li>
+                  <li data-num="④">电芯厚度缩减0.7mm，主板小型化分层设计，机身厚度6.1mm</li>
+                  <li data-num="⑤">五层安全防护：过压/过流/过热IC+石墨烯散热层+智能充电保养</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">9720mAh为11寸平板电池容量新标杆，硅碳电芯技术路线从小米手机延伸至平板；3C认证是产品上市前最可靠的官方数据源，确认电池容量和充电规格；45W快充在同级偏低但电池容量越级</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">硅碳电芯在平板领域渗透加速；9720mAh+6.1mm验证大容量+轻薄可兼得；比亚迪电子代工证实供应链垂直整合能力；3C→发布约1月时间差参考</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">小米 / 平板9 (M656BA) / 平板9 Pro</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-17 通过3C，预计8月发布</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_8626a5f74e008452" target="_blank">qq.com（锋潮科技报道）</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">3C认证数据库(A)、锋潮科技(B)、百度百科(B)、腾讯新闻(B)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value"><span class="status-tag status-coming">即将上市</span> 3C通过，预计8月发布</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">骁龙8s Gen4/8 Gen5具体规格未官方确认；Pro版电池容量可能不同（非9720mAh）；165Hz刷新率来自百科引用未经官方确认；标准版与Pro版屏幕材质可能不同</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">3</div>
+          <div class="card-title-area">
+            <div class="card-title">京东方8.6代OLED产线量产：630亿投资打破韩企垄断</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">显示 / OLED面板 / 供应链</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">产能 / 产线动态</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">3+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">成都B16工厂；630亿元投资；月产能32,000片(一期)；LTPO技术；基板2290×2620mm；平板OLED渗透率2025~4%→2028年9%；笔电OLED 5%→14%；2025年柔性AMOLED出货1.5亿片；2026目标1.6亿片；首款产品14寸笔电OLED送样验证中</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">第8.6代OLED基板面积远大于第6代(手机用)，适合中尺寸IT面板</li>
+                  <li data-num="②">LTPO融合LTPS高迁移率+氧化物低功耗，支持刷新率智能调节</li>
+                  <li data-num="③">2025年5月底量产较原计划提前1月+</li>
+                  <li data-num="④">同期三星A6产线月产能1.5万片（仅为京东方一期的一半）</li>
+                  <li data-num="⑤">2025年柔性AMOLED出货1.5亿片，2026目标1.6亿片，2028目标2亿片</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">京东方比三星更早量产8.6代OLED，打破韩企在中尺寸OLED的垄断；630亿投资+32K/月产能将决定平板/笔电OLED渗透速度和价格走向；2026-2027年是中尺寸OLED从试水到主力市场的转折窗口</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">平板OLED渗透率4%→9%直接量化了未来3年平板显示技术换代速度；京东方量产能力将降低平板OLED面板成本，加速中端平板OLED化；LTPO在平板应用可降低功耗延长续航</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">京东方(BOE) / B16成都工厂</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-05 量产，2026下半年批量出货</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.ledinside.cn/news/20260407-61413.html" target="_blank">ledinside.cn/news/20260407-61413</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">LEDInside(B)、京东方2025年度业绩说明会(A)、TheElec韩媒(B)、腾讯新闻(B)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value">已量产（客户送样验证中）</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">具体平板客户未公布（仅提及笔电华硕/宏碁）；32K/月为一期设计产能实际产出待观察；量产时间从"5月底"到"下半年"表述不一</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">4</div>
+          <div class="card-title-area">
+            <div class="card-title">联想拯救者Y700五代：17353mm² VC均热板 + 骁龙8至尊版</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">散热 / SoC / 显示 / 电池</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">新品发布</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">骁龙8至尊版(3nm N3P)；17353mm² VC均热板；第三代乾坤中置散热；8.8" 3040×1904 165Hz 408PPI 800nits 12bit色深；9000mAh；68W；双Type-C；LPDDR5T+UFS4.1 Pro；安兔兔453万分；12/16/24GB RAM；256GB-1TB；TÜV三重认证；¥3099起</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">17353mm²超大VC均热板（第三代乾坤散热架构），散热功率/冷凝液流速/容量分别提升20%/10%/40%</li>
+                  <li data-num="②">中置散热设计让热源远离握持区，游戏2小时最高温仅41.2℃</li>
+                  <li data-num="③">双Type-C接口+旁路充电（边充边玩不伤电池）</li>
+                  <li data-num="④">天禧AI调度/声纹猎手2.0/像素狙神2.0</li>
+                  <li data-num="⑤">2640Hz瞬时采样率+480Hz多指采样率</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">17353mm² VC均热板为小尺寸(8.8")平板散热新纪录；中置散热架构解决游戏握持发烫痛点；骁龙8至尊版+165Hz定位电竞平板天花板；旁路充电方案保护电池在游戏场景的应用</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">小尺寸平板散热设计标杆案例；VC均热板面积与散热效率的量化关系(+20%功率/+40%容量)；旁路充电方案保护电池在游戏场景的应用；8.8" 165Hz+408PPI对小屏高刷方向的验证</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">联想 / 拯救者 Y700 五代（¥3099起）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-03-18 发布</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://c.m.163.com/news/a/KN6AUPML05128A8R.html" target="_blank">163.com/news/a/KN6AUPML05128A8R</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">网易/泡泡网(B)、联想官方论坛(B)、联想乐享AI(B)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value">已上市</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">17353mm²为VC面积还是总散热面积需区分（部分报道用mm³）；骁龙8至尊版具体为Gen几有不同表述（4nm vs 3nm）；天禧AI功能实际体验待评测</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="intel-card cn">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">5</div>
+          <div class="card-title-area">
+            <div class="card-title">华为 MatePad Edge 液冷散热黑科技：0.33mm微泵液冷膜 + 28W性能释放</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">散热 / SoC / 显示 / 结构</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">技术揭秘 / 新品</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">麒麟X90(10核)；0.33mm微泵液冷膜(等效导热系数4000W/m·K)；双VC均热板+双3.6mm金刚铝风扇；28W持续性能释放；14.2" OLED 3.1K 120Hz 1000nits 94%屏占比；6.85mm机身；24GB+1TB；¥9499；HarmonyOS双模式(平板/电脑)</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">0.33mm超薄微泵液冷膜（首次在平板中引入），等效导热系数比高导热石墨烯+100%</li>
+                  <li data-num="②">双3.6mm金刚铝风扇"猫头鹰式"下置对称布局，直进风设计风量翻倍</li>
+                  <li data-num="③">双VC均热板先将热量左右分摊，再由风扇主动散热</li>
+                  <li data-num="④">主出风口80%风量排核心热量+侧出风口20%吹主板元件</li>
+                  <li data-num="⑤">支架风冷+风扇分流+微泵液冷三重组合拳，6.85mm机身内实现28W</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">首次在平板中引入微泵液冷膜技术，28W性能释放接近轻薄笔记本水平；液冷+风冷+VC三重散热架构为平板散热设计开辟新方向；麒麟X90(10核)为华为PC级芯片下放平板</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">平板散热架构创新标杆——液冷膜技术在6.85mm机身内实现的28W释放；0.33mm液冷膜厚度方案可供参考；双风扇+VC+液冷三重散热设计思路；二合一平板形态(平板/电脑双模式)的散热挑战与解法</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">华为 / MatePad Edge 液冷版（¥9499）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-02-02 技术揭秘，03-20 液冷版上市</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.toutiao.com/article/7602150967110304275" target="_blank">toutiao.com/article/7602150967110304275</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">太平洋电脑网(B)、今日头条IT之家(B)、什么值得买(B)、IT之家(B)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value">已上市</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">液冷膜具体材质未公布；28W为持续还是峰值待实测；微泵功耗对续航影响未公布；等效导热系数4000W/m·K为华为自报数据</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 国际情报 -->
+  <div class="intel-section">
+    <div class="section-title">二、国际情报（5条）</div>
+    <div class="intel-cards">
+
+      <!-- Card 6 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">6</div>
+          <div class="card-title-area">
+            <div class="card-title">华为 MatePad Pro Max 德国上市：4.7mm全球最薄13"平板</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">结构 / OLED / 电池 / 显示</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">国际市场动态 / 新品上市</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">13.2"柔性OLED PaperMatte 3000×2000 144Hz 1600nits 94%屏占比；4.7mm/499g(标准)/509g(PaperMatte)；10400mAh 66W+40W反充；Wi-Fi 7 BT6.0 NearLink USB-C3.1；12GB+256/512GB；HarmonyOS 4.3；TÜV超薄抗弯认证(抗弯+60%)；€1099起</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">4.7mm全球最薄13英寸平板（比iPad Pro 13" 5.3mm更薄）</li>
+                  <li data-num="②">首款TÜV莱茵超薄抗弯认证平板，抗弯性能较前代+60%</li>
+                  <li data-num="③">13.2"柔性OLED PaperMatte纳米蚀刻防眩光，3.55mm超窄边框</li>
+                  <li data-num="④">Glide键盘六行按键+M-Pencil Pro充电槽</li>
+                  <li data-num="⑤">Live Multitask三App并行+PC级WPS AI工具</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">4.7mm厚度超越iPad Pro 13"(5.3mm)成为全球最薄13英寸平板；TÜV抗弯认证解决超薄机身刚性担忧；华为在德国高端市场(€1099)直接对标iPad Pro，显示海外扩张策略</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">超薄结构工艺标杆(4.7mm+抗弯认证)；13" OLED面板供应链规格参考；PaperMatte纳米蚀刻防眩光技术方案；10400mAh在4.7mm机身内的电池方案</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">华为 / MatePad Pro Max（€1099起）</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-05-07 全球发布，06-30 德国上市</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://www.notebookcheck.net/Huawei-MatePad-Pro-Max-arrives-in-Germany-as-the-world-s-thinnest-13-inch-tablet-with-3K-144-Hz-OLED.1329588.0.html" target="_blank">notebookcheck.net</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">Notebookcheck(B)、Digital Trends(B)、GizNewsDaily(B)、新浪科技(B)、Notebookcheck中文(B)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value">已上市</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">SoC型号未明确披露；PaperMatte与iPad Pro nano-texture对比待实测；国内上市时间和价格待确认；华为官方新闻稿为信源</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">7</div>
+          <div class="card-title-area">
+            <div class="card-title">iPad mini OLED面板量产：三星A2产线 8.4" LTPS混合OLED<span class="status-tag status-coming">即将上市</span></div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示 / OLED面板</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">供应链 / 面板量产</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">4+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">8.4" LTPS混合OLED面板(Hybrid OLED)；三星显示A2第5.5代产线；60Hz固定刷新率(无ProMotion)；预计2026年6月量产；全年面板出货约110万片；三星显示独家供货；可能搭载A19 Pro芯片+8GB+内存；预计下半年发布10月上市；起售价预计高于$599</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">LCD→OLED升级，LTPS背板混合OLED（结合刚性+柔性OLED制程优势，更薄更省电）</li>
+                  <li data-num="②">60Hz固定刷新率（非ProMotion），LTPS不支持自适应刷新</li>
+                  <li data-num="③">对比iPad Pro双层LTPO OLED(10-120Hz)，LTPS成本更低但亮度/刷新率较低</li>
+                  <li data-num="④">三星显示A2 5.5代产线已量产</li>
+                  <li data-num="⑤">支持Apple Intelligence需8GB+内存</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">iPad mini首次OLED化，苹果OLED战略从iPad Pro延伸到更小尺寸；60Hz守住产品层级卡位（防止mini蚕食Air销量）；110万片/年出货量反映iPad mini定位为利基产品；LTPS vs LTPO的成本分层策略</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">8.4" OLED面板供应链参考；LTPS混合OLED作为降低OLED成本的技术路线；60Hz vs 120Hz产品层级卡位策略；面板量产到产品上市约3-4月时间差</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">苹果 / iPad mini 8 (代号J510)</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-15 爆料，预计下半年发布</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://new.qq.com/rain/a/20260715A049MH00" target="_blank">new.qq.com/rain/a/20260715A049MH00</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">腾讯新闻(B)、今日头条金融界(B)、MrMad(B)、今日头条华商网(B) — 源自韩媒爆料人yeux1122</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value"><span class="status-tag status-coming">即将上市</span> 面板已量产，预计下半年发布</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">A19 Pro芯片+8GB内存为推测；60Hz最终确认待发布；110万片/年面板出货量为预测值；发布时间"下半年"/"10月"为推测</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">8</div>
+          <div class="card-title-area">
+            <div class="card-title">Samsung Galaxy Z TriFold 三折叠：10" AMOLED + 骁龙8 Elite + $2899</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">折叠屏 / SoC / 电池 / 结构</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">新品发布 / 形态创新</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">10" Dynamic AMOLED 2X 2160×1584 120Hz 1600nits(主屏)；6.5" FHD+ AMOLED 2X 2520×1080 120Hz 2600nits(外屏)；骁龙8 Elite for Galaxy(3nm)；16GB RAM；512GB/1TB；5600mAh(三电芯) 45W有线+15W无线；309g；展开3.9-4.2mm/折叠12.9mm；IP48；Wi-Fi 7 BT5.4；200MP主摄+12MP超广角+10MP长焦；Android 16/One UI 8；$2899</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">三折叠设计（双铰链三面板），展开10"为Galaxy手机最大屏幕</li>
+                  <li data-num="②">钛合金铰链+增强涂层+陶瓷玻璃纤维后盖</li>
+                  <li data-num="③">20万次多折叠测试（约5年使用寿命）</li>
+                  <li data-num="④">IP48级防水防尘（三折叠设备首例）</li>
+                  <li data-num="⑤">Galaxy AI集成+Gemini Live多模态+Samsung DeX桌面模式</li>
+                  <li data-num="⑥">碳纤维保护壳+防反射膜+45W充电器随附</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">三折叠形态首次量产上市，10"展开尺寸接近平板级别；$2899为三星最贵折叠手机，验证超高端形态市场接受度；309g+12.9mm折叠厚度对便携性构成挑战；5600mAh三电芯设计在折叠形态中的电池方案值得参考</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">三折叠形态模糊手机/平板边界，10"展开为平板级体验；折叠态散热/电池/铰链设计参考；IP48防水在折叠设备中的工程实现；$2899定价验证超高端市场容量</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">三星 / Galaxy Z TriFold (SM-F968)</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2025-12-01 发布，2026-01-30 美国上市</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://news.samsung.com/us/the-highly-anticipated-samsung-galaxy-z-trifold-will-be-available-in-u-s-starting-jan-30" target="_blank">news.samsung.com/us</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">三星官方新闻稿(A)、TechRadar(B)、Specifications.Global(B)、YesPress(B)、Samsung US官网(A)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value">已上市（注：YesPress报道已于2026-03-17停售，生命周期约90天）</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">停售原因（销量/产能/策略）未官方说明；后续迭代计划未知；309g重量对长时间握持的影响需实际体验验证；三折叠铰链长期耐久性待市场验证</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">9</div>
+          <div class="card-title-area">
+            <div class="card-title">端侧AI/NPU算力竞争：Qualcomm 80 TOPS vs Apple 38 TOPS</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">AI芯片 / NPU / SoC</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">技术趋势</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">5+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">Qualcomm Snapdragon X2 Elite Extreme Hexagon NPU6 80 TOPS(6代)；Apple M4/A18 Neural Engine 38 TOPS；Snapdragon 8 Elite 45 TOPS(移动端)；Intel Lunar Lake 47 TOPS；AMD Ryzen AI 300 50 TOPS；端侧LLM 1-7B参数(INT4量化)；10-30 tokens/s；80 TOPS较上代翻倍</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">Qualcomm NPU6支持FP8/BF16/2-bit权重，8个向量引擎(4×128-bit SIMD)</li>
+                  <li data-num="②">双micro eNPU低功耗岛（6倍于X1），常驻意图分类/唤醒词/背景摘要</li>
+                  <li data-num="③">Apple统一内存架构在LLM推理中内存带宽优于纯TOPS</li>
+                  <li data-num="④">2-bit权重处理使7B模型在轻薄设备可用</li>
+                  <li data-num="⑤">LLMWare在NPU上运行多步Agent工作流（完全本地，无云端）</li>
+                  <li data-num="⑥">TOPS是峰值营销数字，实际吞吐受内存带宽限制——7B模型每token需读取3.5GB权重</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">2026年端侧NPU算力翻倍，从"技术演示"进入"可商用"阶段；80 TOPS使7B参数LLM完全本地运行成为可能；内存带宽而非TOPS成为真正瓶颈——这一认知对硬件架构选型至关重要；Qualcomm在NPU领域超越Apple(80 vs 38 TOPS)</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">平板SoC NPU算力直接影响端侧AI体验(语音助手/实时翻译/图像生成)；INT4/2-bit量化支持降低内存需求使平板可运行7B模型；低功耗eNPU岛设计对平板续航至关重要；Apple/Qualcomm/Intel/AMD四方NPU竞争将加速平板AI能力升级</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">Qualcomm / Apple / Intel / AMD — 多厂商对比</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-06-27</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://aitechconnect.in/news/snapdragon-x2-npu-on-device-agents-2026" target="_blank">aitechconnect.in/news/snapdragon-x2-npu</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">AI Tech Connect(B)、hardware.computer(B)、appscale.blog(B)、ai2.work(B)、internet-pros(B) — Qualcomm产品规格(A)</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value">部分已量产(X2 Elite PC)/移动端Snapdragon 8 Elite已量产</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">80 TOPS为Qualcomm自报峰值；实际tokens/s因内存带宽而异；移动端(平板/手机)NPU算力可能低于PC端；2-bit量化对模型质量影响待评估；TOPS跨厂商测量精度不统一(INT8 vs FP8 vs INT4)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="intel-card intl">
+        <div class="card-header" onclick="toggleCard(this)">
+          <div class="card-num">10</div>
+          <div class="card-title-area">
+            <div class="card-title">苹果OLED战略调整：可折叠MacBook取消，京东方2027入场<span class="status-tag status-notyet">产能规划中</span></div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示 / OLED面板 / 供应链</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="card-toggle">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><span class="field-label">信号类型</span><span class="field-value">供应链战略 / 产能规划</span></div>
+              <div class="field"><span class="field-label">印证源数</span><span class="field-value">2+</span></div>
+              <div class="field full"><span class="field-label">关键参数</span><span class="field-value">可折叠MacBook(16-18")取消；13.8" MacBook新增(LTPO+/COE/UPC/FMP全Pro级OLED技术)；iPad mini 8.4" Hybrid OLED 2026年6月量产(年110万片)；iPad Pro OLED需求低于预期37%(原700万片下调)；MacBook Pro OLED 2026下半年(14.3"+16.3", RGB Tandem+Oxide, 年130万片)；京东方2027 iPad Air OLED供应商(LTPS)；京东方2028 MacBook Pro OLED(LTPO+/RGB Tandem)；LCD版MacBook Pro并行至2028</span></div>
+              <div class="field full"><span class="field-label">技术特性</span><span class="field-value">
+                <ul class="tech-list">
+                  <li data-num="①">三条背板技术路线并行：LTPS(Air/mini) / LTPO+(京东方) / Oxide TFT(三星A6)</li>
+                  <li data-num="②">Pro系列堆COE(去偏光片)+PSF磷光敏化荧光+BT2020 95%超广色域</li>
+                  <li data-num="③">Air/mini走RGB单层+LTPS简化路线（成本分层）</li>
+                  <li data-num="④">京东方两步走：2027 iPad Air→2028 MacBook Pro</li>
+                  <li data-num="⑤">iPad Pro OLED需求-37%验证OLED成本与需求平衡仍在调试</li>
+                </ul>
+              </span></div>
+              <div class="field full"><span class="field-label">为什么重要</span><span class="field-value">苹果OLED供应链多元化战略明确——京东方2027/2028入场打破三星+LG双寡头；可折叠MacBook取消反映折叠屏成本/耐用性/供应链成熟度仍不足；iPad Pro OLED需求-37%是OLED在平板渗透速度的重要信号</span></div>
+              <div class="field full"><span class="field-label">平板关联点</span><span class="field-value">iPad mini OLED量产时间线参考(6月量产→下半年发布约3-4月)；京东方进入Apple供应链时间表(2027/2028)影响平板OLED面板成本和供应；LTPS/LTPO/Oxide三条技术路线对平板OLED规格分层；iPad Pro OLED需求不及预期反映OLED平板市场接受度仍需培育</span></div>
+              <div class="field"><span class="field-label">厂商 / 型号</span><span class="field-value">苹果 / 三星显示 / 京东方 — iPad mini/Air/Pro/MacBook Pro OLED供应链</span></div>
+              <div class="field"><span class="field-label">时间</span><span class="field-value">2026-07-14（ijiwei引用Omdia报告）</span></div>
+              <div class="field"><span class="field-label">URL</span><span class="field-value"><a href="https://ijiwei.com/n/1063911" target="_blank">ijiwei.com/n/1063911</a></span></div>
+              <div class="field"><span class="field-label">信源明细</span><span class="field-value">ijiwei(B)引用Omdia(A)预测报告</span></div>
+              <div class="field"><span class="field-label">上市状态</span><span class="field-value"><span class="status-tag status-notyet">产能规划中</span> 京东方2027/2028时间表为Omdia预测</span></div>
+              <div class="field full"><span class="field-label">备注待印证</span><span class="field-value">Omdia为预测机构，实际执行可能调整；京东方2027/2028时间表取决于B16产线良率和客户验证；13.8" MacBook产品定位为Omdia推测；iPad Pro OLED需求-37%为Omdia报告数据</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleCard(header) {
+  const card = header.parentElement;
+  card.classList.toggle('expanded');
+}
+</script>
+</body>
+</html>
