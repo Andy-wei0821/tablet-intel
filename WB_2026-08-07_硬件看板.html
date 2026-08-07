@@ -62,7 +62,7 @@
   .status-released { background:#f0f9eb; color:#67c23a; border:1px solid #c2e7b0; }
   .status-progress { background:#f4f4f5; color:#909399; border:1px solid #e4e7ed; }
   .intel-section { margin-bottom:24px; }
-  .intel-cards { display:grid; gap:16px; }
+  .intel-cards { display:grid; grid-template-columns:1fr; gap:16px; }
   .intel-card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow 0.3s; border-left:4px solid var(--primary); }
   .intel-card.cn { border-left-color:var(--tag-b); }
   .intel-card.intl { border-left-color:var(--tag-c); }
@@ -241,7 +241,8 @@
 
   <!-- Domestic Intelligence -->
   <div class="intel-section">
-    <div class="section-title">一、国内情报（15条）</di      <div class="intel-cards">
+    <div class="section-title">一、国内情报（15条）</div>
+      <div class="intel-cards">
 <!-- Card 1: 华为WATCH GT 7系列 -->
       <div class="intel-card cn expanded" id="card-1">
         <div class="card-header" onclick="toggleCard('card-1')">
@@ -1241,10 +1242,7 @@
         </div>
       </div>
       </div> </div>
-    </div>
-  </div>
 
-</div>
 
 <script>
 function toggleCard(id) {
