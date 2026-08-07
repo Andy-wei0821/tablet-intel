@@ -57,8 +57,10 @@
   .source-d { background:#fef0f0; color:var(--tag-d); border:1px solid #fbc4c4; }
   .source-e { background:#f3f0ff; color:var(--tag-e); border:1px solid #d3c2ff; }
   .status-tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; white-space:nowrap; margin-left:8px; }
+  .td-status .status-tag { margin-left:0; font-size:10px; padding:1px 6px; }
   .status-coming { background:#ecf5ff; color:#409eff; border:1px solid #b3d8ff; }
-  .status-notyet { background:#fdf6ec; color:#e6a23c; border:1px dashed #f5dab1; }
+  .status-released { background:#f0f9eb; color:#67c23a; border:1px solid #c2e7b0; }
+  .status-progress { background:#f4f4f5; color:#909399; border:1px solid #e4e7ed; }
   .intel-section { margin-bottom:24px; }
   .intel-cards { display:grid; gap:16px; }
   .intel-card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow 0.3s; border-left:4px solid var(--primary); }
@@ -148,38 +150,38 @@
   <div class="summary-section">
     <div class="section-title">今日概要表</div>
     <table>
-      <thead><tr><th>#</th><th>标题</th><th>区域</th><th>领域</th><th>信源</th><th>时间</th><th>重要度</th></tr></thead>
+      <thead><tr><th>#</th><th>标题</th><th>区域</th><th>领域</th><th>上市状态</th><th>信源</th><th>时间</th><th>重要度</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td class="td-title">红魔游戏平板5 Pro</td><td><span class="td-region region-cn">国内</span></td><td>平板/散热/SoC/电池</td><td><span class="source-tag source-b">B</span></td><td>06-30</td><td>★★★★★</td></tr>
-        <tr><td>2</td><td class="td-title">华为MatePad Pro Max</td><td><span class="td-region region-cn">国内</span></td><td>平板/SoC/显示/结构</td><td><span class="source-tag source-b">B</span></td><td>05-20</td><td>★★★★★</td></tr>
-        <tr><td>3</td><td class="td-title">小米18 CMIIT认证</td><td><span class="td-region region-cn">国内</span></td><td>手机/SoC/电池</td><td><span class="source-tag source-a">A</span></td><td>07-17</td><td>★★★★</td></tr>
-        <tr><td>4</td><td class="td-title">iQOO 15T</td><td><span class="td-region region-cn">国内</span></td><td>手机/SoC/电池/摄像头</td><td><span class="source-tag source-b">B</span></td><td>05-20</td><td>★★★★</td></tr>
-        <tr><td>5</td><td class="td-title">vivo X Fold6</td><td><span class="td-region region-cn">国内</span></td><td>手机/折叠屏/SoC/电池</td><td><span class="source-tag source-a">A</span></td><td>06-26</td><td>★★★★★</td></tr>
-        <tr><td>6</td><td class="td-title">荣耀WIN Turbo</td><td><span class="td-region region-cn">国内</span></td><td>手机/散热/SoC/电池</td><td><span class="source-tag source-b">B</span></td><td>05月</td><td>★★★★</td></tr>
-        <tr><td>7</td><td class="td-title">华为WATCH GT 7系列</td><td><span class="td-region region-cn">国内</span></td><td>智能手表/传感器/电池/AI</td><td><span class="source-tag source-a">A</span></td><td>08-05</td><td>★★★★★</td></tr>
-        <tr><td>8</td><td class="td-title">华为WATCH GT Runner 2</td><td><span class="td-region region-cn">国内</span></td><td>智能手表/传感器/结构</td><td><span class="source-tag source-a">A</span></td><td>06月</td><td>★★★★</td></tr>
-        <tr><td>9</td><td class="td-title">雷鸟GT系列AR眼镜</td><td><span class="td-region region-cn">国内</span></td><td>AR-VR/显示/音频/SoC</td><td><span class="source-tag source-b">B</span></td><td>05-27</td><td>★★★★★</td></tr>
-        <tr><td>10</td><td class="td-title">雷鸟V4 AI拍摄眼镜</td><td><span class="td-region region-cn">国内</span></td><td>AR-VR/SoC/电池/摄像头</td><td><span class="source-tag source-b">B</span></td><td>05-27</td><td>★★★★</td></tr>
-        <tr><td>11</td><td class="td-title">Qi2.2无线充电标准发布</td><td><span class="td-region region-cn">国内</span></td><td>无线充/认证</td><td><span class="source-tag source-a">A</span></td><td>05-15</td><td>★★★★★</td></tr>
-        <tr><td>12</td><td class="td-title">WPC Qi2.2认证突破521款</td><td><span class="td-region region-cn">国内</span></td><td>无线充/认证</td><td><span class="source-tag source-a">A</span></td><td>01-31</td><td>★★★★</td></tr>
-        <tr><td>13</td><td class="td-title">天猫精灵Sound Pro</td><td><span class="td-region region-cn">国内</span></td><td>智能音箱/AI/音频</td><td><span class="source-tag source-b">B</span></td><td>06月</td><td>★★★★</td></tr>
-        <tr><td>14</td><td class="td-title">小米小爱音箱Pro 2026款</td><td><span class="td-region region-cn">国内</span></td><td>智能音箱/AI</td><td><span class="source-tag source-b">B</span></td><td>2026</td><td>★★★</td></tr>
-        <tr><td>15</td><td class="td-title">联想小新Air 13/15 2026版</td><td><span class="td-region region-cn">国内</span></td><td>笔记本/SoC/AI-NPU</td><td><span class="source-tag source-b">B</span></td><td>05-29</td><td>★★★★</td></tr>
-        <tr><td>16</td><td class="td-title">Motorola Moto Pad 70 Pro</td><td><span class="td-region region-intl">国际</span></td><td>平板/SoC/显示/电池/手写笔</td><td><span class="source-tag source-b">B</span></td><td>06-27</td><td>★★★★</td></tr>
-        <tr><td>17</td><td class="td-title">Samsung Galaxy Z Fold 8</td><td><span class="td-region region-intl">国际</span></td><td>手机/折叠屏/SoC/电池</td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★★</td></tr>
-        <tr><td>18</td><td class="td-title">Samsung Galaxy Z Flip 8</td><td><span class="td-region region-intl">国际</span></td><td>手机/折叠屏/SoC</td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★</td></tr>
-        <tr><td>19</td><td class="td-title">Google Pixel 11系列</td><td><span class="td-region region-intl">国际</span></td><td>手机/SoC/电池/摄像头</td><td><span class="source-tag source-b">B</span></td><td>08-12</td><td>★★★★</td></tr>
-        <tr><td>20</td><td class="td-title">Motorola Razr 70 Ultra</td><td><span class="td-region region-intl">国际</span></td><td>手机/折叠屏/SoC/电池/显示</td><td><span class="source-tag source-b">B</span></td><td>07月</td><td>★★★★</td></tr>
-        <tr><td>21</td><td class="td-title">Samsung Galaxy Watch Ultra2</td><td><span class="td-region region-intl">国际</span></td><td>智能手表/SoC/传感器/显示/AI</td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★★</td></tr>
-        <tr><td>22</td><td class="td-title">Samsung Galaxy Watch9</td><td><span class="td-region region-intl">国际</span></td><td>智能手表/SoC/传感器/AI</td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★</td></tr>
-        <tr><td>23</td><td class="td-title">Xiaomi Watch S5 46mm</td><td><span class="td-region region-intl">国际</span></td><td>智能手表/显示/电池/传感器</td><td><span class="source-tag source-b">B</span></td><td>05-29</td><td>★★★</td></tr>
-        <tr><td>24</td><td class="td-title">XREAL AURA空间计算眼镜</td><td><span class="td-region region-intl">国际</span></td><td>AR-VR/SoC/AI-NPU</td><td><span class="source-tag source-a">A</span></td><td>06-17</td><td>★★★★★</td></tr>
-        <tr><td>25</td><td class="td-title">Qi2.2全球终端采纳</td><td><span class="td-region region-intl">国际</span></td><td>无线充/认证</td><td><span class="source-tag source-a">A</span></td><td>持续</td><td>★★★★</td></tr>
-        <tr><td>26</td><td class="td-title">Google Home Speaker</td><td><span class="td-region region-intl">国际</span></td><td>智能音箱/AI-NPU/音频</td><td><span class="source-tag source-a">A</span></td><td>06-25</td><td>★★★★★</td></tr>
-        <tr><td>27</td><td class="td-title">Acer Swift Spin 14 AI</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/AI-NPU/手写笔</td><td><span class="source-tag source-a">A</span></td><td>05-28</td><td>★★★★★</td></tr>
-        <tr><td>28</td><td class="td-title">Acer Swift Air 14</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/AI-NPU/显示</td><td><span class="source-tag source-b">B</span></td><td>05-28</td><td>★★★★</td></tr>
-        <tr><td>29</td><td class="td-title">Microsoft Surface Pro/Laptop 8</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/AI-NPU</td><td><span class="source-tag source-a">A</span></td><td>06-17</td><td>★★★★★</td></tr>
-        <tr><td>30</td><td class="td-title">HP OmniBook X 16</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/显示</td><td><span class="source-tag source-b">B</span></td><td>07-30</td><td>★★★</td></tr>
+        <tr><td>1</td><td class="td-title">红魔游戏平板5 Pro</td><td><span class="td-region region-cn">国内</span></td><td>平板/散热/SoC/电池</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>06-30</td><td>★★★★★</td></tr>
+        <tr><td>2</td><td class="td-title">华为MatePad Pro Max</td><td><span class="td-region region-cn">国内</span></td><td>平板/SoC/显示/结构</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>05-20</td><td>★★★★★</td></tr>
+        <tr><td>3</td><td class="td-title">小米18 CMIIT认证</td><td><span class="td-region region-cn">国内</span></td><td>手机/SoC/电池</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>07-17</td><td>★★★★</td></tr>
+        <tr><td>4</td><td class="td-title">iQOO 15T</td><td><span class="td-region region-cn">国内</span></td><td>手机/SoC/电池/摄像头</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>05-20</td><td>★★★★</td></tr>
+        <tr><td>5</td><td class="td-title">vivo X Fold6</td><td><span class="td-region region-cn">国内</span></td><td>手机/折叠屏/SoC/电池</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-a">A</span></td><td>06-26</td><td>★★★★★</td></tr>
+        <tr><td>6</td><td class="td-title">荣耀WIN Turbo</td><td><span class="td-region region-cn">国内</span></td><td>手机/散热/SoC/电池</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-b">B</span></td><td>05月</td><td>★★★★</td></tr>
+        <tr><td>7</td><td class="td-title">华为WATCH GT 7系列</td><td><span class="td-region region-cn">国内</span></td><td>智能手表/传感器/电池/AI</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>08-05</td><td>★★★★★</td></tr>
+        <tr><td>8</td><td class="td-title">华为WATCH GT Runner 2</td><td><span class="td-region region-cn">国内</span></td><td>智能手表/传感器/结构</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-a">A</span></td><td>06月</td><td>★★★★</td></tr>
+        <tr><td>9</td><td class="td-title">雷鸟GT系列AR眼镜</td><td><span class="td-region region-cn">国内</span></td><td>AR-VR/显示/音频/SoC</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>05-27</td><td>★★★★★</td></tr>
+        <tr><td>10</td><td class="td-title">雷鸟V4 AI拍摄眼镜</td><td><span class="td-region region-cn">国内</span></td><td>AR-VR/SoC/电池/摄像头</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>05-27</td><td>★★★★</td></tr>
+        <tr><td>11</td><td class="td-title">Qi2.2无线充电标准发布</td><td><span class="td-region region-cn">国内</span></td><td>无线充/认证</td><td class="td-status"><span class="status-tag status-released">已发布</span></td><td><span class="source-tag source-a">A</span></td><td>05-15</td><td>★★★★★</td></tr>
+        <tr><td>12</td><td class="td-title">WPC Qi2.2认证突破521款</td><td><span class="td-region region-cn">国内</span></td><td>无线充/认证</td><td class="td-status"><span class="status-tag status-progress">进行中</span></td><td><span class="source-tag source-a">A</span></td><td>01-31</td><td>★★★★</td></tr>
+        <tr><td>13</td><td class="td-title">天猫精灵Sound Pro</td><td><span class="td-region region-cn">国内</span></td><td>智能音箱/AI/音频</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>06月</td><td>★★★★</td></tr>
+        <tr><td>14</td><td class="td-title">小米小爱音箱Pro 2026款</td><td><span class="td-region region-cn">国内</span></td><td>智能音箱/AI</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>2026</td><td>★★★</td></tr>
+        <tr><td>15</td><td class="td-title">联想小新Air 13/15 2026版</td><td><span class="td-region region-cn">国内</span></td><td>笔记本/SoC/AI-NPU</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>05-29</td><td>★★★★</td></tr>
+        <tr><td>16</td><td class="td-title">Motorola Moto Pad 70 Pro</td><td><span class="td-region region-intl">国际</span></td><td>平板/SoC/显示/电池/手写笔</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>06-27</td><td>★★★★</td></tr>
+        <tr><td>17</td><td class="td-title">Samsung Galaxy Z Fold 8</td><td><span class="td-region region-intl">国际</span></td><td>手机/折叠屏/SoC/电池</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★★</td></tr>
+        <tr><td>18</td><td class="td-title">Samsung Galaxy Z Flip 8</td><td><span class="td-region region-intl">国际</span></td><td>手机/折叠屏/SoC</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★</td></tr>
+        <tr><td>19</td><td class="td-title">Google Pixel 11系列</td><td><span class="td-region region-intl">国际</span></td><td>手机/SoC/电池/摄像头</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-b">B</span></td><td>08-12</td><td>★★★★</td></tr>
+        <tr><td>20</td><td class="td-title">Motorola Razr 70 Ultra</td><td><span class="td-region region-intl">国际</span></td><td>手机/折叠屏/SoC/电池/显示</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>07月</td><td>★★★★</td></tr>
+        <tr><td>21</td><td class="td-title">Samsung Galaxy Watch Ultra2</td><td><span class="td-region region-intl">国际</span></td><td>智能手表/SoC/传感器/显示/AI</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★★</td></tr>
+        <tr><td>22</td><td class="td-title">Samsung Galaxy Watch9</td><td><span class="td-region region-intl">国际</span></td><td>智能手表/SoC/传感器/AI</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>07-22</td><td>★★★★</td></tr>
+        <tr><td>23</td><td class="td-title">Xiaomi Watch S5 46mm</td><td><span class="td-region region-intl">国际</span></td><td>智能手表/显示/电池/传感器</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>05-29</td><td>★★★</td></tr>
+        <tr><td>24</td><td class="td-title">XREAL AURA空间计算眼镜</td><td><span class="td-region region-intl">国际</span></td><td>AR-VR/SoC/AI-NPU</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-a">A</span></td><td>06-17</td><td>★★★★★</td></tr>
+        <tr><td>25</td><td class="td-title">Qi2.2全球终端采纳</td><td><span class="td-region region-intl">国际</span></td><td>无线充/认证</td><td class="td-status"><span class="status-tag status-progress">进行中</span></td><td><span class="source-tag source-a">A</span></td><td>持续</td><td>★★★★</td></tr>
+        <tr><td>26</td><td class="td-title">Google Home Speaker</td><td><span class="td-region region-intl">国际</span></td><td>智能音箱/AI-NPU/音频</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-a">A</span></td><td>06-25</td><td>★★★★★</td></tr>
+        <tr><td>27</td><td class="td-title">Acer Swift Spin 14 AI</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/AI-NPU/手写笔</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-a">A</span></td><td>05-28</td><td>★★★★★</td></tr>
+        <tr><td>28</td><td class="td-title">Acer Swift Air 14</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/AI-NPU/显示</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>05-28</td><td>★★★★</td></tr>
+        <tr><td>29</td><td class="td-title">Microsoft Surface Pro/Laptop 8</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/AI-NPU</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-a">A</span></td><td>06-17</td><td>★★★★★</td></tr>
+        <tr><td>30</td><td class="td-title">HP OmniBook X 16</td><td><span class="td-region region-intl">国际</span></td><td>笔记本/SoC/显示</td><td class="td-status"><span class="status-tag status-released">已上市</span></td><td><span class="source-tag source-b">B</span></td><td>07-30</td><td>★★★</td></tr>
       </tbody>
     </table>
   </div>
@@ -199,7 +201,7 @@
               <span class="source-tag source-b">B</span>
               <span class="card-domain">平板/散热/SoC/电池/显示</span>
               <span class="stars">★★★★★</span>
-              <span class="status-tag status-coming">已上市</span>
+              <span class="status-tag status-released">已上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -233,7 +235,7 @@
               <span class="source-tag source-b">B</span>
               <span class="card-domain">平板/SoC/显示/结构/电池</span>
               <span class="stars">★★★★★</span>
-              <span class="status-tag status-coming">已上市</span>
+              <span class="status-tag status-released">已上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -267,7 +269,7 @@
               <span class="source-tag source-a">A</span>
               <span class="card-domain">手机/SoC/电池</span>
               <span class="stars">★★★★</span>
-              <span class="status-tag status-notyet">即将上市</span>
+              <span class="status-tag status-coming">即将上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -301,7 +303,7 @@
               <span class="source-tag source-b">B</span>
               <span class="card-domain">手机/SoC/电池/摄像头</span>
               <span class="stars">★★★★</span>
-              <span class="status-tag status-coming">已上市</span>
+              <span class="status-tag status-released">已上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -335,7 +337,7 @@
               <span class="source-tag source-a">A</span>
               <span class="card-domain">手机/折叠屏/SoC/电池/显示</span>
               <span class="stars">★★★★★</span>
-              <span class="status-tag status-coming">已上市</span>
+              <span class="status-tag status-released">已上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -369,7 +371,7 @@
               <span class="source-tag source-b">B</span>
               <span class="card-domain">手机/散热/SoC/电池</span>
               <span class="stars">★★★★</span>
-              <span class="status-tag status-notyet">即将上市</span>
+              <span class="status-tag status-coming">即将上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -403,7 +405,7 @@
               <span class="source-tag source-a">A</span>
               <span class="card-domain">智能手表/传感器/电池/显示/AI</span>
               <span class="stars">★★★★★</span>
-              <span class="status-tag status-notyet">即将上市</span>
+              <span class="status-tag status-coming">即将上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -437,7 +439,7 @@
               <span class="source-tag source-a">A</span>
               <span class="card-domain">智能手表/传感器/结构/电池</span>
               <span class="stars">★★★★</span>
-              <span class="status-tag status-coming">已上市</span>
+              <span class="status-tag status-released">已上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -471,7 +473,7 @@
               <span class="source-tag source-b">B</span>
               <span class="card-domain">AR-VR/显示/音频/SoC</span>
               <span class="stars">★★★★★</span>
-              <span class="status-tag status-coming">已上市</span>
+              <span class="status-tag status-released">已上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -505,7 +507,7 @@
               <span class="source-tag source-b">B</span>
               <span class="card-domain">AR-VR/SoC/电池/摄像头</span>
               <span class="stars">★★★★</span>
-              <span class="status-tag status-coming">已上市</span>
+              <span class="status-tag status-released">已上市</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -539,7 +541,7 @@
               <span class="source-tag source-a">A</span>
               <span class="card-domain">无线充/认证</span>
               <span class="stars">★★★★★</span>
-              <span class="status-tag status-coming">已发布</span>
+              <span class="status-tag status-released">已发布</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -573,7 +575,7 @@
               <span class="source-tag source-a">A</span>
               <span class="card-domain">无线充/认证</span>
               <span class="stars">★★★★</span>
-              <span class="status-tag status-coming">进行中</span>
+              <span class="status-tag status-progress">进行中</span>
             </div>
           </div>
           <span class="card-toggle">▼</span>
@@ -1011,7 +1013,7 @@
               <span class="source-tag source-a">A</span>
               <span class="card-domain">无线充/无线通信</span>
               <span class="stars">&#9733;&#9733;&#9733;&#9733;</span>
-              <span class="status-tag status-coming">进行中</span>
+              <span class="status-tag status-progress">进行中</span>
             </div>
           </div>
           <span class="card-toggle">&#9660;</span>
