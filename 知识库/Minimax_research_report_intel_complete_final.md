@@ -1,0 +1,570 @@
+# 智能终端硬件架构岗 · 技术情报体系与方法论（完整版）
+
+> **用途**：日常跨领域情报采集 + 趋势信号识别 + 去噪标准化 + 研究方向判定，最终输出给老板的「研究技术方案」
+> **闭环**：渠道采集（多领域多源）→ 信号识别（去噪分级聚类）→ 方向判定（矩阵）→ 方案输出。
+
+> **文档所有者**：硬件架构经理
+> **核心任务**：TMG 课题立项 + 招投标技术支撑 → 形成差异化卖点 + 技术壁垒 → 提升产品竞争力
+
+> **产品形态覆盖（7 类智能终端）**：平板 / 手机 / 智能手表 / AR-VR 眼镜 / 无线充 / 智能音箱 / 笔记本电脑
+> **每日采集量**：30 条（国内 15 + 国际 15）
+> **搜索窗口**：90 天（优先近 7 天，扩展到 90 天）
+> **去重窗口**：14 天
+
+---
+
+## 第一部分：信息渠道清单（从哪里采）
+
+### 采集铁律
+
+- **分层采信，不一刀切**：
+  - **一手层（A/B 级）**：OEM 官方公告、认证数据库、专利/标准文档、专业拆解（BOM 级）—— 直接采信，可对外引用
+  - **二手层（E/F 级）**：公众号聚合、爆料社区、供应链匿名消息 —— 入 watchlist 待印证，印证后升级到 C/D
+  - **G 级半实名爆料**：微博/小红书数码博主 —— 入 watchlist 限定 7 天，2 印证升级
+- **每条必可溯源**：引用时注明 URL/数据库编号/专利号/认证 ID，老板和招投标评委可自行核验
+- **覆盖五层**：官方公告 → 认证强制披露 → 专业拆解 → 权威评测 → 供应链/渠道数据
+- **竞品信号必交叉验证**：同一参数至少从两个独立源确认（官方 + 认证/拆解优先）
+
+---
+
+### 1. 微信公众号（每日扫读、抓首发与产业快讯）
+
+| 账号 | 信号类型 | 定位 | 用法 |
+|------|----------|------|------|
+| 小白测评 | 跑分首发 | 性能跑分实测首发 | 新机 SoC/屏幕/续航横评 |
+| iMobile 爱科技 | 曝光参数 | 平板新机曝光参数 | 掌握 Y700、红米等规格与节奏 |
+| 数码科技通 / 玩尽新机 | 横评 | 平板横评对比 | 华为 vs 苹果等直接对比 |
+| 科技美学 | 产业榜单 | 出货排行与新机汇总 | 季度榜单、新品前瞻（给老板概览） |
+| 笔吧评测室 | 横评 | PC/Windows 平板二合一 | 生产力场景对标 |
+| eWiseTech（微测） | 拆解 | 专业拆解 | BOM 与器件识别，竞品硬件方案核心源 |
+| 群智咨询 / CINNO | 产业 | 显示与半导体产业 | OLED 渗透、面板价格风向 |
+| 半导体行业观察 / 集微网 / 电子工程专辑 | 产业 | SoC/供应链/元件 | 预判竞品芯片路线、国产器件占比 |
+| 第一财经 | 产业 | OLED 平板等产业新闻 | 趋势佐证 |
+| 充电头网 | 拆解 | 充电器/电池/线缆拆解首发 | 电芯型号、容量、快充协议一手数据 |
+| 雷科技 | 评测 | 数码新品首发评测 | 新机开箱、硬件规格快报 |
+| 超能网 | 深度 | 硬件架构深度分析 | SoC/GPU 架构剖析、散热方案对比 |
+
+### 2. 中文网站 / 社区 / 电商（竞品规格、口碑、渠道）
+
+| 站点 | URL | 用法 |
+|------|-----|------|
+| 快科技·平板评测室 | hardware.mydrivers.com/pingbanpingce.html | 平板首发评测最密、硬核跑分 |
+| 中关村在线·平板 | pad.zol.com.cn | 参数库+跑分，竞品横向对比 |
+| 太平洋电脑网·平板 | pad.pconline.com.cn | 常引 IDC 出货，看份额趋势 |
+| IT之家·评测室 | ithome.com | AI/屏幕/生态体验评测 |
+| CFM 闪存市场 | chinaflashmarket.com | 存储实时报价，可估平板 BOM |
+| 京东 / 天猫商品页 | jd.com / tmall.com | 一手销量、评价、痛点 |
+| 魔镜洞察 / 鲸参谋 | mktindex.com 等 | 在线零售销售额/均价，量化竞品 |
+| 酷安 / 什么值得买 / 贴吧平板吧 | coolapk.com 等 | 用户真实反馈与一线诉求 |
+| 中国政府采购网 / 中央政府采购网 | ccgp.gov.cn / zycg.cn | 教育/政企集采，渠道渗透 |
+| 充电头网 | chongdiantou.com | 充电器/电池专业拆解，BOM 级器件识别 |
+| 超能网 | expreview.com | 硬件架构深度评测，SoC/GPU/散热方案 |
+| 国际电子商情 | esmchina.com | 电子供应链行情、元器件交期与价格 |
+| 52RD | 52rd.com | 手机/平板硬件设计社区，竞品方案讨论 |
+| 摩尔精英 | moore.ren | 芯片供应链、IP/设计服务生态 |
+
+### 3. 国际网站 / 拆解 / 供应链（全球趋势、BOM、硬核实测）
+
+| 站点 | URL | 用法 |
+|------|-----|------|
+| The Verge / Engadget | theverge.com / engadget.com | 新品评测、CES/MWC 汇总 |
+| NotebookCheck | notebookcheck.net | 屏幕/性能/续航硬核实测，直接横评 |
+| Phoronix | phoronix.com | SoC/CPU/GPU 硬核实测（替代已停刊的 AnandTech） |
+| Tom's Hardware | tomshardware.com | PC/平板硬件横评，散热/功耗专项；已并入原 AnandTech 团队 |
+| Ars Technica | arstechnica.com | 科技深度报道，新品架构解析 |
+| GSMArena | gsmarena.com | 竞品参数快拉表 |
+| TechInsights（BOM/Teardown） | techinsights.com | 量化竞品 BOM 与供应商（付费） |
+| iFixit | ifixit.com/Teardown | 免费拆解图与器件布局 |
+| Counterpoint（含 DSCC） | counterpointresearch.com | 平板/OLED 出货与份额最全 |
+| Omdia / UBI Research | omdia.tech.informa.com 等 | 面板出货与 OLED 渗透 |
+| TrendForce（含 WitsView 业务） | trendforce.com | 月度面板价格与出货（已合并原独立 WitsView 频道） |
+| Yole Group | yolegroup.com | 器件/封装/MEMS/光伏深度报告（付费+免费摘要） |
+| SemiAnalysis | semianalysis.com | 半导体产业战略与代工/AI 芯片分析 |
+| Bloomberg Tech / The Information | bloomberg.com / theinformation.com | 企业战略、并购、人事变动 |
+| Qualcomm / MediaTek / 海思 | 官网 | SoC 路线图与参考设计 |
+| USB-IF / MIPI / Wi-Fi 联盟 / BT SIG | 官网 | 接口与连接规范演进 |
+| FCC 官方授权库 | fcc.gov/oet/ea/fccid | 竞品无线频段/认证/内部照片（最硬一手，替代 fccid.io 第三方） |
+| CNIPA / USPTO / WIPO PATENTSCOPE / Lens.org | cnipa.gov.cn / uspto.gov / patentscope.wipo.int / lens.org | 竞品专利前置预警，四库互补，免费直连 |
+| Android Authority | androidauthority.com | Android 平板生态一手评测 |
+| DisplayMate | displaymate.com | 显示面板评测权威，色准/亮度硬数据 |
+| DxOMark | dxomark.com | 影像/音频/电池/显示标准化测试 |
+
+### 3-bis. 日本信源（日文搜索，覆盖日系厂商与供应链）
+
+| 站点 | URL | 覆盖 | 用法 |
+|------|-----|------|------|
+| ITmedia | itmedia.co.jp | 综合科技新闻 | 平板/SoC/面板新品发布与评测 |
+| ファミ通.com / 4Gamer | 4gamer.net | 游戏与硬件 | 平板游戏性能评测、SoC 跑分 |
+| 日本経済新聞 | nikkei.com | 产业与财经 | 半导体供应链、日企战略动态 |
+| Impress Watch | impress.co.jp | 数码评测 | 平板/显示/音频硬件评测 |
+| moba.watch | moba.watch | 移动设备情报 | 新机规格前瞻 |
+| Sony 官方 | sony.com | 索尼产品与技术 | 传感器、显示、音频器件 |
+| Sharp 官方 | sharp.com | 夏普面板与器件 | IGZO 面板、传感器 |
+| Panasonic 官方 | panasonic.com | 电池与器件 | 电芯、MLCC、传感器 |
+| JDI（Japan Display） | j-display.com | 中小尺寸面板 | LCD/OLED 面板出货 |
+| 村田 Murata | murata.com | MLCC/电感/通信模块 | 被动器件、通信模组 |
+| TDK | tdk.com | 电感/电池/传感器 | 电芯、被动器件方案 |
+| Kyocera | kyocera.com | 陶瓷封装/器件 | 半导体封装、结构件 |
+
+### 3-ter. 韩国信源（韩文搜索，覆盖韩系厂商与供应链）
+
+| 站点 | URL | 覆盖 | 用法 |
+|------|-----|------|------|
+| ETNews（电子新闻） | etnews.com | 半导体/显示产业 | Samsung/LG/SK 动态最权威 |
+| The Elec | thelec.kr | 显示与半导体深度 | OLED/面板供应链独家 |
+| Digital Times | dt.co.kr | 科技产业新闻 | 平板/手机新品与供应链 |
+| Seoul Economic Daily | sedaily.com | 财经与产业 | 日韩企业战略动态 |
+| Samsung 官方 | samsung.com | 三星产品与技术 | Galaxy Tab、Exynos、面板 |
+| Samsung Display | samsungdisplay.com | OLED 面板 | Tandem OLED、LTPO 面板出货 |
+| Samsung SDI | samsungsdi.com | 电池 | 硅碳负极、高密度电芯 |
+| LG Display | lgdisplay.com | OLED/LCD 面板 | IT OLED 面板路线 |
+| LG Energy Solution | lgenergy.com | 电池电芯 | 高密度电芯方案 |
+| SK hynix | skhynix.com | 存储/DRAM/NAND | LPDDR/UFS 供应动态 |
+
+### 3-bis. 爆料/社区层（分级 E/G）
+
+> 9to5Mac / MacRumors / SamMobile / XDA 严格说是爆料/技术社区，从国际网站表移出，单列分级为 E（2 印证升级）。
+> 微博/小红书半实名爆料列为 G 级（限定 7 天升级窗口）。
+
+| 站点 | URL | 用法 | 分级 |
+|------|-----|------|------|
+| 9to5Mac | 9to5mac.com | iPad 前置情报、供应链爆料 | E |
+| MacRumors | macrumors.com | iPad/Apple 新品爆料 | E |
+| SamMobile | sammobile.com | 三星平板/手机固件与规格 | E |
+| XDA Developers | xda-developers.com | Android 内核/驱动/性能深度 | E |
+| 微博数码话题 / 小红书数码博主 | weibo.com / xiaohongshu.com | 早期信号、用户实拍 | G（半实名，7 天升级窗口） |
+
+### 4. 行业报告 / 专利标准（给老板呈现的权威出处）
+
+| 机构 | URL | 内容 | 获取方式 |
+|------|-----|------|----------|
+| IDC | idc.com | 全球平板季度出货/份额 | 新闻稿免费，Tracker 付费 |
+| Counterpoint / Omdia / Canalys | 对应官网 | 出货与品牌份额 | 摘要免费 |
+| 洛图科技 RUNTO | runto.com.cn | 国内线上份额、学习平板 | 新闻稿免费 |
+| 群智 / CINNO | sigmaintell.com / cinn.cn | 面板价格风向 | 部分免费 |
+| 信通院 CAICT | caict.ac.cn | 智能终端蓝皮书（政策背书） | 免费 |
+| TrendForce / DRAMeXchange | trendforce.com | 存储与面板价格 | 快讯免费 |
+| 智慧芽 / Incopat | zhihuiya.com 等 | 竞品专利族对比 | 企业付费 |
+| 36氪 / 亿欧 / 甲子光年 | 对应官网 | 竞品公司动态 | 部分免费 |
+| arXiv / Google Scholar | 对应官网 | 前瞻技术（Micro LED 等） | 免费 |
+
+### 5. 标准认证数据库（一手强制披露，最硬证据）
+
+| 数据库 | URL | 可获取信息 | 用法 |
+|--------|-----|-----------|------|
+| Bluetooth SIG Launch Studio | launchstudio.bluetooth.com | 竞品蓝牙模块型号/芯片/认证日期 | 搜竞品名称，看 BT 版本与芯片 |
+| Wi-Fi Alliance Certification | wi-fi.org/product-finder | 竞品 Wi-Fi 芯片/频段/协议支持 | 搜竞品型号，确认 Wi-Fi 7/8 落地 |
+| USB-IF Product Search | usb.org/products | Type-C/PD 认证、功率等级 | 验证竞品快充协议 |
+| VESA DisplayHDR | displayhdr.org | 竞品屏幕 HDR 认证等级 | 屏幕参数独立验证 |
+| PCI-SIG Integrators List | pcisig.com | 竞品 PCIe 版本/通道数 | 内部互联带宽推测 |
+| JEDEC 标准 | jedec.org | LPDDR/UFS 最新规范 | 判断竞品内存/存储代际 |
+| WPC Qi 认证 | wirelesspowerconsortium.com | 竞品无线充电功率 | Qi2 落地追踪 |
+| NFC Forum Certification | nfc-forum.org | 竞品 NFC 功能认证 | NFC 规格验证 |
+| 工信部进网管理 | jwxk.miit.gov.cn | 国内上市平板入网参数 | 3C 之外的第二道强制披露 |
+| 国家无线电管理 | srrc.org.cn | 无线发射设备型号核准 | Wi-Fi/BT/NFC 频段参数 |
+| USI Certified Products | usi.org/certified-products | 竞品主动笔 USI 协议版本与互操作性 | 笔协议技术对标 |
+| Wacom EMR/AES 合作伙伴 | developer.wacom.com | EMR/AES 授权厂商与产品列表 | 竞品笔技术路线溯源 |
+
+### 6. 芯片/器件厂商官方一手源
+
+| 厂商 | 覆盖 | URL/渠道 | 用法 |
+|------|------|---------|------|
+| 高通 Qualcomm | SoC/Modem/Wi-Fi | qualcomm.com/products | 参考设计、芯片规格书、路线图 |
+| 联发科 MediaTek | SoC/Modem/Connectivity | mediatek.com/products | Dimensity/Kompanio 平板芯片 |
+| 紫光展锐 Unisoc | 中低端平板 SoC | unisoc.com | 国产替代方案跟踪 |
+| 京东方 BOE | IT OLED/LCD 面板 | boe.com | 面板量产公告、技术路线 |
+| 华星光电 CSOT | 大尺寸 IT 面板 | szcsot.com | Tandem OLED 等新品 |
+| 天马 Tianma | 中小尺寸 LCD/OLED | tianma.com | 平板面板出货 |
+| 维信诺 Visionox | OLED 面板 | visionox.com | 国产 OLED 渗透 |
+| 汇顶科技 Goodix | 触控/指纹/音频 | goodix.com | 触控 IC、主动笔方案 |
+| 瑞声科技 AAC | 扬声器/线性马达/光学 | aactechnologies.com | 音频/振动硬件方案 |
+| 歌尔股份 Goertek | 声学/光学/VR 代工 | goertek.com | 代工格局与产能 |
+| 豪威 OV/韦尔股份 | CIS 图像传感器 | ovt.com | 平板前摄/后摄方案 |
+| 宁德新能源 ATL | 聚合物锂电池 | atlbattery.com | 硅碳负极、高密度电芯 |
+| 欣旺达 Sunwoda | 消费电子电池 | sunwoda.com | 电芯方案与客户 |
+| 德赛电池 | 电池封装/PACK | desaybattery.com | 平板电池供应链 |
+| Wacom | 手写笔 EMR/AES/Multi-Touch | wacom.com | 笔协议授权、合作伙伴、技术路线 |
+| 敦泰 FocalTech | 触控 IC/主动笔方案 | focaltech.com | 平板触控+手写笔主控 |
+| 奕力 ILITEK | 触控与显示驱动整合(TDDI) | ilitek.com | 平板 TDDI+主动笔方案 |
+| 汉王 Hanvon | 电磁笔/手写识别 | hanvon.com | 国产主动笔方案 |
+
+### 7. 学术/顶会一手源（前瞻技术预判）
+
+| 来源 | URL | 用法 |
+|------|-----|------|
+| ISSCC | isscc.org | 芯片/SoC 最新架构年度首发 |
+| SID Display Week | sid.org | 显示技术年度风向标 |
+| IEEE Xplore | ieeexplore.ieee.org | 通信/电源/传感器/天线论文 |
+| Nature Electronics | nature.com/natelectron | 前沿器件（二维材料/神经形态等） |
+| ACM Digital Library | dl.acm.org | HCI/交互/嵌入式系统 |
+| VLSI Symposium | vlsisymposium.org | 与 ISSCC 互补的芯片顶会 |
+| SPIE | spie.org | 光学/影像/AR/VR 深度 |
+
+### 8. 竞品官方一手公告
+
+| 厂商 | 核心频道 | 盯什么 |
+|------|---------|--------|
+| Apple | apple.com/newsroom + developer.apple.com | iPad 新品发布、M 系列芯片、WWDC |
+| 三星 | news.samsung.com | Galaxy Tab、Exynos、display 技术 |
+| 华为 | consumer.huawei.com + 花粉论坛 | 麒麟芯片、鸿蒙生态、平板策略 |
+| 小米/红米 | mi.com + 小米社区 | Pad 系列新品、澎湃 OS |
+| 荣耀 | honor.com | 平板系列技术路线 |
+| 联想 | lenovo.com | Y700 游戏平板、ThinkPad X1 Tablet |
+| OPPO/vivo | oppo.com / vivo.com | Pad 产品线拓展节奏 |
+
+### 9. 平板附件/配件专用源（手写笔、键盘、保护壳等）
+
+| 来源 | URL | 覆盖 | 用法 |
+|------|-----|------|------|
+| USI (Universal Stylus Initiative) | usi.org | 主动笔互联协议标准 | 查 USI 2.0 认证产品、协议演进 |
+| Wacom EMR/AES | developer.wacom.com | 电磁笔/主动电容笔技术方案 | 三星 S Pen/华为 M-Pencil 等底层技术溯源 |
+| Microsoft Pen Protocol (MPP) | aka.ms/pen-compatibility | 微软主动笔协议 | Surface Pen 和平板兼容笔方案 |
+| Logitech | logitech.com | 平板键盘/保护壳/笔 | Combo Touch/Slim Folio 等方案 |
+| Brydge | brydge.com | 高端平板铝合金键盘 | iPad Pro/Galaxy Tab 键盘方案 |
+| ZAGG | zagg.com | 键盘保护套 | Pro Keys/Rugged Book 等 |
+| 数字尾巴 | dgtle.com | 数码配件评测 | 笔/键盘/壳横向体验对比 |
+| iFixit（附件拆解） | ifixit.com/Teardown | Apple Pencil/Magic Keyboard 拆解 | 笔内部传感器/电池/芯片识别 |
+| 京东/天猫配件销量榜 | jd.com / tmall.com | 第三方笔/键盘/壳销量与评价 | 用户真实痛点提取 |
+| Apple Pencil 专利族 | uspto.gov / cnipa.gov.cn (+ Apple) | 笔悬停/触觉反馈/磁吸充电 | 竞品笔功能前瞻（双指捏合等） |
+| 华为 M-Pencil 技术 | consumer.huawei.com + 专利检索 | 星闪/低延迟/压感 | 笔技术路线对标 |
+| Paperlike | paperlike.com | 类纸膜/屏幕保护 | 书写手感优化方向 |
+
+---
+
+## 第二部分：跨领域采集分类表（锁死领域不漏项）
+
+> **优先级**：P0 每日 / P1 每周 / P2 双周
+
+> **七维标签**：每领域映射七维标签 → 技术趋势 ｜ 行业风向 ｜ 材料工艺 ｜ 预认证(FCC/3C) ｜ 标准(USB-IF/MIPI 等) ｜ 专利 ｜ 竞品映射（属性）
+
+| 领域 | 优先级 | 关键突破方向 | 关键标准/组织 | 重点信号源 |
+|------|--------|-------------|-------------|-----------|
+| 系统级 SoC | P0 | **2nm/1.4nm GAA，3nm 仍为 FinFET**、端侧 AI NPU、Chiplet | TSMC、**UCIe**（Universal Chiplet Interconnect Express）| 代工路线图·ISSCC |
+| 端侧 AI / OS 生态 | P0 | 端侧 LLM、跨设备协同、AI 算力 TOPS、NPU IP | MLPerf、ONNX、Khronos | 苹果/华为/高通发布会、WWDC、HDC |
+| OLED/IT 显示 | P0 | Tandem 双层串联、LTPO、IT OLED 大尺寸化、Micro LED | SID、VESA、DSCC | 拆解·SID·供应链 |
+| DDIC/TDDI | P0 | Ram-less DDIC、AMOLED TDDI | VESA、MIPI | 供应链·拆解 |
+| 电池快充 | P0 | 硅碳负极、100W+、GaN | **USB-IF PD3.2 EPR（240W）**、WPC Qi2、UFCS 融合 | 拆解·预认证·标准 |
+| 散热 | P0 | VC 均热板、石墨烯、相变 PCM、主动散热 | JEDEC | 拆解·热成像 |
+| 通信互联 | P0 | Wi-Fi 7/8、BT LE Audio、UWB、星闪 | Wi-Fi 联盟、BT SIG、3GPP、星闪联盟 | 标准·认证 |
+| 影像/光学 | P1 | 潜望长焦、计算光学、大底 | MIPI CSI-2、3GPP | 拆解·样张·专利 |
+| 智能眼镜 XR | P1 | Micro LED+光波导、轻量化 | OpenXR、**UCIe** | CES·顶会 |
+| 结构交互 + 轻量化材料 | P1 | 主动笔/悬停、全域磁吸键盘、铰链、**钛合金/镁基/碳纤** | USB-IF、USI、Wacom、ASTM、ISO | 拆解·专利 |
+| 附件(笔/键盘/壳) | P1 | USI/EMR/AES/MPP 多协议演进、压感/延迟/悬停/触觉反馈、磁吸键盘转轴与连接器、类纸膜/抗蓝光、第三方生态 | USI、Wacom、USB-IF、MPP | 竞品发布·拆解·认证·专利·用户评价 |
+| 音频 | P1 | 空间音频、扬声器阵列、骨传导 | Dolby、IEC | 拆解·DxoAudio |
+| 功耗/PMIC | P1 | 端侧 AI 能效、电源岛 | JEDEC、IEEE | 发布·评测 |
+| 生物识别 | P1 | 屏下指纹、3D 结构光、TOF 人脸 | FIDO、IEEE | 拆解·专利 |
+| 卫星通信 / UFCS | P1 | 平板直连卫星、UFCS 融合快充 | 3GPP NTN、UFCS 工作组 | 华为/苹果发布、3GPP |
+| 平板整机 | P1 | OLED 渗透、AI 平板、折叠 | DSCC、Counterpoint | 竞品发布·拆解 |
+| 手机/可穿戴 | P1 | 折叠屏旗舰、钛合金、折叠铰链 | 同上 | 竞品发布·拆解·认证 |
+| 智能手表 | P1 | 3nm SoC、蓝宝石屏、ECG/SpO2 | Qualcomm/Wearable | 竞品发布·拆解 |
+| AR-VR 眼镜 | P1 | Micro-OLED、光波导、空间计算 | XREAL/雷鸟/Meta | CES·顶会·发布 |
+| 无线充电 | P1 | Qi2.2 磁吸 25W、WPC 认证 | WPC | 认证·标准·供应链 |
+| 智能音箱 | P1 | 端侧 AI/NPU、UWB、Matter | Google/小米/天猫 | 竞品发布·拆解 |
+| 笔记本电脑 | P1 | AI PC NPU TOPS、Copilot+、OLED | Qualcomm/Intel/AMD | 竞品发布·拆解 |
+| 电芯/充电器/传感器/天线 | P2 | 高密度电芯、GaN、dToF、空间音频、mmWave | IEC/USB-IF/MIPI/3GPP | 拆解·认证·论文 |
+| 可维修性 / 环保 | P2 | 模块化电池、欧盟 Right to Repair、回收材料 | IEC、欧盟 CE | 法规·拆解·公告 |
+
+### 采集技术维度（16 项对标清单）
+
+> **用途**：情报采集和竞品对标时，按此 16 项维度逐项收集参数，确保硬件方案无遗漏。
+> 每条情报至少对应其中 1 项维度，每日 30 条尽量覆盖 12+ 个不同维度，7 类产品中至少覆盖 5 类。
+
+| 序号 | 技术维度 | 采集要点 |
+|------|---------|---------|
+| ① | SoC型号+制程+跑分 | 芯片型号、工艺节点、安兔兔/Geekbench 跑分、NPU TOPS |
+| ② | 屏幕类型+分辨率+刷新率+亮度 | OLED/LCD/Tandem、分辨率 PPI、刷新率 Hz、峰值亮度 nits |
+| ③ | 电池类型+充电（协议、功率等） | 硅碳/聚合物电芯、容量 mAh、PD/UFCS/Qi2 协议、功率 W |
+| ④ | 散热架构 | VC 均热板面积、石墨烯、相变 PCM、主动风扇 |
+| ⑤ | 无线传输（5G/WIFI/星闪/UWB/NBIOT/卫星等） | 5G NR、Wi-Fi 7/8、星闪、UWB 测距、卫星通信、NB-IoT |
+| ⑥ | 音频（音腔、喇叭、麦克风、功放、架构等） | 扬声器数/品牌、音腔体积、麦克风阵列、功放 IC、空间音频 |
+| ⑦ | 摄像头传感器 | CMOS 型号/品牌、像素、传感器尺寸、光学防抖、计算摄影 |
+| ⑧ | 尺寸+重量+材质+防护 | 机身尺寸 mm、重量 g、钛/铝/镁合金、IP 等级、康宁大猩猩 |
+| ⑨ | 传感器（加速度、陀螺仪、IMU、TOF、雷达等） | 6 轴 IMU、dTOF/iTOF、激光雷达、结构光、环境光/距离 |
+| ⑩ | 手写笔+键盘方案(平板) | 协议(USI/EMR/AES/MPP)、压感级数、延迟 ms、磁吸充电、键盘转轴 |
+| ⑪ | 生物识别方案 | 屏下指纹/侧边指纹、3D 结构光/TOF 人脸、虹膜 |
+| ⑫ | AI应用+多系统 | NPU 算力 TOPS、端侧大模型、跨设备协同、多窗口/多桌面 |
+| ⑬ | 马达 | 线性/转子、尺寸、振感反馈精度 |
+| ⑭ | 折叠 | 折叠形态(左右/上下/三折/卷轴)、铰链方案、弯折半径 |
+| ⑮ | 电池管理 | BMS 芯片、电量计、充电 IC、热管理策略 |
+| ⑯ | MCU应用 | 嵌入式控制器、协处理器、触控 IC、TDDI |
+
+---
+
+## 第三部分：趋势信号识别（哪些是真信号）
+
+### 框架选型
+
+- **定立项节奏** → Gartner Hype Cycle
+- **定导入时机** → TRL（<4 预研、5–6 工程验证、≥7 机型导入）
+- **看替代窗口** → S 曲线
+- **找机会白地** → 专利组合分析
+- **抓早期先兆** → STEEP 弱信号
+
+### 预认证 = 最硬信号（上市前 1–6 月强制披露）
+
+- **FCC**（fccid.io）：暴露电池/充电/频段/内部照片
+- **中国 3C/CQC**（CNCA-C09-02:2025）：暴露电芯容量
+- **CE/TÜV**：泄露天线与 SAR
+
+> **实例**：Galaxy Tab A9+ FCC 曝 7040mAh+15W；小米 17T 曝 6360mAh+100W+Wi-Fi 7。
+
+### 识别管线
+
+| 环节 | 输出 | 判断标准 |
+|------|------|---------|
+| 采集→去重 | 唯一事件集 | 同事件多源归并（**以"参数指纹+品牌+代次"为主键**，同一参数 5 源合并为 1 条）|
+| 信源分级 | A–G 级 | 见第四部分 |
+| 信号提取 | 信号卡 | 含 ≥1 硬参数才算信号 |
+| 趋势聚类 | 趋势簇 | 同簇 ≥3 独立信号或跨 2 竞品 |
+| 方向判定 | 优先级+路径 | Hype Cycle+TRL+能力缺口 |
+| 方案生成 | 立项书 | 目标/资源/里程碑/owner |
+
+> **信号归一化规则**：以"参数指纹 + 品牌 + 代次"为主键做去重。
+> 例：电池容量 7040mAh 出现在 ① FCC 文档 ② 充电头网拆解 ③ 数码闲聊站爆料 → 合并为 1 条信号，证据源数 = 3。
+
+---
+
+## 第四部分：去噪与标准化
+
+### 信源分级 A–G
+
+> **注**：每日自动化日报使用简化映射 A-E（F 匿名→直接过滤，G 半实名→映射到 E 并设 7 天印证窗口）。本表为方法论完整定义。
+
+| 级别 | 类型 | 策略 | 自动化映射 |
+|------|------|------|-----------|
+| **A** | 认证/标准/官方/财报 | 直接采信 | A |
+| **B** | 专利/监管（CNIPA/USPTO/ETSI） | 直接采信，标号 | B |
+| **C** | 权威媒体/评测（The Verge、Counterpoint） | 可采信，需印证 | C |
+| **D** | 普通媒体/供应链消息 | 线索，标"待证实" | D |
+| **E** | 爆料/社群（9to5Mac、MacRumors、SamMobile、XDA） | 入 watchlist，2 印证升级 | E |
+| **F** | 匿名无出处 | 隔离 | 过滤淘汰 |
+| **G** | 半实名爆料（微博/小红书） | 限定 7 天，2 印证升级到 E/D | → E（7天窗口） |
+
+### 铁律
+
+- 趋势信号须 **≥2 个独立源印证**，否则进 **watchlist**（待证伪清单，设复核日，到期未印证则降级/归档）
+- 每条带采集时间+有效窗口（**芯片规格 90 天 / 预认证 90 天 / 传闻 14 天 / 营销话术 7 天**），超期标"旧闻"
+
+### 情报条目模板（14 字段，每条必填）
+
+> **注意**：看板卡片头部另含 badges 区域，展示信源等级标签(A-E)、技术维度标签、星级(★)和上市状态标签（即将上市=蓝色标签 / 已上市=不显示标签），不占用 14 字段名额。
+
+| 字段 | 说明 |
+|------|------|
+| 信号类型 | 产品发布/监管认证/拆解/爆料/产业新闻/标准认证 |
+| 信源等级 | A(官方/认证) / B(科技媒体一线) / C(行业垂媒) / D(普通媒体) / E(爆料/社群) |
+| 印证源数 | 独立信源数量 |
+| 关键参数 | 核心技术参数/规格 |
+| 技术特性 | ① ② ③ 编号列出技术亮点 |
+| 为什么重要 | 对智能终端行业的战略/竞争/供应链意义 |
+| 智能终端关联点 | 与智能终端硬件架构的直接关联（芯片/屏幕/电池/结构/附件/认证/供应链） |
+| 厂商/型号 | 相关厂商名称与具体产品型号 |
+| 时间 | 发布/认证/拆解日期 |
+| URL | 至少 1 个可溯源链接，且已验证可正常打开（不留死链） |
+| 信源明细 | 每个信源的名称和等级 |
+| 备注/待印证 | 需后续验证的信息（D/E 级在此标注 watchlist） |
+| 技术维度 | 从 16 项中选择（见第二部分采集技术维度表） |
+| 上市状态 | 即将上市（已通过认证/有明确发布日期）/ 已上市（已正式发布在售） |
+
+> **URL 可访问性铁律**：所有情报条目的来源 URL 必须能正常打开，打不开的不算信源。404/超时/重定向到无关页面/需登录才能查看的，整条过滤掉，用其他条目替换。不留死链，不存侥幸。
+
+---
+
+## 第五部分：研究方向判定（最终走哪条路）
+
+> **判定流程**：二维初筛（门槛） → 三维打分（排序） → 专利修正（闭环），三道关输出立项优先级。
+
+---
+
+### 第一关：二维矩阵初筛（定性门槛）
+
+- **横轴**：技术成熟度（Hype Cycle × TRL）
+- **纵轴**：战略匹配度（能力缺口 × 竞争压力 × 差异化）
+
+| 成熟度 | 匹配度 | 决策 | 说明 |
+|--------|--------|------|------|
+| 高 | 高 | **立即立项** | 机型导入 |
+| 高 | 中 | **预研 / POC** | 成熟技术适配场景，降维打击竞品 |
+| 高 | 低 | **仅监测** | 对我方无战略价值，关注竞品是否用 |
+| 中 | 高 | **预研 / POC** | 战略重地但技术有缺口，重点投入 |
+| 中 | 中 | **评估观望** | 进候选池，等待趋势信号进一步确认 |
+| 中 | 低 | **放弃** | — |
+| 低 | 高 | **长线跟踪** | 前瞻技术+战略高地，不进项目、专人 watch |
+| 低 | 中/低 | **放弃** | — |
+
+> 初筛通过（进入立项候选池）的方向，进入第二关三维打分排序。
+
+---
+
+### 第二关：三维打分模型（TMG 课题立项量化排序）
+
+初筛通过的候选方向，用以下四维模型打分排序，解决资源有限时优先投给谁的问题。
+
+| 维度 | 权重 | 子项 | 说明 |
+|------|------|------|------|
+| **技术壁垒** | **35%** | 能否形成独家卖点、构建专利/标准护城河、与竞品拉开代差 | TMG 立项核心目标 |
+| **业务价值** | 30% | 降本幅度、投标竞争力、需求真实度（场景痛点佐证） | 直接商业回报 |
+| **落地可行性** | 20% | 技术成熟度、供应链、资源周期、合规风险 | 预研阶段权重降低 |
+| **业务紧迫性** | 15% | 产品规划节点、重大投标、量产/技术卡脖子、法规更新 | 时间窗口 |
+
+> **综合得分** = 技术壁垒 × 0.35 + 业务价值 × 0.30 + 落地可行性 × 0.20 + 业务紧迫性 × 0.15（每项 1–5 分）
+
+#### 子项评分参考
+
+| 得分 | 技术壁垒 | 业务价值 | 落地可行性 | 业务紧迫性 |
+|------|---------|---------|-----------|-----------|
+| 5 | 能形成独家卖点，竞品 2 年内无法复刻 | 需求已被大客户/标书验证，显著降本 | TRL ≥ 7，供应链 ≥ 2 家可选，无合规障碍 | 下代旗舰/重点投标必备，本年度必须落地 |
+| 4 | 明显差异化，有专利/标准护城河雏形 | 差异化明显，有明确目标客户/场景 | TRL 5–6，供应链可控，合规路径清晰 | 未来 12 个月内关键节点 |
+| 3 | 与竞品持平或局部优化 | 与竞品持平或局部优化，需求一般 | TRL 4–5，供应链单一，合规需评估 | 规划内但可延后 |
+| 2 | 仅参数差异，无壁垒 | 仅成本微降或体验小改 | TRL 3–4，供应链待开发，合规有风险 | 2 年后才需要 |
+| 1 | 通用方案，无差异化可能 | 价值模糊，难以量化 | TRL < 3，供应链不可行，合规禁区 | 无明确时间压力 |
+
+---
+
+### 第三关：专利修正（闭环反馈）
+
+专利研判结果直接作为三维打分的加减分因子，形成闭环：
+
+| 专利信号 | 修正规则 | 影响维度 |
+|---------|---------|---------|
+| 我方已有专利储备 ≥ 3 族 | **技术壁垒 +0.5** | 技术壁垒 |
+| 我方无专利、竞品专利密集 | **技术壁垒 -0.5，紧迫性 +0.5** | 技术壁垒、业务紧迫性 |
+| 标准提案活跃（ETSI/3GPP 等） | **紧迫性 +0.5** | 业务紧迫性 |
+| 竞品近 2 年专利申请放缓 | **紧迫性 -0.5** | 业务紧迫性 |
+| 专利空白区（无竞品布局） | **技术壁垒 +0.3** | 技术壁垒（占位窗口） |
+
+> 修正后得分重新排序，输出最终优先级。
+
+#### 专利分析工具
+
+- CNIPA / USPTO / WIPO PATENTSCOPE / **Lens.org**（免费全球专利 + 引用图）按 **IPC+申请人** 做专利族去重（多库互补，均免费国内直连）
+- "专利密集 + 标准提案活跃" = 路线前兆
+- 对比苹果 / 华为 / 三星 / 高通的申请趋势与技术簇
+
+---
+
+### 优先级分级与资源匹配
+
+修正后的最终得分对应优先级：
+
+| 优先级 | 得分区间 | 定位 | 资源配置 |
+|--------|---------|------|---------|
+| **P0 核心立项** | ≥ 4.0 分 | 年度核心预研 | 全职人力 + 专项预算 + 供应链支持 |
+| **P1 常规预研** | 3.2–3.9 分 | 技术储备 + 优化 | 兼职人力 + 常规预算 + 原厂配合 |
+| **P2 轻量跟踪** | < 3.2 分 | 前瞻性摸底 | 1 人跟踪，无专项预算 |
+
+> **关于 P1 区间**：3.2–3.9 的 P1 区间集中资源给头部项目；3.0–3.1 之间的中等候选直接进 P2 轻量跟踪，避免资源被分散。
+
+#### 管理要求
+
+| 优先级 | 跟进节奏 |
+|--------|---------|
+| **P0** | 周度跟进 · 双周评审 |
+| **P1** | 双周跟进 · 月度评审 |
+| **P2** | 月度更新 · 季度复盘 |
+
+---
+
+## 第六部分：研究技术方案模板（给老板的最终交付）
+
+1. **背景与问题定义**：痛点与为何现在做
+2. **趋势信号汇总**：引用源 + 信源等级 + 置信度
+3. **竞品对标**：参数表（芯片/屏/电池/充电/接口/重量/散热），标 A–E
+4. **候选路线 ≥ 2 条**：TRL / 成本 / 风险 / 差异化 / 供应链可行性
+5. **推荐路线+依据**：用第五部分矩阵说明
+6. **预研/POC 计划**：目标/资源/里程碑/owner/时间窗
+7. **风险与待验证项**：watchlist
+8. **1 页呈现摘要**：结论先行（推荐路线 + 关键数据 + 所需决策）
+
+---
+
+## 第七部分：运转节奏
+
+### 每日：情报扫描（国内 15 条 + 国际 15 条）
+
+每日固定产出 30 条情报，覆盖 7 类智能终端产品形态（平板/手机/智能手表/AR-VR眼镜/无线充/智能音箱/笔记本电脑），按 14 字段模板记录（见第四部分），每条三问：
+
+```
+【编号】来源 ｜ 标题 ｜ 日期
+- 为什么重要？：对智能终端行业的战略/竞争/供应链意义
+- 技术特性：核心技术参数/规格/变化
+- 智能终端关联点：与智能终端硬件架构的直接关联（芯片/屏幕/电池/结构/附件/认证/供应链）
+```
+
+| 区域 | 条数 | 优先渠道 |
+|------|------|---------|
+| **国内** | 15 条 | 公众号首发 → 充电头网/超能网拆解 → CQC/3C 新过审 → 京东新品参数 → 供应链周报 → 智能手表/音箱/AR眼镜/笔记本专项 |
+| **国际** | 15 条 | FCC 新过审 → iFixit 拆解 → Phoronix/NotebookCheck/Tom's Hardware 评测 → 芯片厂官方新闻 → 认证数据库更新 → 日韩信源（etnews/itmedia/nikkei 等） |
+
+> 国际 15 条应覆盖日本、韩国、美国、欧洲等不同地区，不要只集中在某一国。
+
+> 每日情报上午 10:00 前完成采集，标注信源等级（A–E），A/B 级可直接对外引用。
+
+> **采集要求**：
+> - 按 16 项技术维度采集，每日 30 条尽量覆盖 12+ 个不同维度，7 类产品中至少覆盖 5 类
+> - 采集 35-40 条候选，用 WebFetch 逐一验证 URL 可访问性后筛到 30 条
+> - URL 打不开的（404/超时/需登录/内容已删）整条淘汰，用其他条目替换
+> - 去重窗口 14 天，读取历史日报条目标题，排除已覆盖条目
+> - 搜索窗口 90 天（优先近 7 天，扩展到 90 天）
+
+> **自动化部署**：
+> - 输出 HTML 看板到 `E:/AI相关/预研究/202608/03_输出/WB_YYYY-MM-DD_硬件看板.html`
+> - 更新索引页 `硬件日报入口.html`（最新一期 + 历史日报列表）
+> - `git push` 到 GitHub（Andy-wei0821/tablet-intel），GitHub Pages 自动更新
+> - 稳定 URL（永久不变）：https://andy-wei0821.github.io/tablet-intel/
+> - HTML 格式：内联 CSS + CSS 变量，禁止外部 CDN/Tailwind/Alpine.js
+> - 参照样例：WB_2026-08-07_硬件看板.html（30条/7类/90天/维度面板）
+> - 看板新增**技术维度覆盖面板**（4×4 网格，16 个维度 chip，绿底=有覆盖/灰底=无覆盖，顶部进度条显示覆盖率 X/16）
+
+### 每周：深度扫描 + 周报
+
+| 聚焦 | 动作 | 输出 |
+|------|------|------|
+| 认证/合规 | 扫 FCC/CQC/CE 本周新过审 | 竞品参数快报（48h 内出） |
+| 专利 | 竞品最新公开专利（苹果/华为/三星/高通） | 专利动向摘要 |
+| 竞品发布 | 本周新品/固件泄漏/代码仓库 | 竞品信息卡 |
+| 周报 | 整合每日情报 + 以上专项 | **竞品硬件参数周报**（老板看摘要页） |
+
+### 每月：趋势聚类 + 立项建议
+
+| 动作 | 输出 |
+|------|------|
+| 4 周每日情报 + 周报趋势聚类 | 趋势簇（同簇 ≥ 3 独立信号或跨 2 竞品） |
+| 按第五部分三道关排序 | **趋势优先级矩阵 + 方向立项建议**（核心汇报件） |
+| 回看 watchlist 超期项 | 降级/归档，清理过时信号 |
+
+### 每季：路线刷新 + 情景规划
+
+| 动作 | 输出 |
+|------|------|
+| 刷新技术路线图（Hype Cycle × TRL 更新） | 路线缺口与预案 |
+| 竞品路线推断（3/6/12 个月） | 竞品路线概率表 |
+| 供应链情报汇总 | 器件 roadmap + 产能风险 |
+
+---
+
+> **对外引用规则**：只用 A/B 级权威源（IDC、Omdia、洛图、信通院、FCC/3C、专利号）；C/D 级仅内部线索。每日情报中的 D 级源标注"待证实"，不纳入外部引用。
+
+---
+
+## 参考来源
+
+- Gartner Hype Cycle
+- TechInsights Teardown
+- FCC ID 数据库（含官方 fcc.gov 与第三方 fccid.io 互补）
+- CNCA-C09-02:2025 强制认证规则
+- WIPO 专利地图指南
+- ETSI SEP Landscape
+- IDC / Counterpoint / 洛图科技 RUNTO / 信通院 CAICT
+- JRC
+- ISSCC / SID / VLSI Symposium
+- Bluetooth SIG Launch Studio / Wi-Fi Alliance Certification
+- USB-IF / VESA / PCI-SIG / JEDEC / WPC / NFC Forum
+- Phoronix / Tom's Hardware / NotebookCheck / DisplayMate / DxOMark
+- 充电头网 / 超能网 / 国际电子商情
+- 高通 / MediaTek / 海思 / 京东方 / 华星光电 / 天马 / 维信诺
+- Lens.org（全球专利检索）
+- 紫光展锐 / 汇顶 / 瑞声 / 歌尔 / ATL / 欣旺达（国内供应链厂商）
+- Sony / Sharp / Panasonic / JDI / Murata / TDK / Kyocera（日本供应链厂商）
+- Samsung / Samsung Display / Samsung SDI / LG Display / LG Energy Solution / SK hynix（韩国供应链厂商）
+- ITmedia / Nikkei / ETNews / The Elec / Digital Times（日韩科技媒体）
