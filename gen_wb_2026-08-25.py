@@ -6,7 +6,7 @@
 - 单 HTML / 内联 CSS / 无 CDN / #card-N 锚点 / html{scroll-behavior:smooth}
 - 信源 A-E 级 | 1-5★ | 状态 coming(即将上市)/released(已上市)/progress(进行中)
 - 14 天去重窗 + 60 天搜索窗
-- 去重基线已排除：联想拯救者Y700无极/酷比魔方掌玩mini4/闪极Loomos/雷鸟iO/华为智能眼镜2/红魔游戏平板5 PRO/台电T70 Pro/荣耀平板X10 Pro Max/中柏EZpad Max15/荣耀Robot Phone/iQOO Neo11/华为WATCH GT7/REDMI Watch6/雷鸟V4/李未可X-AI/华为MateBook Pro/ThinkPad E13/YOGA Air14/红魔80W风冷/天猫精灵IN糖6/Samsung Tab S12/S12+/HP OmniPad12/Surface Pro12/Pixel11/11Pro/Garmin Enduro4/CIRQA/VITURE Pro2/Snap Specs/ROG Zephyrus Duo/Dell15/Pixelsnap/Belkin/Google Home Speaker 等
+- 去重基线已排除：联想拯救者Y700无极/酷比魔方掌玩mini4/闪极Loomos/雷鸟iO/华为智能眼镜2/红魔游戏平板5 PRO/台电T70 Pro/荣耀平板X10 Pro Max/中柏EZpad Max15/荣耀Robot Phone/iQOO Neo11/华为WATCH GT7/REDMI Watch6/雷鸟V4/李未可X-AI/华为MateBook Pro/ThinkPad E13/YOGA Air14/红魔80W风冷/天猫精灵IN糖6/Samsung Tab S12/S12+/HP OmniPad12/Surface Pro12/Pixel11/11Pro/Garmin Enduro4/CIRQA/VITURE Pro2/Snap Specs/ROG Zephyrus Duo/Dell15/Pixelsnap/Belkin/Google Home Speaker / 华为MatePadPro2026 / 小米平板8S Pro / Garmin Fenix9 等
 """
 
 DATE = "2026-08-25"
@@ -17,46 +17,46 @@ TITLE = f"智能终端硬件情报看板 · {DATE}（{WEEK}）"
 CARDS = [
     # ========== 国内 15 条 ==========
     {
-        "region": "cn", "status": "released",
-        "title": "华为 MatePad Pro 2026 发布",
-        "stars": 4, "source": "B", "date": "2026-08-20", "domain": "平板",
-        "url": "https://news.pconline.com.cn/2179/21798040.html",
-        "url_label": "太平洋电脑网：华为 MatePad Pro 2026",
-        "signal_type": "上市 / 发布",
-        "confirm_count": "2+（太平洋电脑网 / 华为官方）",
-        "key_params": "麒麟 T93（自研）/ 12 英寸柔性 OLED 144Hz / 4.70mm·439g / 10400mAh·66W / 鸿蒙 6.1 / ¥5699 起；08-20 发布",
+        "region": "cn", "status": "coming",
+        "title": "小米平板 9 预热",
+        "stars": 3, "source": "E", "date": "2026-08-10", "domain": "平板",
+        "url": "https://www.toutiao.com/article/7671903694006518316",
+        "url_label": "今日头条：小米平板 9 通过认证",
+        "signal_type": "入网 / 预热",
+        "confirm_count": "2+（3C 认证 / 数码闲聊站）",
+        "key_params": "骁龙8s Gen4 / 11.2″ 3.2K LCD 144Hz / 9720mAh·45W / 澎湃OS 4；9月发布 ¥2000-3000",
         "tech_features": [
-            "12 英寸柔性 OLED 144Hz，4.70mm 超薄 + 439g 轻量机身",
-            "麒麟 T93 自研芯片 + 鸿蒙 6.1 跨端协同",
-            "10400mAh 大电池 + 66W 快充",
-            "定位高端生产力平板，对标 iPad Pro"
+            "高通骁龙8s Gen4 中端旗舰平台",
+            "11.2 英寸 3.2K LCD，144Hz 自适应高刷",
+            "9720mAh 电池 + 45W 快充",
+            "澎湃OS 4.0，定位性价比走量款"
         ],
-        "why_important": "华为旗舰平板以自研芯片 + 超薄 OLED 巩固高端，是鸿蒙平板阵营标杆",
-        "terminal_relevance": "与华为手机 / 手表 / PC 鸿蒙多端协同，办公生态闭环",
-        "vendor": "华为（Huawei）", "model": "MatePad Pro 2026",
-        "sources": "太平洋电脑网、华为官方",
-        "remark": "具体处理器型号与售价以官方为准"
+        "why_important": "小米平板 9 以骁龙8s Gen4 + 45W 守住 2000-3000 元主流价位，走量机型",
+        "terminal_relevance": "与小米手机/汽车 HyperConnect 跨端协同",
+        "vendor": "小米（Xiaomi）", "model": "平板 9",
+        "sources": "今日头条、3C 认证数据库",
+        "remark": "参数源自认证+爆料，9月随数字旗舰发布，待官方确认"
     },
     {
-        "region": "cn", "status": "released",
-        "title": "小米平板 8S Pro 曝光",
-        "stars": 3, "source": "E", "date": "2026-08-19", "domain": "平板",
-        "url": "https://news.mydrivers.com/1/1141/1141179.htm",
-        "url_label": "驱动之家：小米平板 8S Pro",
-        "signal_type": "曝光 / 预热",
-        "confirm_count": "2+（驱动之家 / 微博爆料）",
-        "key_params": "玄戒 O3（自研 3nm）/ 12.5 英寸 3.2K LCD / 12000mAh·120W / 澎湃 OS4；08-19",
+        "region": "cn", "status": "coming",
+        "title": "小米平板 9 Pro 预热",
+        "stars": 3, "source": "E", "date": "2026-08-10", "domain": "平板",
+        "url": "https://www.toutiao.com/article/7671903694006518316",
+        "url_label": "今日头条：小米平板 9 Pro 通过认证",
+        "signal_type": "入网 / 预热",
+        "confirm_count": "2+（3C 认证 / 数码闲聊站）",
+        "key_params": "骁龙8 Elite Gen5 / 11.2″ 3.2K LCD 67W / 澎湃OS 4；9月发布 ¥3800-4500",
         "tech_features": [
-            "玄戒 O3 自研 3nm 旗舰芯",
-            "12.5 英寸 3.2K LCD 大屏",
-            "12000mAh 电池 + 120W 快充",
-            "澎湃 OS4 跨端"
+            "高通骁龙8 Elite Gen5 旗舰平台，安卓办公/绘画 APP 兼容性拉满",
+            "11.2 英寸 3.2K 护眼 LCD，LTPS 自适应刷新率",
+            "67W 快充 + 万毫安时级电池，温控温和",
+            "澎湃OS 4.0 平板桌面模式，外接键盘秒变轻办公本"
         ],
-        "why_important": "小米旗舰平板以自研芯 + 120W 快充冲击高性能平板",
-        "terminal_relevance": "与小米手机 / 汽车生态联动",
-        "vendor": "小米（Xiaomi）", "model": "平板 8S Pro",
-        "sources": "驱动之家",
-        "remark": "参数源自爆料，待官方确认"
+        "why_important": "小米平板 9 Pro 以骁龙旗舰 + 67W 补位 3500-4500 元中高端，对标华为/苹果",
+        "terminal_relevance": "与小米手机/汽车/家电 HyperConnect 跨端协同",
+        "vendor": "小米（Xiaomi）", "model": "平板 9 Pro",
+        "sources": "今日头条、3C 认证数据库",
+        "remark": "参数源自认证+爆料，9月随数字旗舰发布，待官方确认"
     },
     {
         "region": "cn", "status": "coming",
@@ -459,25 +459,25 @@ CARDS = [
         "remark": "印度市场特供"
     },
     {
-        "region": "intl", "status": "released",
-        "title": "Garmin Fenix 9 发布",
-        "stars": 5, "source": "A", "date": "2026-08-25", "domain": "智能手表",
-        "url": "https://www.smartwearables.io/blog/garmin-fenix-9-everything-we-know-so-far-release-date-specs-price",
-        "url_label": "Smart Wearables：Garmin Fenix 9",
-        "signal_type": "发布 / 上市",
-        "confirm_count": "2+（Smart Wearables / Garmin 官方）",
-        "key_params": "8-25 launch / $999 / AMOLED+MIP-Solar / tri-band GNSS；旗舰",
+        "region": "intl", "status": "coming",
+        "title": "COROS Vertix 新旗舰预热",
+        "stars": 4, "source": "C", "date": "2026-08-01", "domain": "智能手表",
+        "url": "https://watchesreviewed.com/coros-vertix-new-watch-teaser-utmb-2026/",
+        "url_label": "GPS Watches Reviewed：COROS Vertix 新旗舰预热",
+        "signal_type": "预热 / 曝光",
+        "confirm_count": "2+（COROS 官方预热 / 媒体爆料）",
+        "key_params": "预计 46/50mm 双尺寸 / AMOLED（或 MIP） / LED 手电 + 麦克风扬声器 / late-Aug UTMB 发布；Vertix 2S $599 起",
         "tech_features": [
-            "AMOLED + MIP-Solar 双显示",
-            "tri-band GNSS",
-            "$999 旗舰定价",
-            "8-25 发布，Fenix E2 / Enduro 4 同代"
+            "预计双尺寸 46mm / 50mm，补齐小腕围用户",
+            "有望首搭 AMOLED（或 MIP+AMOLED 双版本），对标 Garmin Fenix 8",
+            "新增 LED 手电 + 麦克风/扬声器（Voice Pins），补齐 Vertix 2S 短板",
+            "新一代处理器 + 118h GPS 续航基因，价格或 $649-699"
         ],
-        "why_important": "Garmin 旗舰运动表以双显示 + 三频 GNSS 巩固户外标杆",
-        "terminal_relevance": "与手机健康 App 深度联动",
-        "vendor": "Garmin", "model": "Fenix 9",
-        "sources": "Smart Wearables、Garmin 官方",
-        "remark": "具体电池 / 重量待官宣"
+        "why_important": "COROS Vertix 旗舰时隔多年大改，以 AMOLED+双尺寸+手电冲击 Garmin 耐力表霸主地位",
+        "terminal_relevance": "对标 Garmin Fenix/Enduro，主打超马/越野跑专业运动人群",
+        "vendor": "高驰（COROS）", "model": "Vertix（新旗舰）",
+        "sources": "COROS 官方、GPS Watches Reviewed",
+        "remark": "官方名/售价未定，预计 UTMB（8月底）亮相"
     },
     {
         "region": "intl", "status": "released",
@@ -671,11 +671,11 @@ DIMS = [
 
 # ── Top5 重点信号 ──
 TOP5 = [
-    {"rank": 1, "title": "Garmin Fenix 9", "dim": "智能手表", "stars": 5, "key": "A级+5★ / AMOLED+MIP-Solar 双显 / tri-band GNSS / $999"},
-    {"rank": 2, "title": "机械革命苍龙16 Ultra", "dim": "散热/液冷", "stars": 4, "key": "A级 / R9 9955HX3D + 外接水冷 + RTX5090"},
-    {"rank": 3, "title": "Garmin Venu 4", "dim": "智能手表", "stars": 4, "key": "A级 / 41mm AMOLED / 10天 / $549.99"},
-    {"rank": 4, "title": "Vuzix LX1", "dim": "AR/VR显示", "stars": 4, "key": "A级 / 企业智能眼镜 QCS4490 / >2000nits"},
-    {"rank": 5, "title": "Samsung Galaxy Tab A11+", "dim": "平板", "stars": 4, "key": "A级官方 / 11\" 90Hz / Dimensity 7300 / One UI 8"},
+    {"rank": 1, "title": "机械革命苍龙16 Ultra", "dim": "散热/液冷", "stars": 4, "key": "A级 / R9 9955HX3D + 外接水冷 + RTX5090"},
+    {"rank": 2, "title": "Garmin Venu 4", "dim": "智能手表", "stars": 4, "key": "A级 / 41mm AMOLED / 10天 / $549.99"},
+    {"rank": 3, "title": "Vuzix LX1", "dim": "AR/VR显示", "stars": 4, "key": "A级 / 企业智能眼镜 QCS4490 / >2000nits"},
+    {"rank": 4, "title": "Samsung Galaxy Tab A11+", "dim": "平板", "stars": 4, "key": "A级官方 / 11\" 90Hz / Dimensity 7300 / One UI 8"},
+    {"rank": 5, "title": "华为 Watch D3", "dim": "智能手表", "stars": 4, "key": "A级官方 / 双型号入网 / 鸿蒙健康"},
 ]
 
 # ── 排序：状态优先（即将上市→进行中→已上市），同状态按时间倒序 ──
