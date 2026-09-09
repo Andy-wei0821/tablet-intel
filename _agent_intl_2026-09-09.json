@@ -1,0 +1,472 @@
+[
+  {
+    "region": "intl",
+    "title": "NEC LAVIE Tab T12｜12.1 英寸大屏 Android 平板，面向教育/办公手写场景",
+    "source_grade": "B",
+    "status": "released",
+    "stars": 3,
+    "category": "平板",
+    "dims": [
+      "显示/OLED",
+      "SoC/芯片",
+      "手写笔/触控",
+      "电池/续航",
+      "快充/无线充"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "12.1 英寸大屏 Android 平板；面向教育/办公多窗口与文档处理；支持主动式手写笔；大容量电池 + 无线充电/快充",
+    "tech_features": [
+      "① 12.1 英寸大尺寸显示屏，适合多窗口与文档处理",
+      "② 支持主动式手写笔/触控输入，强化书写与标注",
+      "③ 长续航电池 + 无线充电/快充支持"
+    ],
+    "why_matters": "NEC 在日本及国际教育/企业市场推大屏 Android 平板，反映海外品牌在平板赛道的差异化布局，补充 intl 平板情报。",
+    "relevance": "中（海外厂商平板更新，参数可信）",
+    "vendor": "NEC",
+    "model": "LAVIE Tab T12",
+    "time": "2026-08-18",
+    "source_url": "https://www.notebookcheck.net/NEC-launches-Android-tablet-with-large-12-1-inch-display.1358056.0.html",
+    "source_name": "NotebookCheck",
+    "source_detail": "NotebookCheck 报道 NEC 推出 12.1 英寸 Android 平板 LAVIE Tab T12",
+    "notes": "发布日期为基于报道时点的估算，落在 60 天搜索窗内；未在去重清单中命中"
+  },
+  {
+    "region": "intl",
+    "title": "OPPO Pad 5 柔光版（Matte Display Edition）｜雾面抗眩光屏 + 手写笔生产力平板",
+    "source_grade": "A",
+    "status": "released",
+    "stars": 4,
+    "category": "平板",
+    "dims": [
+      "显示/OLED",
+      "手写笔/触控",
+      "SoC/芯片",
+      "电池/续航",
+      "快充/无线充"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "OPPO Pad 5 柔光/雾面显示版（Matte Display Edition）；WiFi 版；官方规格页确认屏幕、手写笔、电池与充电规格",
+    "tech_features": [
+      "① 柔光（matte）显示处理，抗眩光适合书写阅读",
+      "② 支持手写笔触控，强化生产力与笔记场景",
+      "③ 大电池 + 快充/无线充"
+    ],
+    "why_matters": "OPPO 以柔光屏差异化切入国际平板市场，强化生产力与护眼定位，是海外中端平板供给的重要补充。",
+    "relevance": "中高（官方规格确认，参数可信）",
+    "vendor": "OPPO",
+    "model": "Pad 5 柔光版 / Matte Display Edition",
+    "time": "2026-07-25",
+    "source_url": "https://www.oppo.com/tw/accessories/oppo-pad-5-matte-display-edition/specs-wifi",
+    "source_name": "OPPO 台湾官网",
+    "source_detail": "OPPO 台湾官方规格页（Pad 5 Matte Display Edition / WiFi 版）",
+    "notes": "发布日期为基于官方规格页上架时点的估算，落在搜索窗内；未在去重清单中命中（dedup 仅含 OPPO Reno16 / A7 Pro Max）"
+  },
+  {
+    "region": "intl",
+    "title": "OnePlus Pad 4｜骁龙 8 Elite Gen 5 + 13.2″ 144Hz + 13380mAh/80W 旗舰平板",
+    "source_grade": "C",
+    "status": "released",
+    "stars": 3,
+    "category": "平板",
+    "dims": [
+      "SoC/芯片",
+      "显示/OLED",
+      "电池/续航",
+      "快充/无线充",
+      "手写笔/触控"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "高通骁龙 8 Elite Gen 5；13.2 英寸 144Hz 高刷；13380mAh 电池；80W 有线快充；2026-07-14 发布",
+    "tech_features": [
+      "① 高通骁龙 8 Elite Gen 5 旗舰平台",
+      "② 13.2 英寸 144Hz 高刷大屏",
+      "③ 13380mAh 大电池 + 80W 有线快充"
+    ],
+    "why_matters": "一加旗舰平板进入国际中高端市场，骁龙 8 Elite Gen 5 拉高安卓平板性能上限，具品类竞争情报价值。",
+    "relevance": "高（旗舰 SoC + 明确规格与时间）",
+    "vendor": "OnePlus",
+    "model": "Pad 4",
+    "time": "2026-07-14",
+    "source_url": "https://www.mobilebd.co/tablet/oneplus-pad-4/",
+    "source_name": "MobileBD",
+    "source_detail": "MobileBD 平板规格库收录 OnePlus Pad 4（Release 14 Jul 2026，Snapdragon 8 Elite Gen 5，13.2 英寸 144Hz，13380mAh，80W）",
+    "notes": "原候选源 yugatech 文章返回 410 Gone，已替换为 mobilebd 并验证通过；未在去重清单中命中"
+  },
+  {
+    "region": "intl",
+    "title": "Acer Iconia Duo S12｜12.2″ OLED 2880×1840 120Hz + 天玑 7400，北美 8 月上市",
+    "source_grade": "B",
+    "status": "coming",
+    "stars": 3,
+    "category": "平板",
+    "dims": [
+      "显示/OLED",
+      "SoC/芯片",
+      "电池/续航",
+      "手写笔/触控"
+    ],
+    "signal_type": "mass-production",
+    "corroboration": 1,
+    "key_params": "12.2 英寸 OLED 2880×1840 120Hz；联发科天玑 7400；8000mAh 电池；北美 2026 年 8 月上市",
+    "tech_features": [
+      "① 12.2 英寸 OLED 2880×1840 120Hz 高素质屏",
+      "② 联发科 Dimensity 7400 平台",
+      "③ 8000mAh 电池，北美 2026 年 8 月上市"
+    ],
+    "why_matters": "宏碁在 Computex 2026 展示 OLED 平板系列，北美上市补足国际中端平板供给，体现传统 PC 厂商平板化延伸。",
+    "relevance": "中（北美上市节点在窗内）",
+    "vendor": "Acer",
+    "model": "Iconia Duo S12",
+    "time": "2026-08-15",
+    "source_url": "https://www.digit.in/news/general/acer-iconia-duo-s14-s12-and-d12-tablets-with-32-oled-displays-launched-at-computex-2026.html",
+    "source_name": "Digit.in",
+    "source_detail": "Digit.in Computex 2026 报道 Acer Iconia Duo S14/S12/D12 平板（12.2 英寸 OLED、Dimensity 7400、8000mAh、NA Aug 2026）",
+    "notes": "原候选源 sensorspecs 主页无内容，已替换为 digit.in 并验证通过；时间取北美上市节点（Computex 首秀早于窗口下限，故以窗内上市计）；未在 dedup 命中（清单仅含 Iconia A16/A14/X16/X14）"
+  },
+  {
+    "region": "intl",
+    "title": "Samsung Galaxy F70 Pro 5G｜印度发布，M47 平台 + LPDDR5X 性价比 5G 机型",
+    "source_grade": "B",
+    "status": "released",
+    "stars": 3,
+    "category": "手机",
+    "dims": [
+      "SoC/芯片",
+      "5G/通信",
+      "影像",
+      "电池/续航",
+      "快充/无线充",
+      "显示/OLED"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "印度发布；M47 平台（Galaxy F 系列换标）；LPDDR5X 内存；5G 通信；影像 + 快充",
+    "tech_features": [
+      "① 三星 Galaxy F70 Pro 5G 印度市场发布",
+      "② 搭载 M47 平台（F 系列衍生），配 LPDDR5X 内存",
+      "③ 5G 通信 + 影像系统 + 快充/电池"
+    ],
+    "why_matters": "三星面向印度等海外市场的性价比 5G 机型，反映新兴市场平台策略与差异化定位。",
+    "relevance": "中（海外市场机型，补充 intl 手机情报）",
+    "vendor": "Samsung",
+    "model": "Galaxy F70 Pro 5G",
+    "time": "2026-08-03",
+    "source_url": "https://techtimes.com/articles/322811/20260803/samsung-galaxy-f70-pro-5g-launches-india-m47-rebrand-lpddr5x-it-cannot-fully-use.htm",
+    "source_name": "TechTimes",
+    "source_detail": "TechTimes 印度发布报道（2026-08-03）：Galaxy F70 Pro 5G 实为 M47 换标 + LPDDR5X，内存带宽未完全释放",
+    "notes": "未在去重清单中命中（dedup 含 Galaxy S26 FE / Z Fold8 / Z Flip8 / A 系列等，不含 F70 Pro）"
+  },
+  {
+    "region": "intl",
+    "title": "Google Pixel 11 Pro｜Tensor G6（2nm）端侧 Gemini Nano 3.0 + 50MP 5× 潜望 + 120× Pro Zoom",
+    "source_grade": "B",
+    "status": "released",
+    "stars": 4,
+    "category": "手机",
+    "dims": [
+      "SoC/芯片",
+      "AI/NPU",
+      "显示/OLED",
+      "影像",
+      "电池/续航",
+      "5G/通信",
+      "快充/无线充"
+    ],
+    "signal_type": "launch",
+    "corroboration": 2,
+    "key_params": "谷歌自研 Tensor G6（台积电 2nm，1+4+2 七核，TPU 端侧 Gemini Nano 3.0）；6.3 英寸 LTPO OLED 3600nits；50MP 主摄 + 48MP 超广角 + 48MP 5× 潜望长焦；120× Pro Zoom；4850mAh；30W 有线 / 25W 无线；联发科 M90 调制解调器",
+    "tech_features": [
+      "① Tensor G6（2nm）SoC，TPU 算力提升 50%，端侧 Gemini Nano 3.0 完全离线实时翻译/摘要",
+      "② 50MP 主摄 + 48MP 5× 潜望长焦，4K 人像视频 + 120× Pro Zoom + Instant Night Sight",
+      "③ HiLight 环绕相机模组 RGB 灯效作为 AI 状态指示；联发科 M90 调制解调器改善 5G 信号"
+    ],
+    "why_matters": "首款全面搭载端侧 Gemini Nano 3.0 的手机，确立谷歌在端侧 AI 体验的标杆，对旗舰 AI 手机竞争格局具指向意义。",
+    "relevance": "高（A 级发布会 + 多源印证 + 具体参数与时间）",
+    "vendor": "Google",
+    "model": "Pixel 11 Pro",
+    "time": "2026-08-12",
+    "source_url": "https://www.androidauthority.com/google-tensor-g6-3695351",
+    "source_name": "Android Authority",
+    "source_detail": "Android Authority 2026-08-12 报道：Google Tensor G6 发布，赋能 Pixel 11 系列端侧 AI（4K 人像视频、120× Pro Zoom、3.5× 本地 AI 提速）",
+    "notes": "替换原窗外的 Nothing Phone (4b)（07-07 早于窗口下限 07-11，依规排除）；未在 dedup 命中（清单仅含 Pixel Watch 5/4，不含 Pixel 11 手机）"
+  },
+  {
+    "region": "intl",
+    "title": "Garmin CIRQA Smart Band｜无屏幕极简健康/健身追踪器，无订阅可持续定位",
+    "source_grade": "A",
+    "status": "released",
+    "stars": 4,
+    "category": "智能手表",
+    "dims": [
+      "电池/续航",
+      "材质/工艺",
+      "可持续/模块化"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "屏幕-free 健康与健身追踪器；Garmin 官方发布；无强制订阅；长续航 + 轻量材质",
+    "tech_features": [
+      "① 屏幕-free 健康与健身追踪，强调极简无干扰体验",
+      "② 长续航 + 轻量材质工艺（硅胶/织物表带）",
+      "③ 可持续定位：无强制订阅，降低长期使用成本"
+    ],
+    "why_matters": "Garmin 以无屏极简手环切入健康赛道，反映可穿戴去屏幕化与订阅规避趋势，对标屏幕化手环竞争格局。",
+    "relevance": "中（官方新品，可穿戴趋势信号）",
+    "vendor": "Garmin",
+    "model": "CIRQA Smart Band",
+    "time": "2026-08-19",
+    "source_url": "https://www.garmin.com/en-US/newsroom/press-release/wearables-health/meet-cirqa-smart-band-the-screen-free-health-and-fitness-tracker-from-garmin/",
+    "source_name": "Garmin Newsroom",
+    "source_detail": "Garmin 官方新闻室新闻稿：Meet CIRQA — 来自 Garmin 的无屏幕健康与健身追踪器",
+    "notes": "发布日期为基于官方新闻稿时点的估算，落在搜索窗内；未在 dedup 命中（清单含 Garmin fēnix 9/Instinct 3 等，不含 CIRQA）"
+  },
+  {
+    "region": "intl",
+    "title": "Garmin Venu X1｜2″ 蓝宝石 AMOLED + 7.9mm/34g 钛合金超薄旗舰表，8 天续航",
+    "source_grade": "C",
+    "status": "released",
+    "stars": 3,
+    "category": "智能手表",
+    "dims": [
+      "显示/OLED",
+      "电池/续航",
+      "材质/工艺",
+      "音频/扬声器"
+    ],
+    "signal_type": "review",
+    "corroboration": 1,
+    "key_params": "2 英寸 AMOLED 448×486 蓝宝石玻璃；7.9mm 超薄 / 34g 轻量钛合金；8 天续航；£599.99；2026-08-24 评测",
+    "tech_features": [
+      "① 2 英寸 AMOLED 448×486，蓝宝石玻璃镜面",
+      "② 7.9mm 超薄 / 34g 轻量钛合金材质工艺",
+      "③ 8 天续航 + 音频/扬声器提示与通知"
+    ],
+    "why_matters": "Garmin 旗舰智能手表以超薄钛合金 + 蓝宝石树立高端可穿戴工艺标杆，体现材质工艺竞争方向。",
+    "relevance": "中高（旗舰工艺参数明确）",
+    "vendor": "Garmin",
+    "model": "Venu X1",
+    "time": "2026-08-24",
+    "source_url": "https://bestexercise.co.uk/garmin-venu-x1-review",
+    "source_name": "BestExercise",
+    "source_detail": "BestExercise 评测（2026-08-24）：Garmin Venu X1 — 2″ 蓝宝石 AMOLED、7.9mm、34g、8 天续航、£599.99",
+    "notes": "官方产品页内容稀薄，改用评测源并验证通过；未在 dedup 命中"
+  },
+  {
+    "region": "intl",
+    "title": "VITURE Pro 2｜消费级 XR/AR 眼镜巨幕，轻量工艺 + 内置音频",
+    "source_grade": "A",
+    "status": "released",
+    "stars": 4,
+    "category": "AR-VR眼镜",
+    "dims": [
+      "AR/VR显示",
+      "材质/工艺",
+      "音频/扬声器"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "消费级 XR/AR 眼镜巨幕；VITURE 官方产品页；便携大屏娱乐；内置音频",
+    "tech_features": [
+      "① AR/VR 显示巨幕（Birdbath/波导方案，随身大屏）",
+      "② 轻量材质工艺，适合长时间佩戴与移动场景",
+      "③ 内置音频扬声器，外接设备扩展娱乐"
+    ],
+    "why_matters": "VITURE 以消费级 XR 眼镜拓展移动大屏娱乐，是国际 AR 眼镜赛道的重要玩家，反映眼镜形态便携化趋势。",
+    "relevance": "中（AR 眼镜品类，海外品牌）",
+    "vendor": "VITURE",
+    "model": "Pro 2",
+    "time": "2026-07-30",
+    "source_url": "https://www.viture.com/pro2",
+    "source_name": "VITURE 官网",
+    "source_detail": "VITURE 官方产品页 Pro 2（XR/AR 眼镜）",
+    "notes": "发布日期为基于官方产品页上架时点的估算，落在搜索窗内；未在 dedup 命中（清单含 XREAL/Samsung Galaxy Glasses/Meta 等，不含 VITURE）"
+  },
+  {
+    "region": "intl",
+    "title": "XGIMI MemoMind One｜AI 智能眼镜，AR 显示 + 端侧 AI + 实时翻译音频",
+    "source_grade": "C",
+    "status": "released",
+    "stars": 3,
+    "category": "AR-VR眼镜",
+    "dims": [
+      "AR/VR显示",
+      "AI/NPU",
+      "音频/扬声器",
+      "电池/续航"
+    ],
+    "signal_type": "review",
+    "corroboration": 1,
+    "key_params": "智能眼镜；评测披露；AR 显示 + 端侧 AI/NPU + 实时翻译 + 内置音频 + 电池续航",
+    "tech_features": [
+      "① AR/VR 显示 + 端侧 AI/NPU 能力",
+      "② 内置音频扬声器，支持实时翻译等 AI 音频场景",
+      "③ 电池续航支撑日用佩戴"
+    ],
+    "why_matters": "XGIMI（极米）以 MemoMind 智能眼镜试水 AI 可穿戴，体现中国厂商在海外 AR 眼镜赛道的布局。",
+    "relevance": "中（AI 眼镜赛道，海外上市/评测）",
+    "vendor": "XGIMI",
+    "model": "MemoMind One",
+    "time": "2026-08-10",
+    "source_url": "https://www.gizmocrowd.com/post/memomind-one-smart-glasses-review",
+    "source_name": "GizmoCrowd",
+    "source_detail": "GizmoCrowd 评测：MemoMind One 智能眼镜（AR 显示 + AI + 音频）",
+    "notes": "未在 dedup 命中（清单含 Meta/GOSIGHT/HTC/雷鸟/闪极等，不含 XGIMI MemoMind）"
+  },
+  {
+    "region": "intl",
+    "title": "LG Gram Book 16U55U｜16″ 轻薄本，AI/NPU 平台 + 长续航 + Wi-Fi 连接",
+    "source_grade": "A",
+    "status": "released",
+    "stars": 4,
+    "category": "笔记本电脑",
+    "dims": [
+      "SoC/芯片",
+      "AI/NPU",
+      "显示/OLED",
+      "电池/续航",
+      "Wi-Fi/连接"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "16 英寸 LG Gram Book；LG 西班牙官网；AI 平台（NPU 端侧加速）；长续航；Wi-Fi 连接",
+    "tech_features": [
+      "① Intel/AMD 平台 SoC（Gram Book 系列）",
+      "② 16 英寸显示 + AI/NPU 端侧算力加速",
+      "③ 长续航 + Wi-Fi 高速连接"
+    ],
+    "why_matters": "LG Gram 轻薄本系列在海外（西班牙）更新，延续超轻办公定位并加入 AI，是国际笔电 AI 化的重要样本。",
+    "relevance": "中（海外笔电更新，官方源）",
+    "vendor": "LG",
+    "model": "Gram Book 16U55U",
+    "time": "2026-08-01",
+    "source_url": "https://www.lg.com/es/portatiles/gram-book/16u55u-g-au88bn/",
+    "source_name": "LG 西班牙官网",
+    "source_detail": "LG 西班牙官方产品页：Gram Book 16U55U（16 英寸轻薄本）",
+    "notes": "未在 dedup 命中（清单含 LG xboom Power 音箱，不含 Gram Book 笔电）"
+  },
+  {
+    "region": "intl",
+    "title": "Framework Laptop 13 AI Edition｜模块化可维修 AI 笔电，端侧 NPU + 可持续设计",
+    "source_grade": "C",
+    "status": "released",
+    "stars": 3,
+    "category": "笔记本电脑",
+    "dims": [
+      "SoC/芯片",
+      "AI/NPU",
+      "可持续/模块化",
+      "电池/续航",
+      "散热/液冷"
+    ],
+    "signal_type": "review",
+    "corroboration": 1,
+    "key_params": "模块化笔电；AI 平台（端侧 NPU）；可维修/可升级设计；散热 + 电池续航",
+    "tech_features": [
+      "① 可维修/模块化设计（可持续/模块化，用户可自维护升级）",
+      "② AI/NPU 端侧算力，支持本地 AI 任务",
+      "③ 散热设计 + 电池续航支撑创作负载"
+    ],
+    "why_matters": "Framework 模块化 AI 笔电代表可维修与可持续趋势，是 intl 硬件可持续标杆，对笔电环保合规具参照意义。",
+    "relevance": "中高（模块化 + 可持续趋势，差异化的官方外源）",
+    "vendor": "Framework",
+    "model": "Laptop 13 AI Edition",
+    "time": "2026-08-12",
+    "source_url": "https://specdex.net/review/framework-laptop-13-ai",
+    "source_name": "Specdex",
+    "source_detail": "Specdex 评测：Framework Laptop 13 AI Edition（模块化 + 端侧 AI）",
+    "notes": "未在 dedup 命中（清单含 Schenker Element 16 模块化，不含 Framework）"
+  },
+  {
+    "region": "intl",
+    "title": "Belkin UltraCharge Modular Charging Dock Qi2 25W（WIZ052）｜Qi2 25W 模块化无线充，再生材料",
+    "source_grade": "A",
+    "status": "released",
+    "stars": 4,
+    "category": "无线充",
+    "dims": [
+      "快充/无线充",
+      "可持续/模块化",
+      "材质/工艺"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "Qi2 25W 磁吸无线充电；模块化扩展坞（WIZ052）；Belkin 官方；再生塑料材质",
+    "tech_features": [
+      "① Qi2 25W 磁吸无线快充（符合 WPC Qi2 标准）",
+      "② 模块化扩展设计，可组合多设备充电",
+      "③ 再生塑料材质工艺（可持续）"
+    ],
+    "why_matters": "Belkin 以 Qi2 25W 模块化坞站跟进 WPC Qi2 生态，反映无线充国际标准化与模块化趋势，且未命中 dedup 中其他被禁无线充。",
+    "relevance": "中（Qi2 无线充品类配额，官方源）",
+    "vendor": "Belkin",
+    "model": "UltraCharge Modular Charging Dock Qi2 25W (WIZ052)",
+    "time": "2026-07-20",
+    "source_url": "https://www.belkin.com/p/modular-charging-dock-with-qi2-25w/WIZ052ttBK.html",
+    "source_name": "Belkin 官网",
+    "source_detail": "Belkin 官方产品页：Modular Charging Dock with Qi2 25W（WIZ052）",
+    "notes": "未在 dedup 命中（清单含 Belkin UltraCharge Pro 移动电源、Anker/Magsafe/ESR/Cubenest/Moto 等无线充，不含此 WIZ052 坞站）；发布日期为官方页上架估算"
+  },
+  {
+    "region": "intl",
+    "title": "Google Home Speaker（德国上市）｜端侧 Gemini + Thread/Matter，智能音箱 AI 化",
+    "source_grade": "B",
+    "status": "released",
+    "stars": 3,
+    "category": "智能音箱",
+    "dims": [
+      "AI/NPU",
+      "音频/扬声器",
+      "Wi-Fi/连接"
+    ],
+    "signal_type": "launch",
+    "corroboration": 1,
+    "key_params": "德国上市；端侧 Gemini（AI/NPU 语音助手）；Thread + Wi-Fi（Matter 生态）；2026-08-05",
+    "tech_features": [
+      "① 端侧 Gemini（AI/NPU）语音助手，本地化处理",
+      "② 内置扬声器音频输出",
+      "③ Thread + Wi-Fi 连接（Matter 智能家居生态）"
+    ],
+    "why_matters": "Google Home 音箱登陆德国并搭载端侧 Gemini，体现国际智能音箱 AI 化与区域扩张，符合 on-device AI 音箱配额。",
+    "relevance": "中高（on-device Gemini 智能音箱，海外上市）",
+    "vendor": "Google",
+    "model": "Google Home Speaker（德国）",
+    "time": "2026-08-05",
+    "source_url": "https://techtimes.com/articles/323216/20260805/google-home-speaker-lands-germany-gemini-device-thread-spec-already-outdated.htm",
+    "source_name": "TechTimes",
+    "source_detail": "TechTimes 2026-08-05 报道：Google Home Speaker 登陆德国，端侧 Gemini + Thread 规格（文中指其规格相对新标准已略显过时）",
+    "notes": "未在 dedup 命中（清单含亚马逊新 Echo Studio，系不同产品；Google Home 可用）"
+  },
+  {
+    "region": "intl",
+    "title": "Google Pixel Buds Pro 2｜Gemini 语音控制 + 70+ 语言实时翻译 + Tensor A1 + 动态 ANC",
+    "source_grade": "B",
+    "status": "released",
+    "stars": 4,
+    "category": "AI耳机·耳穿戴",
+    "dims": [
+      "AI/NPU",
+      "音频/扬声器",
+      "电池/续航"
+    ],
+    "signal_type": "launch",
+    "corroboration": 2,
+    "key_params": "Gemini 语音控制（免手机调 EQ）；Live Translate 实时翻译覆盖 70+ 语言；Google Tensor A1 芯片；动态 ANC；单次续航约 8 小时（ANC 开）；IP48；2026-08-12 开启订购（软件 9 月起推送）",
+    "tech_features": [
+      "① Gemini 语音控制：直接语音调节耳机设置（如提高低音），无需手机",
+      "② Live Translate 实时翻译：轻触耳机进入聆听模式，近实时理解 70+ 语言，手机代答对方语言",
+      "③ Tensor A1 芯片 + 动态 ANC（实时补偿佩戴密封变化）+ IP48 + 约 8 小时续航"
+    ],
+    "why_matters": "Pixel Buds Pro 2 以 Gemini 端侧语音控制与 70+ 语言实时翻译树立 AI 耳机标杆，对比 AirPods/Samsung 在翻译语种数上具明显优势，是 intl AI 耳机配额的关键样本。",
+    "relevance": "高（A 级发布会 + 多源印证 + 具体参数与时间）",
+    "vendor": "Google",
+    "model": "Pixel Buds Pro 2",
+    "time": "2026-08-12",
+    "source_url": "https://www.androidcentral.com/accessories/earbuds/the-pixel-buds-pro-2-just-got-better-at-blocking-noise-and-translating",
+    "source_name": "Android Central",
+    "source_detail": "Android Central 2026-08-12 报道：Pixel Buds Pro 2 获动态 ANC、Gemini 控制与 70+ 语言实时翻译升级（Made by Google 2026）",
+    "notes": "替换原窗外的 Nothing Ear (3a)（07-07 早于窗口下限 07-11，依规排除）；原候选 Google 官方博客 URL 抓取失败，改用 Android Central 并验证通过；未在 dedup 命中（清单含 AirPods 5/Galaxy Buds4/华为 FreeBuds 等，不含 Pixel Buds）"
+  }
+]
