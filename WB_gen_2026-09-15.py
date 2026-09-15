@@ -9,6 +9,27 @@ WEEKDAY = "周二"
 cn = json.load(open(f"{BASE}/_agent_cn_2026-09-15.json", encoding="utf-8"))
 intl = json.load(open(f"{BASE}/_agent_intl_2026-09-15.json", encoding="utf-8"))
 
+# ---- 事实修正（faithful to verified source content）----
+def fix(items):
+    for c in items:
+        u = c.get("source_url", "")
+        t = c.get("title", "")
+        if "ithome.com/1/001/714" in u:
+            c["title"] = "贝尔金 二合一可折叠磁吸无线充｜iPhone 25W + AirPods 5W，429 元开售"
+            c["source_grade"] = "B"  # IT之家一线科技媒体 → B 级
+        elif "zonagadget.co.id" in u:
+            c["title"] = "Tecno Megapad 2 / Megapad SE 2 印尼上市：Megapad 2 11英寸 2.5K 90Hz + SE 2 9.7英寸 2K"
+        elif "荣耀 Magic9" in t:
+            c["stars"] = 4  # 五星需 A 级信源；本条目为 B 级 → 四星
+        elif "Steam Frame" in t:
+            c["stars"] = 4  # 五星需 A 级信源；本条目为 B 级 → 四星
+        elif "华为 MatePad Edge" in t:
+            c["stars"] = 5  # A 级信源 + 多源印证 + 具体参数 + 直接竞品对标 → 五星
+    return items
+
+cn = fix(cn)
+intl = fix(intl)
+
 # 各区域独立排序：状态(即将上市→进行中→已上市)，同状态内时间倒序
 STATUS_RANK = {"coming": 0, "progress": 1, "released": 2}
 STATUS_LABEL = {"coming": "即将上市", "progress": "进行中", "released": "已上市"}
@@ -16,8 +37,8 @@ STATUS_CLASS = {"coming": "status-coming", "progress": "status-progress", "relea
 SRC_RANK = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4}
 
 def sort_region(items):
-    items = sorted(items, key=lambda c: c["time"], reverse=True)               # 时间倒序（稳定）
-    items = sorted(items, key=lambda c: STATUS_RANK[c["status"]], reverse=False)  # 状态升序（稳定，保组内时间倒序）
+    items = sorted(items, key=lambda c: c["time"], reverse=True)
+    items = sorted(items, key=lambda c: STATUS_RANK[c["status"]], reverse=False)
     return items
 
 cn_sorted = sort_region(cn)
@@ -25,7 +46,7 @@ intl_sorted = sort_region(intl)
 assert len(cn_sorted) == 15 and len(intl_sorted) == 15, f"cn={len(cn_sorted)} intl={len(intl_sorted)}"
 
 all_items = cn_sorted + intl_sorted
-idx_of = {id(it): i + 1 for i, it in enumerate(all_items)}   # 全局编号：CN 1-15, INTL 16-30
+idx_of = {id(it): i + 1 for i, it in enumerate(all_items)}
 assert len(all_items) == 30
 
 def stars_str(n):
@@ -50,7 +71,6 @@ top_pool.sort(key=lambda c: (SRC_RANK[c["source_grade"]], STATUS_RANK[c["status"
 top_pool.sort(key=lambda c: -c["stars"], reverse=False)
 top5 = top_pool[:5]
 
-# 16 维覆盖
 DIMS = ["SoC/芯片", "显示/OLED", "折叠屏", "手写笔/触控", "散热/液冷", "电池/续航",
         "快充/无线充", "影像", "AI/NPU", "音频/扬声器", "5G/通信", "Wi-Fi/连接",
         "AR/VR显示", "材质/工艺", "可持续/模块化", "手柄/外设"]
@@ -68,6 +88,7 @@ five = sum(1 for it in all_items if it["stars"] == 5)
 # 提取模板 CSS / JS
 tmpl = open(f"{BASE}/WB_2026-09-07_硬件看板.html", encoding="utf-8").read()
 css = re.search(r"<style>(.*?)</style>", tmpl, re.S).group(1)
+css = css.replace("max-height:2000px", "max-height:6000px")  # 长卡防截断
 script = re.search(r"<script>(.*?)</script>", tmpl, re.S).group(1)
 
 def card_html(it):
@@ -129,6 +150,7 @@ def summary_row(it):
         <td><span class="source-tag {src_cls}">{it['source_grade']}</span></td>
         <td class="td-status"><span class="status-tag {st_cls}">{st_lbl}</span></td>
         <td>{s(it['time'])}</td>
+        <td class="td-stars">{stars_str(it['stars'])}</td>
       </tr>'''
 
 def top_card(it, rank):
@@ -184,7 +206,7 @@ doc = f'''<!DOCTYPE html>
   <div class="top-signals-panel">
     <div class="top-signals-header">
       <div class="top-signals-title">今日重点信号 Top 5</div>
-      <div style="font-size:12px;color:var(--text-tertiary);">排序：A级优先→星级降序→状态优先→时间倒序</div>
+      <div style="font-size:12px;color:var(--text-tertiary);">排序：星级降序→A级优先→状态优先→时间倒序</div>
     </div>
     <div class="top-signals-grid">
 {top_cards}    </div>
@@ -192,7 +214,7 @@ doc = f'''<!DOCTYPE html>
   <div class="summary-section">
     <div class="section-title">情报摘要表</div>
     <table>
-      <thead><tr><th>#</th><th>标题</th><th>区域</th><th>类别</th><th>信源</th><th>状态</th><th>时间</th></tr></thead>
+      <thead><tr><th>#</th><th>标题</th><th>区域</th><th>类别</th><th>信源</th><th>状态</th><th>时间</th><th>重要度</th></tr></thead>
       <tbody>
 {summary_rows}
       </tbody>
