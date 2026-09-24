@@ -1,0 +1,180 @@
+2026-09-10	WiWU Qi2.2 三合一风冷磁吸无线充（25W 主动散热）
+2026-09-10	传音 TECNO Camon Slim 5G 发布：6.39mm 机身塞入 6000mAh
+2026-09-10	小度智能音箱 Pro Max 发布：三环境传感器 + 小彩屏
+2026-09-10	华为 WATCH 6 系列发布：2799 元起，首发高尿酸风险评估
+2026-09-10	汉王 N6 Pro 墨水屏录写本将售：8192 级压感 + 四麦转写
+2026-09-10	TOZO AIVU 眼镜海外众筹：45g 光波导 + 端侧隐私识别
+2026-09-10	机械革命无界 14S 2026 开售：Intel 18A 平台 3899 元
+2026-09-10	步步高学习机 S10 上市：14.2 英寸类朗伯光刻护眼屏
+2026-09-10	小度 AI 手表 Fit 开售：198 元接入文心大模型
+2026-09-10	台电 ArtPad 上架：13.2 英寸 2.2K 120Hz + 压感手写 1099 元
+2026-09-10	台电 2026 款 P50 平板上市：11 英寸 90Hz + 8000mAh 749 元
+2026-09-10	Cleer 鹊桥开放式耳机上市：内嵌 AI 智能体 1199 元
+2026-09-10	华为 Pura X View 阔直板开售：6.39 英寸 16:9.5 + 7000mAh
+2026-09-10	ThinkPad E16 酷睿 5 版开售：7299 元，全接口 + 护眼认证
+2026-09-10	加南 K2 AI 眼镜拆解：33.5g + 音频 SoC 与影像 ISP 双芯
+2026-09-10	苹果首款折叠屏 iPhone Duo 发布：1999 美元起
+2026-09-10	Blackview Xplore 6 三防机 IFA 首发：12000mAh + 增距镜
+2026-09-10	GOSIGHT P1 全彩 AR 眼镜：热插拔电池架构 + 69g
+2026-09-10	台电 T60 Mini 日本亮相：8.8 英寸 2.5K + 324g
+2026-09-10	索尼 ULT TOWER 7 派对音箱发布：420W + Auracast 百台串联
+2026-09-10	Zens 折叠三合一磁吸无线充发布：Qi2.2 25W 附 65W 适配器
+2026-09-10	viaim Rise AI 耳机 Indiegogo 众筹：AI Agent + 同轴双驱
+2026-09-10	努比亚 Pad Plus Wi-Fi 版日本上市：249 美元支持 Type-C 视频输出
+2026-09-10	Infinix Xpad 30 Pro 海外上市：2.5K 90Hz + 2TB 扩展 227 美元
+2026-09-10	Acer Swift Edge 14 国际开售：990g 塞入 65Wh + 120Hz OLED
+2026-09-10	HP OmniBook 5 16 换装 Wildcat Lake：1100nit OLED 可选
+2026-09-10	Huion Kamvas Pad 12 开售：EMR 无源笔 + 16384 压感 499 美元
+2026-09-10	Redmi Watch 6 Lite 欧洲开售：69 欧元配独立 GPS
+2026-09-10	Rogbid Model R3T 手表：190° 弹出摄像头 + 4G LTE 99.99 美元
+2026-09-10	Rokid 乐奇 AI+AR 眼镜澳洲上市：49g 双目 Micro-LED 波导
+2026-09-11	荣耀 Pad 20 Pro｜12.1英寸3K 165Hz 类纸屏 + 骁龙8s Gen4，马来西亚已首发、国行待发
+2026-09-11	OPPO A7 Pro｜天玑6360 MAX + 6.57英寸120Hz OLED，8000mAh 45W闪充
+2026-09-11	荣耀 LIFE FlyClip 3i｜10.8mm镀钛双圈磁动圈 + 耳畔AI智能体，48小时续航
+2026-09-11	雷鸟 V4 拍摄眼镜 32GB 版｜第一视角拍摄 + AI双芯架构，国补后1699元
+2026-09-11	小米 蓝牙音箱 磁吸版｜磁吸吸附手机背盖当支架，1.5英寸3W全频喇叭
+2026-09-11	小米 米家智能音频眼镜｜音频优先无摄像头设计，轻量化日常佩戴形态
+2026-09-11	中柏 EZpad M20 HD 2026｜紫光展锐T606 + 10.1英寸全金属机身，首发759元
+2026-09-11	荣耀 Robot Phone｜四自由度钛合金灵巧云台 + 第五代骁龙8至尊版，7060mAh青海湖电池
+2026-09-11	华为 WATCH GT 7 系列｜1.47英寸3000nits AMOLED + 高硅叠片电池，Pro版21天续航
+2026-09-11	联想 小新平板 Pro GT 11.1｜第三代骁龙8 + 11.1英寸3.2K 144Hz，8860mAh大电池
+2026-09-11	小米 REDMI 儿童手表 Pro｜双芯无网络定位 + AI楼层定位3.0，前后500万双摄
+2026-09-11	小米 30W 立式无线充电器｜立式双线圈横竖可充，兼容Qi协议，99元
+2026-09-11	联想 小新 Air 14 柔光版｜1.14kg/12.9mm 全金属机身，34小时本地视频续航
+2026-09-11	来酷 Air 16 Wildcat Lake｜第三代酷睿Ultra 5 315 + 16英寸2.8K 120Hz，80Wh电池
+2026-09-11	华为 MatePad 11.5 2026｜麒麟T82B + 11.5英寸2.5K 120Hz护眼屏，10100mAh 40W快充
+2026-09-11	Suunto Run 2 发布 35g 机身配 2000nits AMOLED 与双频 GNSS
+2026-09-11	XREAL Aura 亮相 IFA 2026 首款消费级 Android XR 眼镜秋季上市
+2026-09-11	联想 IdeaPad Vibe 14/15 多彩 Copilot+ PC 于 IFA 2026 发布
+2026-09-11	Anker MagStand Charging Station 三合一床头无线充亮相 IFA 2026
+2026-09-11	JBL Cove 全屋 WiFi 音频系统发布 三款音箱支持杜比全景声
+2026-09-11	三星发布智能眼镜 Intelligent Eyewear 骁龙 AR1 Gen 1 配 Gemini
+2026-09-11	Blackview LINK 5 发布 全球首款出厂预装 Android 17 的平板
+2026-09-11	三星 Galaxy S26 FE 发布 首款出厂搭载 One UI 9 的 S26 机型
+2026-09-11	HMD T21 2nd Edition 10.36 英寸 2K 平板尼泊尔上市
+2026-09-11	森海塞尔 MOMENTUM 真无线 5 代发布 电池可自行更换
+2026-09-11	Fairphone (Gen. 6+) 发布 12 个可更换部件并首次进入美国市场
+2026-09-11	Alldocube iPlay 80 mini Turbo 8.8 英寸 120Hz 小平板海外上市
+2026-09-11	华硕 Zenbook DUO 2026 双 14 英寸 OLED 双屏本登陆巴西
+2026-09-11	三星 Galaxy Watch Ultra 2 上市 5000nits 蓝宝石表镜配 3nm 平台
+2026-09-11	HP OmniPad 12 二合一安卓平板印度首发
+2026-09-15	荣耀 Magic9 超能版｜11000mAh 青海湖电池 + Magic 系列首款主动散热风扇，9 月 28 日发布
+2026-09-15	荣耀手表 6 Pro｜荣耀首款搭载心脏骤停监测的可穿戴，9 月 28 日与 Magic9 同场发布
+2026-09-15	vivo X500 系列｜定档 9 月 21 日，首发天玑 9600 2nm 平台 + 蔡司影像
+2026-09-15	戴尔 14（灵越 14 Air）Wildcat Lake 版｜酷睿 5 320 首发 5999 元，17 TOPS NPU
+2026-09-15	VITURE 幻影猛兽 XR 眼镜｜与影之刃零联名，174 英寸空间巨幕国内首展、10 月 29 日发售
+2026-09-15	立讯精密 云雀 Air（Lark Air）｜业界首款超小型全彩 LCoS 一拖二 AR 眼镜整机
+2026-09-15	酷比魔方 酷玩 Pad Pro 2｜12.1 英寸 2.5K 90Hz 通话平板，10000mAh 首销 1219 元
+2026-09-15	漫步者花再 Halo PixelBar 桌面音箱强化版｜动态像素屏实时显示歌词，419 元开售
+2026-09-15	华为 MatePad Edge｜14.2 英寸柔性 OLED 鸿蒙二合一，平板/电脑双模式
+2026-09-15	科大讯飞 T90 Pro｜14.8 英寸有益自然光纳米类纸屏，全球首款 TÜV 莱茵自然光认证学习机
+2026-09-15	小猿 AI 学习机 T6 Pro｜新一代超拟人 AI 老师多智能体协同，服贸会发布
+2026-09-15	惠普 战 99（16 英寸）｜酷睿 Ultra 7 255H + 16 英寸 2.5K 120Hz，9999 元
+2026-09-15	小米手环 11｜9.99mm 十年最薄机身 + 2000nits AMOLED，首发澎湃 OS 4（289 元起）
+2026-09-15	倍思 Simple Mini4 Air 磁吸无线充｜7mm 极薄机身 + 7N 吸力，官方 Qi2 15W 认证拆解
+2026-09-15	漫步者 Comfo Clip Q2｜海思谛听芯片 + 开源鸿蒙全栈国产架构耳夹耳机，399 元开售
+2026-09-15	Blackview Zeno 6 Pro｜11 英寸 2.3K 120Hz + 骁龙 4 Gen 2 的 4G 生产力平板
+2026-09-15	三星 Galaxy A08｜6000mAh + LPDDR5X 入门机，保留 3.5mm 耳机孔与 microSD
+2026-09-15	Google 新款 Pixel 可穿戴｜FCC 认证 G8BL6：独立 GNSS + 金属中框 + Wear OS
+2026-09-15	Coros Pace 4 Pro｜钛合金表壳 + 圆形 AMOLED，定档 9 月 22 日发布
+2026-09-15	Nothing Headphone (1) Pro｜三单元 + XMEMS 高音 + 10 麦自适应降噪，399 美元
+2026-09-15	VAIO T / T Work｜多段翻转机构笔电：13.3 英寸 2.5K 触控 + 最高 64GB LPDDR5X
+2026-09-15	Anker soundcore SleepLab Pro｜60GHz 毫米波雷达床旁音箱，不戴设备测睡眠，269.99 美元
+2026-09-15	Valve Steam Frame｜骁龙 8 Gen 3 + 双 2160×2160 LCD 的独立 VR 头显，1060 美元起
+2026-09-15	Rugtake T5 Pro｜20080mAh + IP69K/MIL-STD-810H 三防平板，约 340 美元
+2026-09-15	Acer Iconia Duo D12｜12.2 英寸 2.4K 90Hz 全金属平板，349.99 美元含键盘与笔
+2026-09-15	HP OmniBook 5 14｜699 美元起：Wildcat Lake + 1200p OLED 的入门轻薄本
+2026-09-15	三星 Galaxy Z Flip8｜6.9 英寸翻折旗舰评测：Exynos 2600 + 4300mAh 硅碳，180g
+2026-09-15	贝尔金 二合一可折叠磁吸无线充｜iPhone 25W + AirPods 5W，429 元开售
+2026-09-15	BleeqUp Rover｜53g AI 运动眼镜：16MP 索尼传感器 + 可俯仰 3K HDR 相机
+2026-09-15	Tecno Megapad 2 / Megapad SE 2 印尼上市：Megapad 2 11英寸 2.5K 90Hz + SE 2 9.7英寸 2K
+2026-09-17	荣耀 Magic9 Pro Max 将发：10000nits 黑钻屏 + 骁龙 8 Elite Gen6 Pro 2nm + 双 3D 生物识别
+2026-09-17	OPPO Find X10 Pro Max 定档 9/22：全球首批 2nm 天玑 9600 Pro + 三 2 亿像素 + 8000mAh
+2026-09-17	OPPO Watch S2 将发：8.9mm 圆表 + FatMax 燃脂 + 98.8% 心率精度
+2026-09-17	小米平板 9 Pro 开启预售：12.5 英寸 3.2K 144Hz + 第五代骁龙 8 + 11000mAh
+2026-09-17	华为 Sound X 系列获秋季升级：AI 搜歌 + 自然对话 + HiPlay 投播
+2026-09-17	微星 神影 16 MAX 2026 发布：Ultra 9 290HX Plus + RTX5060 + 200W 双烤
+2026-09-17	华米 Amazfit Cheetah 2 Ultra 越野跑表发布：30 天续航 + 双频六星 GPS + 钛合金
+2026-09-17	亮亮视野 Leion Hey2 AR 翻译眼镜服贸会亮相：49g、100+ 语种、8h 续航
+2026-09-17	微星 神影 18 AI 2026 游戏本发布：18 英寸 2.5K 240Hz + 酷睿 Ultra 200HX + RTX50
+2026-09-17	网易有道 OpenPods AI 耳机正式发售：7g + MFi + AI Agent 工作流
+2026-09-17	vivo Pad5 Pro 上架：13 英寸 3.1K 144Hz + 天玑 9400 + 12050mAh
+2026-09-17	OPPO Pad 5 标准版亮相：12.1 英寸 2.8K 144Hz + 天玑 9400+ + 5.99mm 金属一体
+2026-09-17	安克快充护机系列三折叠风冷无线充发布：25W 三合一 + 主动风冷
+2026-09-17	华为 MatePad Pro 12 英寸(2026) 全球发布：4.7mm 超薄 + 自研麒麟 T93 旗舰生产力平板
+2026-09-17	星纪魅族 MYVU 眼镜接入腾讯 WorkBuddy：43g + MicroLED 2000nit + 翻译 95%
+2026-09-17	荣耀 MagicPad 4 12.1 英寸揭晓：165Hz + 骁龙 8s Gen4 + 10100mAh，9/28 同场发布
+2026-09-17	Snap Specs 独立 AR 眼镜发布：$2195 + 双骁龙 XR + 51° FOV LCoS 波导
+2026-09-17	mophie 发布 Qi2.2 StealthCharge 无线充：25W 持续快充 + 无风扇静音架构
+2026-09-17	苹果 iPad mini OLED（传闻）：8.4-8.7 英寸 OLED + A19 Pro + 自研 C1X 基带
+2026-09-17	Google Android XR 眼镜（Warby Parker 版）：$799 显示版 / $299 纯音频版，10/14 发货
+2026-09-17	XP-Pen Magic Pro 13 安卓创作平板：12.95 英寸 3K 120Hz + 天玑 8300 + 16384 级压感笔
+2026-09-17	HP OmniBook Ultra 16（RTX Spark）：NVIDIA 首款 PC SoC + 128GB 统一内存 + 3K OLED
+2026-09-17	微星 Prestige N16 Flip AI+（RTX Spark）：128GB 统一内存 + 4K Tandem OLED 翻转本
+2026-09-17	Sonos Beam Ultra 智能声霸：$699 + 7.1.2 杜比全景声 + Sonos 27 AI 语音
+2026-09-17	苹果 AirPods 5 发布：开放式 ANC 全系标配 + H2 芯片 + 实时翻译
+2026-09-17	摩托罗拉 Edge 70 全球发布：6.67 英寸 P-OLED 4500nit + 68W + 5.99mm/159g 军规
+2026-09-17	联想 Tab Plus Gen 2 安卓平板：12.1 英寸 2.5K 120Hz + 天玑 7400 + JBL 9 单元
+2026-09-17	索尼 Xperia 10 VIII 发布：6.1 英寸 OLED 120Hz + 骁龙 6 Gen3 + 5000mAh
+2026-09-17	Garmin Fenix 9 / Fenix 9 Pro 发布：AMOLED + 钛合金 + inReach 卫星通讯
+2026-09-17	Google Pixel Watch 5 发布：端侧 Gemini + 骁龙 W5 Gen2 + 3000nit
+2026-09-18	iQOO Pad Ultra 定档 9/29：8.8 英寸 OLED + 2nm 骁龙8 超级至尊版 + 主动散热风扇
+2026-09-18	荣耀 WIN 平板开启盲约：骁龙8 至尊版 + 内置主动风扇，电竞平板再添一员
+2026-09-18	小米手表 S5 41mm 官宣：首发表端澎湃 OS 4 + 580mAh/14 天续航 + 车家互联
+2026-09-18	Ulefone Armor Pad 5 Ultra 亮相 IFA：11 英寸三防平板塞入 24200mAh + 200 流明投影
+2026-09-18	秋果计划 Wigain Flow 全彩 AI 眼镜定档 9/23 数贸会全球首发
+2026-09-18	ColorOS 17 正式发布：端侧大模型 Linear Attention + 128K 上下文，Find X10/一加16 首发
+2026-09-18	Momax 1-Power S.Pass² Air 获 IFA 创新奖：6mm 超薄半固态磁吸无线充
+2026-09-18	Redmi Note 17 Pro / Pro Max 印度发布：Pro Max 带来 10000mAh + 100W，第二款破万毫安机型
+2026-09-18	Rokid Ai Glasses Style 日本发布：38.5g 无屏 AI 眼镜 + 76 语种翻译 + 多模型开放生态
+2026-09-18	飞书 × 安克第二款 AI 会议耳机发布：录音自动同步飞书工作流
+2026-09-18	怀芯声学 AuraBuds S1 发布：工业声学 AI 下放，ENC 峰值 73.99dB 商务效率耳机
+2026-09-18	七彩虹橘宝 X16 Pro 开售：锐龙7 8745HX + RTX 5060 + 2.5K 180Hz，572 TOPS AI 算力下探主流价
+2026-09-18	新款华为 MateBook Fold 非凡大师发布：18 英寸双层 OLED 手写折叠屏 + 麒麟 X90 Plus
+2026-09-18	小米小爱音箱 Play 增强版亮相：新增 LED 时钟 + 红外遥控
+2026-09-18	华为 MatePad SE 11 英寸(2026 焕新版)上市：120Hz 护眼 LCD + 7700mAh + 全金属机身
+2026-09-18	iPad 第 12 代预计秋季发布：A18/A19 + 首次完整下放 Apple Intelligence，349 美元起
+2026-09-18	Meta Ray-Ban Display 智能眼镜：右镜全彩波导 5000nit + 神经腕带，799 美元 9/30 开售
+2026-09-18	荣耀 Pad X9b Max 国际铺货：13 英寸 2.5K 120Hz + 10100mAh，菲律宾 9/19 开卖
+2026-09-18	OPPO Pad Mini 柔光版通过 SIRIM/BIS/IMDA 认证：8.8 英寸 144Hz AMOLED + 骁龙8 Gen5
+2026-09-18	Nothing Phone (4b) 马来西亚上市：6.77 英寸 120Hz AMOLED + 5200mAh，9/20 开卖 1599 林吉特
+2026-09-18	亚马逊 Echo Dot Max 预热：AZ3 端侧 AI 芯片 + Omnisense 传感融合 + Alexa+，99.99 美元
+2026-09-18	Actxa Spark Band 亮相 IFA：22g 无屏手环以 BGEM 技术实现一分钟无创血糖趋势估算
+2026-09-18	三星 Galaxy Glasses（Intelligent Eyewear）亮相 Unpacked：Android XR 首款真智能眼镜
+2026-09-18	谷歌 Pixel Tablet 正式停产下架：安卓平板阵营再失一员，商店平板品类整体移除
+2026-09-18	华硕印度发布 2026 款 Vivobook 五机型：全金属 + 三平台 Copilot+，标称 38 小时续航
+2026-09-18	TOZO NC9 Pro AI 耳机开售：1.47 英寸触屏充电仓 + LDAC + AI 翻译对话
+2026-09-18	联想 Yoga Slim 7x 全球上市：骁龙 X2 Elite + 14 英寸 1100nit OLED + 80 TOPS NPU
+2026-09-18	Twelve South 小号 Valet 充电托盘：Qi2.2 25W 磁吸 + 纳帕皮革家居化设计，129.99 美元
+2026-09-18	三星 Galaxy Z Fold 8 Ultra 发布：首款 Ultra 折叠 + 骁龙8 Elite Gen5 for Galaxy + 钛缓震层
+2026-09-18	三星 Galaxy Watch 9 发布：首发 Snapdragon Wear Elite + 3000nit + 7 年更新
+2026-09-23	小米 18 Pro 系列发布：首发第六代骁龙 8 至尊版(2nm) + 徕卡双 2 亿 + 7000/8500mAh，6999 元起
+2026-09-23	韶音 OpenFit 2 AI 亮相云栖：Qwen 大模型 + 实时翻译 30 语种 + AI 会议总结，耳机变生产力终端
+2026-09-23	Rokid 新一代乐奇 AI 眼镜定档 9/24 数贸会：Micro LED + 衍射光波导，强化多模型 AI Agent
+2026-09-23	小米平板 9 / 9 Pro 开启预售：全系 3.2K 护眼屏，Pro 版第五代骁龙 8，2999 元起
+2026-09-23	绿联 HomeAgent 家庭 AIoT 中枢发布：本地存储 + 本地计算 + 后摩 M50 160TOPS，连接智能音箱
+2026-09-23	安克 MagGo 磁吸移动电源 2.0 曝光：Qi2.2 25W 无线充 + 内置支架 + 彩屏
+2026-09-23	华硕天选 Air 2026 锐龙 AI Max 版新配置开售：锐龙 AI Max+388 + 50TOPS NPU + 73Wh，11999 元内
+2026-09-23	vivo WATCH 6 发布：全系蓝宝石表镜 + 钛合金 37.6g + 1.47 英寸 3500nits，999 元起
+2026-09-23	华为 WATCH Ultimate 2 新色开售：非晶锆合金 + 双卫星通信 + 20 项微体检，6999 元
+2026-09-23	七彩虹灵创 K16 移动 AI 工作站：锐龙 AI Max+395 + 128GB 统一内存，本地跑大模型笔记本
+2026-09-23	小米平板 9 Pro Max 发布：13.3 英寸 3.4K + 满血玄戒 O3 + 12000mAh，4799 元起专业生产力旗舰
+2026-09-23	影目 INMO GO3 获 IFA 2026 创新奖：58g 轻量 AI HUD + 98 语种实时翻译 + 5 秒换电
+2026-09-23	华为 MatePad Air 12 英寸 OLED 柔光屏发布：麒麟 T93 + 2.8K 144Hz + 10100mAh
+2026-09-23	华为 Mate XT 2 二代三折叠发布：麒麟 9050 Pro + 10.2 英寸 3K OLED + 5600mAh，19999 元起
+2026-09-23	华为 MatePad Pro 12.2 发布：PaperMatte OLED + 麒麟 + 10100mAh + 100W，生产力旗舰
+2026-09-23	Samsung Galaxy Tab S12 Ultra 规格泄露：Dimensity 9500 + 14.6 寸 AMOLED2X 120Hz + IP68
+2026-09-23	M6 MacBook Pro 路线图：2nm 芯片秋季落地，跳过 M6 Pro/Max 聚焦 M7 AI
+2026-09-23	Apple HomePod 3 预期秋季发布：A 系芯片 + Apple Intelligence + Wi-Fi 7
+2026-09-23	Apple Vision Pro 2 (M5) 传闻：芯片能效与电池内部升级
+2026-09-23	Apple Watch Ultra 4 发售：S11 + 高血压通知首发 + 50h 续航
+2026-09-23	Bose Ultra Open Earbuds (2nd Gen) 发布：OpenAudio + Snapdragon Sound
+2026-09-23	Apple Watch Series 12 发售：S11 健康传感 + 高血压/睡眠呼吸暂停通知
+2026-09-23	OnePlus 15 印度上市：7300mAh + 120W 有线 / 50W 无线 + 165Hz
+2026-09-23	Redmagic Astra 2 全球开售：量产液冷 + 9.06 寸 OLED 185Hz 游戏平板
+2026-09-23	Apple iPhone 18 Pro 发布：A20 Pro 2nm + 可变光圈 + 新一代 VC 均热板
+2026-09-23	ASUS Zenbook A14 入选最佳 Windows 本：Snapdragon X2 Elite + 80 TOPS NPU + 27.5h
+2026-09-23	Belkin UltraCharge Pro 三合一磁力充电座上架苹果官方店：Qi2 25W
+2026-09-23	RayNeo 雷鸟 iO/GT 系列 AR 眼镜 IFA 亮相：33g MicroLED HUD + B&O 调音 + 40 国上市
+2026-09-23	Lenovo Legion Y700 AI 发布：8.4 寸 OLED + 5G 独立联网小屏游戏平板
+2026-09-23	TCL Note A1 NXTPAPER 海外评测：11.5 寸类纸护眼屏 + T-Pen Pro 主动笔
