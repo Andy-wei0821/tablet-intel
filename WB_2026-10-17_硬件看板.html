@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能终端硬件情报日报 · 2026-10-17</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --card-bg: #fff; --border: #e4e7ed;
+    --text: #303133; --text-secondary: #606266; --text-tertiary: #909399;
+    --primary: #409eff; --success: #67c23a; --warning: #e6a23c; --danger: #f56c6c; --info: #909399;
+    --tag-a: #67c23a; --tag-b: #409eff; --tag-c: #e6a23c; --tag-d: #f56c6c; --tag-e: #aa55ff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06); --shadow-hover: 0 4px 20px rgba(0,0,0,0.1); --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:20px; }
+  .container { max-width:1200px; margin:0 auto; }
+  .header { background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff; border-radius:var(--radius); padding:28px 32px; margin-bottom:20px; box-shadow:var(--shadow); }
+  .header h1 { font-size:24px; margin-bottom:8px; }
+  .header .subtitle { font-size:14px; opacity:0.9; }
+  .header .meta { display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+  .meta-badge { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:4px 14px; font-size:13px; }
+  .stats-bar { display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
+  .stat-item { background:var(--card-bg); border-radius:var(--radius); padding:14px 20px; box-shadow:var(--shadow); flex:1; min-width:140px; text-align:center; }
+  .stat-num { font-size:22px; font-weight:700; color:var(--primary); }
+  .stat-label { font-size:12px; color:var(--text-tertiary); margin-top:4px; }
+  .dim-panel { background:var(--card-bg); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .dim-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .dim-title { font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .dim-title::before { content:''; width:4px; height:18px; background:var(--success); border-radius:2px; }
+  .dim-counter { font-size:14px; color:var(--text-secondary); }
+  .dim-counter .dim-num { font-size:18px; font-weight:600; color:var(--success); }
+  .dim-counter .dim-total { color:var(--text-tertiary); }
+  .dim-bar { width:100%; height:8px; background:#f0f2f5; border-radius:4px; margin-bottom:16px; overflow:hidden; }
+  .dim-bar-fill { height:100%; background:linear-gradient(90deg,#67c23a,#95d475); border-radius:4px; transition:width 0.5s; }
+  .dim-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .dim-chip { padding:8px 12px; border-radius:8px; font-size:13px; font-weight:500; display:flex; justify-content:space-between; align-items:center; }
+  .dim-chip.on { background:#f0f9eb; border:1px solid #c2e7b0; color:#67c23a; }
+  .dim-chip.off { background:#f5f7fa; border:1px solid #e4e7ed; color:#c0c4cc; }
+  .dim-chip .dim-count { font-size:11px; opacity:0.7; font-weight:400; }
+  .summary-section { background:var(--card-bg); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .section-title { font-size:16px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .section-title::before { content:''; width:4px; height:18px; background:var(--primary); border-radius:2px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { background:#f0f2f5; padding:10px 12px; text-align:left; font-weight:600; color:var(--text-secondary); border-bottom:2px solid var(--border); white-space:nowrap; }
+  tbody td { padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:top; }
+  tbody tr:hover { background:#f5f7fa; }
+  tbody tr:last-child td { border-bottom:none; }
+  .td-title { font-weight:600; color:var(--text); }
+  .td-region { font-size:12px; font-weight:600; padding:2px 8px; border-radius:4px; white-space:nowrap; }
+  .region-cn { background:#ecf5ff; color:#409eff; }
+  .region-intl { background:#fdf6ec; color:#e6a23c; }
+  .source-tag { display:inline-block; font-size:12px; font-weight:700; padding:2px 10px; border-radius:12px; white-space:nowrap; }
+  .source-a { background:#f0f9eb; color:var(--tag-a); border:1px solid #c2e7b0; }
+  .source-b { background:#ecf5ff; color:var(--tag-b); border:1px solid #b3d8ff; }
+  .source-c { background:#fdf6ec; color:var(--tag-c); border:1px solid #f5dab1; }
+  .source-d { background:#fef0f0; color:var(--tag-d); border:1px solid #fbc4c4; }
+  .source-e { background:#f3f0ff; color:var(--tag-e); border:1px solid #d3c2ff; }
+  .status-tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; white-space:nowrap; margin-left:8px; }
+  .td-status .status-tag { margin-left:0; font-size:10px; padding:1px 6px; }
+  .status-coming { background:#ecf5ff; color:#409eff; border:1px solid #b3d8ff; }
+  .status-released { background:#f0f9eb; color:#67c23a; border:1px solid #c2e7b0; }
+  .status-progress { background:#f4f4f5; color:#909399; border:1px solid #e4e7ed; }
+  .intel-section { margin-bottom:24px; }
+  .intel-cards { display:grid; grid-template-columns:1fr; gap:16px; }
+  .intel-card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow 0.3s; border-left:4px solid var(--primary); }
+  .intel-card.cn { border-left-color:var(--tag-b); }
+  .intel-card.intl { border-left-color:var(--tag-c); }
+  .intel-card:hover { box-shadow:var(--shadow-hover); }
+  .card-header { padding:16px 20px; cursor:pointer; display:flex; align-items:flex-start; gap:12px; user-select:none; }
+  .card-num { flex-shrink:0; width:28px; height:28px; border-radius:50%; background:#f0f2f5; color:var(--text-secondary); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:2px; }
+  .intel-card.cn .card-num { background:#ecf5ff; color:var(--tag-b); }
+  .intel-card.intl .card-num { background:#fdf6ec; color:var(--tag-c); }
+  .card-title-area { flex:1; }
+  .card-title { font-size:15px; font-weight:600; color:var(--text); margin-bottom:6px; }
+  .card-badges { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .card-badges .stars { font-size:12px; color:var(--warning); letter-spacing:1px; }
+  .card-domain { font-size:12px; color:var(--text-tertiary); background:#f5f7fa; padding:2px 8px; border-radius:4px; }
+  .card-toggle { flex-shrink:0; color:var(--text-tertiary); font-size:14px; transition:transform 0.3s; margin-top:4px; }
+  .intel-card.expanded .card-toggle { transform:rotate(180deg); }
+  .card-body { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+  .intel-card.expanded .card-body { max-height:3000px; }
+  .card-content { padding:0 20px 18px 20px; border-top:1px solid var(--border); padding-top:16px; }
+  .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 20px; }
+  .field { display:flex; flex-direction:column; gap:4px; }
+  .field.full { grid-column:1 / -1; }
+  .field-label { font-size:12px; font-weight:600; color:var(--text-tertiary); letter-spacing:0.5px; }
+  .field-value { font-size:13px; color:var(--text-secondary); line-height:1.7; }
+  .field-value a { color:var(--primary); text-decoration:none; word-break:break-all; }
+  .field-value a:hover { text-decoration:underline; }
+  .field-value .tech-list { padding-left:0; list-style:none; }
+  .field-value .tech-list li { padding:2px 0; padding-left:18px; position:relative; }
+  .field-value .tech-list li::before { content:attr(data-num); position:absolute; left:0; font-weight:700; color:var(--primary); }
+  @media (max-width:768px) { .field-grid { grid-template-columns:1fr; } .dim-grid { grid-template-columns:repeat(2,1fr); } table { font-size:12px; } thead th,tbody td { padding:8px 6px; } }
+
+  html { scroll-behavior: smooth; }
+  .td-title a { color: inherit; text-decoration: none; }
+  .td-title a:hover { color: var(--primary); text-decoration: underline; }
+  .top-signals-panel { background:var(--card-bg); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .top-signals-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .top-signals-title { font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .top-signals-title::before { content:''; width:4px; height:18px; background:var(--warning); border-radius:2px; }
+  .top-signals-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+  .signal-card { background:linear-gradient(135deg,#f5f7fa,#fafafa); border-radius:8px; padding:12px 14px; border-left:3px solid var(--success); transition:box-shadow 0.3s; }
+  .signal-card:hover { box-shadow:var(--shadow-hover); }
+  .signal-card .sig-rank { display:inline-block; font-size:11px; font-weight:700; color:#fff; background:var(--success); border-radius:50%; width:18px; height:18px; text-align:center; line-height:18px; margin-right:6px; }
+  .signal-card .sig-title { font-size:13px; font-weight:600; color:var(--text); line-height:1.4; }
+  .signal-card .sig-tags { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px; margin-top:6px; }
+  .signal-card .sig-dim { font-size:11px; background:#f0f9eb; color:#67c23a; border-radius:4px; padding:1px 6px; }
+  .signal-card .sig-stars { font-size:12px; color:#e6a23c; }
+  .signal-card .sig-key { font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:4px; }
+</style>
+</head><body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>智能终端硬件情报日报 · 2026-10-17</h1>
+    <div class="subtitle">采集口径：8类智能终端（平板/手机/智能手表/AR-VR眼镜/无线充/智能音箱/笔记本电脑/AI耳机·耳穿戴） | 搜索窗口60天 | 国内15条 + 国际15条</div>
+    <div class="meta">
+      <span class="meta-badge">总情报 30条</span>
+      <span class="meta-badge">国内 15条</span>
+      <span class="meta-badge">国际 15条</span>
+      <span class="meta-badge">信源 A-E级</span>
+      <span class="meta-badge">搜索窗口 60天</span>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">30</div><div class="stat-label">总情报数</div></div>
+    <div class="stat-item"><div class="stat-num">14</div><div class="stat-label">A级信源</div></div>
+    <div class="stat-item"><div class="stat-num">11</div><div class="stat-label">B级信源</div></div>
+    <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">覆盖产品类别</div></div>
+    <div class="stat-item"><div class="stat-num">1</div><div class="stat-label">五星条数</div></div>
+  </div>
+
+  <!-- Dimension Coverage Panel -->
+  <div class="dim-panel">
+    <div class="dim-header">
+      <div class="dim-title">技术维度覆盖面板</div>
+      <div class="dim-counter"><span class="dim-num">16</span><span class="dim-total"> / 16 维度</span></div>
+    </div>
+    <div class="dim-bar"><div class="dim-bar-fill" style="width:100.0%"></div></div>
+    <div class="dim-grid">
+      <div class="dim-chip on">SoC/芯片 <span class="dim-count">19条</span></div>
+<div class="dim-chip on">显示/OLED <span class="dim-count">24条</span></div>
+<div class="dim-chip on">电池/快充 <span class="dim-count">24条</span></div>
+<div class="dim-chip on">散热 <span class="dim-count">3条</span></div>
+<div class="dim-chip on">无线通信 <span class="dim-count">18条</span></div>
+<div class="dim-chip on">音频 <span class="dim-count">17条</span></div>
+<div class="dim-chip on">摄像头 <span class="dim-count">8条</span></div>
+<div class="dim-chip on">结构/工艺 <span class="dim-count">14条</span></div>
+<div class="dim-chip on">传感器 <span class="dim-count">9条</span></div>
+<div class="dim-chip on">手写笔/触控 <span class="dim-count">2条</span></div>
+<div class="dim-chip on">生物识别 <span class="dim-count">3条</span></div>
+<div class="dim-chip on">AI/NPU <span class="dim-count">10条</span></div>
+<div class="dim-chip on">马达/触觉 <span class="dim-count">1条</span></div>
+<div class="dim-chip on">折叠屏 <span class="dim-count">1条</span></div>
+<div class="dim-chip on">BMS/电源 <span class="dim-count">2条</span></div>
+<div class="dim-chip on">认证/合规 <span class="dim-count">3条</span></div>
+    </div>
+  </div>
+
+  <!-- Top 5 Key Signals -->
+  <div class="top-signals-panel">
+    <div class="top-signals-header">
+      <div class="top-signals-title">今日重点信号 Top 5</div>
+      <div style="font-size:12px;color:var(--text-tertiary);">排序：星级降序→信源等级→状态优先→时间倒序</div>
+    </div>
+    <div class="top-signals-grid">
+                  <div class="signal-card">
+        <div><span class="sig-rank">1</span><span class="sig-title">vivo X500 Pro Max</span></div>
+        <div class="sig-tags"><span class="sig-dim">SoC/芯片</span><span class="sig-stars">★★★★★</span></div>
+        <div class="sig-key">6.85英寸2K LTPO AMOLED(1440×3168,144Hz,4400nit)、天玑9600 Pro(2nm…</div>
+      </div>
+            <div class="signal-card">
+        <div><span class="sig-rank">2</span><span class="sig-title">Lenovo Idea Tab Plus</span></div>
+        <div class="sig-tags"><span class="sig-dim">SoC/芯片</span><span class="sig-stars">★★★★</span></div>
+        <div class="sig-key">12.1英寸 2.5K(2560×1600) IPS 90Hz屏；联发科天玑6400(2×A76@2.5GHz+6×A5…</div>
+      </div>
+            <div class="signal-card">
+        <div><span class="sig-rank">3</span><span class="sig-title">微星 Prestige N16 Flip AI+</span></div>
+        <div class="sig-tags"><span class="sig-dim">SoC/芯片</span><span class="sig-stars">★★★★</span></div>
+        <div class="sig-key">16英寸UHD+(3840×2400) Tandem OLED触控屏30–120Hz VRR；NVIDIA RTX Sp…</div>
+      </div>
+            <div class="signal-card">
+        <div><span class="sig-rank">4</span><span class="sig-title">Garmin MARQ Gen 3</span></div>
+        <div class="sig-tags"><span class="sig-dim">显示/OLED</span><span class="sig-stars">★★★★</span></div>
+        <div class="sig-key">47mm Grade-5钛合金表壳；1.4英寸无边框AMOLED(454×454)峰值3000nit；128GB存储；内…</div>
+      </div>
+            <div class="signal-card">
+        <div><span class="sig-rank">5</span><span class="sig-title">安克AI会议耳机</span></div>
+        <div class="sig-tags"><span class="sig-dim">AI/NPU</span><span class="sig-stars">★★★★</span></div>
+        <div class="sig-key">深度集成飞书AI/妙记、充电盒1.78" AMOLED触屏+内置麦克风、Thus存算一体AI音频芯片、10麦克风阵列(8…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="summary-section">
+    <div class="section-title">今日概要表</div>
+    <table>
+      <thead><tr><th>#</th><th>标题</th><th>区域</th><th>领域</th><th>上市状态</th><th>信源</th><th>时间</th><th>重要度</th></tr></thead>
+      <tbody>
+<tr><td>1</td><td class="td-title"><a href="#card-1">荣耀平板X10 Mini</a></td><td><span class="td-region region-cn">国内</span></td><td>显示/OLED/电池/快充/音频/结构/工艺/认证/合规</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-b">B</span></td><td>2026-10-23</td><td>★★★★</td></tr>
+<tr><td>2</td><td class="td-title"><a href="#card-2">机械革命无界14/16 Max</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/散热/无线通信/音频/结构/工艺</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-b">B</span></td><td>2026-10-23</td><td>★★★★</td></tr>
+<tr><td>3</td><td class="td-title"><a href="#card-3">XREAL 1 Pro+</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/音频/结构/工艺</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-b">B</span></td><td>2026-10-20</td><td>★★★★</td></tr>
+<tr><td>4</td><td class="td-title"><a href="#card-4">一加Ace7 Pro</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/散热/电池/快充/摄像头/结构/工艺/马达/触觉</td><td class="td-status"><span class="status-tag status-progress">进行中</span></td><td><span class="source-tag source-b">B</span></td><td>2026-10-14</td><td>★★★★</td></tr>
+<tr><td>5</td><td class="td-title"><a href="#card-5">小米手表S5 41mm</a></td><td><span class="td-region region-cn">国内</span></td><td>显示/OLED/电池/快充/传感器/无线通信/结构/工艺</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-10-14</td><td>★★★★</td></tr>
+<tr><td>6</td><td class="td-title"><a href="#card-6">HomePod mini 2 国行</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/无线通信/音频/传感器</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-10-13</td><td>★★★★</td></tr>
+<tr><td>7</td><td class="td-title"><a href="#card-7">安克AI会议耳机</a></td><td><span class="td-region region-cn">国内</span></td><td>AI/NPU/音频/电池/快充/传感器</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-12</td><td>★★★★</td></tr>
+<tr><td>8</td><td class="td-title"><a href="#card-8">realme真我平板X</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/电池/快充/音频/摄像头/手写笔/触控</td><td class="td-status"></td><td><span class="source-tag source-d">D</span></td><td>2026-10-10</td><td>★★</td></tr>
+<tr><td>9</td><td class="td-title"><a href="#card-9">华为MateBook Fold</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/电池/快充/无线通信/音频/结构/工艺/折叠屏</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-10-08</td><td>★★★★</td></tr>
+<tr><td>10</td><td class="td-title"><a href="#card-10">vivo Pad SE 2s</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/电池/快充/音频/无线通信</td><td class="td-status"></td><td><span class="source-tag source-c">C</span></td><td>2026-10-06</td><td>★★★</td></tr>
+<tr><td>11</td><td class="td-title"><a href="#card-11">华为WATCH FIT 5 联名款</a></td><td><span class="td-region region-cn">国内</span></td><td>显示/OLED/电池/快充/传感器/结构/工艺</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-10-01</td><td>★★★</td></tr>
+<tr><td>12</td><td class="td-title"><a href="#card-12">vivo X500 Pro Max</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/电池/快充/摄像头/无线通信/结构/工艺/生物识别/AI/NPU</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-21</td><td>★★★★★</td></tr>
+<tr><td>13</td><td class="td-title"><a href="#card-13">荣耀平板GT</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/显示/OLED/电池/快充</td><td class="td-status"></td><td><span class="source-tag source-d">D</span></td><td>2026-09-16</td><td>★★</td></tr>
+<tr><td>14</td><td class="td-title"><a href="#card-14">科大讯飞AI眼镜</a></td><td><span class="td-region region-cn">国内</span></td><td>显示/OLED/AI/NPU/摄像头/音频</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-08</td><td>★★★★</td></tr>
+<tr><td>15</td><td class="td-title"><a href="#card-15">乐充V32/V32PRO</a></td><td><span class="td-region region-cn">国内</span></td><td>电池/快充/BMS/电源/认证/合规</td><td class="td-status"></td><td><span class="source-tag source-c">C</span></td><td>2026-09-02</td><td>★★★</td></tr>
+<tr><td>16</td><td class="td-title"><a href="#card-16">OPPO Pad Mini 国际版</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/摄像头/手写笔/触控</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-b">B</span></td><td>2026-10-22</td><td>★★★★</td></tr>
+<tr><td>17</td><td class="td-title"><a href="#card-17">Lenovo Idea Tab Plus</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/音频/无线通信/AI/NPU</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>2026-10-20</td><td>★★★★</td></tr>
+<tr><td>18</td><td class="td-title"><a href="#card-18">微星 Prestige N16 Flip AI+</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/无线通信/结构/工艺/AI/NPU</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>2026-10-08</td><td>★★★★</td></tr>
+<tr><td>19</td><td class="td-title"><a href="#card-19">Garmin MARQ Gen 3</a></td><td><span class="td-region region-intl">国际</span></td><td>显示/OLED/电池/快充/无线通信/结构/工艺/传感器/生物识别</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-13</td><td>★★★★</td></tr>
+<tr><td>20</td><td class="td-title"><a href="#card-20">Blackview Tab 20 WiFi</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/音频/AI/NPU</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-10</td><td>★★</td></tr>
+<tr><td>21</td><td class="td-title"><a href="#card-21">Poco F9 Ultra</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/摄像头/音频/无线通信/结构/工艺</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-03</td><td>★★★★</td></tr>
+<tr><td>22</td><td class="td-title"><a href="#card-22">UGREEN MagFlow Pro</a></td><td><span class="td-region region-intl">国际</span></td><td>电池/快充/散热/BMS/电源/认证/合规</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-01</td><td>★★★★</td></tr>
+<tr><td>23</td><td class="td-title"><a href="#card-23">HTC VIVE XR Elite 2</a></td><td><span class="td-region region-intl">国际</span></td><td>显示/OLED/电池/快充/无线通信/结构/工艺</td><td class="td-status"></td><td><span class="source-tag source-c">C</span></td><td>2026-09-30</td><td>★★★</td></tr>
+<tr><td>24</td><td class="td-title"><a href="#card-24">Sonos Beam Ultra</a></td><td><span class="td-region region-intl">国际</span></td><td>无线通信/音频/结构/工艺/传感器</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-29</td><td>★★★★</td></tr>
+<tr><td>25</td><td class="td-title"><a href="#card-25">Valve Steam Frame</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/无线通信/音频/摄像头/传感器</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-14</td><td>★★★★</td></tr>
+<tr><td>26</td><td class="td-title"><a href="#card-26">LG gram Book AI 2026</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/音频/无线通信/AI/NPU</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-07</td><td>★★★★</td></tr>
+<tr><td>27</td><td class="td-title"><a href="#card-27">Lenovo Tab Plus Gen 2</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/音频/电池/快充/无线通信/结构/工艺</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-01</td><td>★★★★</td></tr>
+<tr><td>28</td><td class="td-title"><a href="#card-28">Google Pixel 11</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/摄像头/无线通信/AI/NPU</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-08-20</td><td>★★★★</td></tr>
+<tr><td>29</td><td class="td-title"><a href="#card-29">Google Pixel Watch 5</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/显示/OLED/电池/快充/无线通信/传感器/生物识别/AI/NPU</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-08-20</td><td>★★★★</td></tr>
+<tr><td>30</td><td class="td-title"><a href="#card-30">Google Pixel Buds Pro 2</a></td><td><span class="td-region region-intl">国际</span></td><td>无线通信/音频/传感器/电池/快充/AI/NPU</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-08-12</td><td>★★★★</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Domestic Intelligence -->
+  <div class="intel-section">
+    <div class="section-title">一、国内情报（15条）</div>
+      <div class="intel-cards">
+      <div class="intel-card cn expanded" id="card-1">
+        <div class="card-header" onclick="toggleCard('card-1')">
+          <div class="card-num">1</div>
+          <div class="card-title-area">
+            <div class="card-title">荣耀平板X10 Mini</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示/OLED/电池/快充/音频/结构/工艺/认证/合规</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">9.7英寸2K LCD护眼屏(2052×1152)、90Hz、500nit、8000mAh、SGS抗摔抗压五星金标、约447g/8.48mm、售价待公布</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:9.7英寸2K LCD护眼屏,分辨率2052×1152,90Hz刷新率,峰值亮度500nit,100% sRGB色域</li><li data-num="②">电池:8000mAh大电池,官方实验室视频播放16小时、电子书21小时、待机82天</li><li data-num="③">耐用:SGS抗摔抗压五星金标认证,面向儿童学习与家庭抗磕碰场景</li><li data-num="④">音频:双扬声器立体声</li><li data-num="⑤">系统:MagicOS平板版,支持荣耀多屏协同</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">荣耀首次在X10系列加入"Mini"后缀,补齐9.7英寸中间尺寸,以8000mAh+抗摔认证切入学生、老人、通勤人群,是对经典9.7英寸定位的本土化回应。分析性判断:小尺寸平板在网课与阅读场景仍有稳定需求,但价格与未公布的处理器型号将成为购买分水岭。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商的平板产品定义有启发——在卷大屏之外,可围绕"便携+耐用+护眼"做差异化细分,针对家庭多成员(儿童/老人)场景强化抗摔与长续航,而非单纯堆参数。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">荣耀 / 荣耀平板X10 Mini</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-23</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://m.toutiao.com/article/7693891037969842749" target="_blank">今日头条</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">今日头条、荣耀之家(荣耀官网预约页)</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">处理器型号、存储组合、充电功率、重量厚度与售价官方尚未公布,待首销日(2026-10-23)印证。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-2">
+        <div class="card-header" onclick="toggleCard('card-2')">
+          <div class="card-num">2</div>
+          <div class="card-title-area">
+            <div class="card-title">机械革命无界14/16 Max</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/散热/无线通信/音频/结构/工艺</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新品曝光</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">英特尔酷睿Ultra 200V(Lunar Lake)、全镁合金14.9mm、14"约1.0kg(72Wh)/16"约1.25kg(80Wh)、14" 2.8K 120Hz 500nit/16" 2.5K 120Hz 400nit、16GB LPDDR5X+1TB、5799元起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">平台:英特尔酷睿Ultra 200V(Lunar Lake),3nm,Ultra5 226V/Ultra7 256V,NPU AI算力40–47 TOPS</li><li data-num="②">机身:全镁合金,薄至14.9mm,14"约1.0kg/16"约1.25kg</li><li data-num="③">屏幕:14" 2880×1800 120Hz 500nit;16" 2560×1600 120Hz 400nit,高色域雾面</li><li data-num="④">散热与音频:双热管双风扇,双高音双低音4扬声器,Wi-Fi 6</li><li data-num="⑤">接口:2×雷电4、3×USB-A、HDMI 2.1、3.5mm,电源键指纹;统一16GB LPDDR5X-8533+1TB SSD</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">机械革命无界Max以全镁合金+1kg级重量+Lunar Lake低功耗平台切入轻薄本市场,14/16双尺寸覆盖便携与全能需求,5799元起主打高性价比轻薄生产力。分析性判断:Lunar Lake的能效比让"轻薄+长续航+AI"成为2026轻薄本主流配方,国产厂商借全金属机身与价格快速跟进。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商轻薄本定义的启发——以"全镁/全金属轻量化+低功耗平台+高刷高亮屏+丰富接口"组合做性价比轻薄本,AI NPU算力可作为办公卖点而不必堆独显。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">机械革命 / 无界14 Max / 无界16 Max</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-23</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://digi.china.com/digi/20261016/202610161966055.html" target="_blank">IT之家</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">IT之家、中华网数码、腾讯新闻</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">10月16日上架,10月23日00:00开售;16GB内存为板载不可扩,选购需注意。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-3">
+        <div class="card-header" onclick="toggleCard('card-3')">
+          <div class="card-num">3</div>
+          <div class="card-title-area">
+            <div class="card-title">XREAL 1 Pro+</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/音频/结构/工艺</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（4）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">双0.55英寸索尼Micro-OLED(1920×1080/眼)、峰值1200nit、120Hz、57°FOV、X1空间计算芯片、3DOF(配Eye达6DOF)、Sound by Bose、$599</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示:双0.55英寸索尼Micro-OLED,每眼1920×1080,峰值1200nit(较上代700nit提升),120Hz</li><li data-num="②">视场:57°FOV,虚拟屏34–556英寸,电致变色调光</li><li data-num="③">芯片:XREAL X1空间计算芯片,3ms M2P延迟,原生3DOF(配Eye配件6DOF)</li><li data-num="④">2D转3D:自动2D→3D转换提升至60fps,新增AI HDR与标准/电影/阅读三模式</li><li data-num="⑤">音频与连接:Sound by Bose双扬声器,USB-C DP Alt Mode直连手机/电脑/游戏机</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">XREAL 1 Pro+是XREAL One Pro的硬件迭代,把峰值亮度从700nit提升到1200nit并加入AI HDR与60fps 2D转3D,巩固其在Birdbath AR眼镜的画质与舒适度领先;售价维持599美元,性价比突出。分析性判断:AR眼镜正向"更亮、更舒适、空间计算芯片自研"演进,但分辨率(1080p/眼)与FOV仍是体验天花板。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商XR产品定义的启发——AR眼镜应以"自研空间计算芯片+高亮Micro-OLED+舒适人体工学"构建护城河,并靠外接直连(DP Alt Mode)降低整机复杂度,而非追求独立算力。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">XREAL / XREAL 1 Pro+</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-20</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.gsmarena.com/xreal_1_pro_launches_with_brighter_display_and_same_price_as_predecessor-news-75072.php" target="_blank">XREAL官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">XREAL官网、GSMArena、Road to VR、Notebookcheck</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">美国2026-10-15/16开售、Amazon 10-29;表中2026-10-20疑为国内/渠道到货节点;需外接设备,非独立一体机。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-4">
+        <div class="card-header" onclick="toggleCard('card-4')">
+          <div class="card-num">4</div>
+          <div class="card-title-area">
+            <div class="card-title">一加Ace7 Pro</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/散热/电池/快充/摄像头/结构/工艺/马达/触觉</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-progress">进行中</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">规格泄露</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">6.78英寸1.5K直屏(185Hz)、第五代骁龙8至尊版(骁龙8 Elite Gen5)、9000mAh级+百瓦有线、2亿主摄+5000万潜望长焦、内置主动散热风扇(双路出风)、预计4000元上下</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:6.78英寸1.5K直屏,支持185Hz超高刷(全局165Hz)</li><li data-num="②">芯片:第五代骁龙8至尊版(骁龙8 Elite Gen5),工程机顶配16GB+1TB</li><li data-num="③">散热:行业首发双路出风主动散热风扇架构,配AI温控传感器,横握热风侧出、冷风下吸</li><li data-num="④">影像:2亿像素主摄+5000万像素潜望长焦</li><li data-num="⑤">其他:9000mAh级电池+百瓦有线、IP68/69防水、红外、NFC、X轴马达、立体双扬</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">一加Ace7 Pro以"内置主动散热风扇+双路出风"做性能差异化,试图让骁龙8 Elite Gen5发挥接近Gen6的性能,是手机主动散热路线的回归与升级;配合185Hz高刷与2亿像素主摄,瞄准高性能游戏与性价比旗舰市场。分析性判断:主动散热能否兼顾噪音与防尘、并真正拉动持续性能,将是Ace系列此次突围的关键变量。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商游戏手机/性能机定义的启发——在芯片制程红利放缓背景下,结构性散热创新(主动风扇、多风道)可能成为性能释放的新抓手,但需平衡厚度、噪音与可靠性。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">一加 / 一加Ace7 Pro</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-14</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://news.qq.com/rain/a/20261014A05JAY00" target="_blank">数码闲聊站(微博爆料)</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">数码闲聊站(微博爆料)、腾讯新闻、快科技、新浪科技</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">截至检索日一加官方未官宣,以上均为数码闲聊站等爆料信息,发布时间与售价待官方确认;芯片命名(第五代骁龙8至尊版/骁龙8 Elite Gen5)以爆料为准。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-5">
+        <div class="card-header" onclick="toggleCard('card-5')">
+          <div class="card-num">5</div>
+          <div class="card-title-area">
+            <div class="card-title">小米手表S5 41mm</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示/OLED/电池/快充/传感器/无线通信/结构/工艺</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市(新尺寸)</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">1.32英寸AMOLED(466×466,3000nit)、590mAh、14天续航、36g/9.9mm、HyperOS 4、女性健康/三腕温传感器、5ATM、NFC、BT5.4、国行约1019元起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:1.32英寸AMOLED,466×466,全局1500nit/峰值3000nit,60Hz</li><li data-num="②">续航:590mAh,至长14天/常规8天/AOD 5天</li><li data-num="③">健康:三颗腕温传感器布局,精准预测女性生理周期;心率/血氧/压力/睡眠监测</li><li data-num="④">轻薄:不锈钢+陶瓷表圈,约36g/9.9mm</li><li data-num="⑤">连接:双频GNSS(L1+L5)、蓝牙5.4、Wi-Fi、NFC、5ATM防水、表端超级小爱</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">小米Watch S5 41mm是在46mm版本之外推出的更小表径女性向/轻量款,以3000nit阳光屏+三腕温传感器+14天续航主打专业女性健康与日常佩戴,补齐小米手表尺寸矩阵。分析性判断:在Apple Watch SE与华为WATCH GT小表径竞争下,女性健康(生理周期/UVA-UVB提示)是国产手表差异化突破口。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商手表产品定义的启发——以"小表径+轻量+女性健康(腕温周期预测)"做细分人群覆盖,配合长续航与生态联动,可避开与旗舰大表的参数内卷。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">小米 / Xiaomi Watch S5 41mm (M2606W1)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-14</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.mi.com/prod/xiaomi-watch-s5-41mm/specs" target="_blank">小米官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">小米官网、京东、China-Gadgets</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">透明版(47mm)随18 Pro套装发布,规格略有不同;国行常规款约1019元起,补贴后更低。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-6">
+        <div class="card-header" onclick="toggleCard('card-6')">
+          <div class="card-num">6</div>
+          <div class="card-title-area">
+            <div class="card-title">HomePod mini 2 国行</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/无线通信/音频/传感器</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">S10芯片、360度音频+全频单元双无源辐射器、Wi-Fi 6E/蓝牙6、五种配色、Sound Glow灯效、温湿度检测、国行1099元、10月30日发售</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片:Apple S10芯片,计算音频实时优化动态范围/响度/声学</li><li data-num="②">音频:全频驱动单元+双无源辐射器,360度环绕声,支持立体声配对与多房间</li><li data-num="③">连接:Wi-Fi 6E、蓝牙6(国行标Wi-Fi 6),20W USB-C电源</li><li data-num="④">新特性:Sound Glow顶部律动灯效、声音识别(烟雾/CO警报)、温湿度检测</li><li data-num="⑤">AI:后续免费固件更新引入Siri AI(国行首发暂不支持)</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">HomePod mini 2是苹果时隔6年的迷你音箱换代,芯片从S5升级到S10、新增Sound Glow灯效与Wi-Fi 6E/蓝牙6,国行1099元且为本次发布会唯一同步登陆国内的新品,承担智能家居中枢与Mac默认音箱角色。分析性判断:在智能音箱全球增长放缓下,苹果以"芯片换代+灯效+生态中枢"维持溢价,而Siri AI的国行缺席仍是本土体验短板。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商智能音箱定义的启发——音箱应超越播放器,向"家庭中枢+传感(温湿度/声音识别)+灯光交互+多设备环绕"演进,并以生态绑定提升替换成本。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Apple / HomePod mini 2</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-13</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.apple.com.cn/newsroom/2026/10/apple-announces-the-next-generation-of-homepod-mini" target="_blank">Apple官网新闻稿</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Apple官网新闻稿、太平洋科技、新浪科技</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">国行10月13日预购、10月30日发售;Siri AI需后续固件、首发仅英语且不含大陆/香港;HomeView与Apple TV 4K未在国内发售。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-7">
+        <div class="card-header" onclick="toggleCard('card-7')">
+          <div class="card-num">7</div>
+          <div class="card-title-area">
+            <div class="card-title">安克AI会议耳机</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/音频/电池/快充/传感器</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">深度集成飞书AI/妙记、充电盒1.78" AMOLED触屏+内置麦克风、Thus存算一体AI音频芯片、10麦克风阵列(8 MEMS+2骨传导)、LDAC/杜比全景声、50小时续航、1799元</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">AI录音:深度集成飞书AI与飞书妙记,耳机/充电盒双端全场景录音,兼容飞书/钉钉/腾讯会议/Teams,自动转写+24语翻译+结构化纪要</li><li data-num="②">芯片:安克首款自研Thus存算一体AI音频芯片,算力较上代声阔旗舰提升150倍,端侧消噪</li><li data-num="③">收音:10麦克风阵列(8 MEMS+2骨传导),获吉尼斯"全球通话最清晰"认证</li><li data-num="④">充电盒:1.78英寸AMOLED触控屏,可操控降噪/录音/遥控拍照,内置麦克风支持免佩戴录制</li><li data-num="⑤">音频与续航:Adaptive ANC 4.0、杜比全景声+头部追踪、LDAC,综合续航50小时,支持无线充电</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">安克AI会议耳机是安克与飞书深度绑定的办公AI硬件,把"录音豆"能力装进耳机,以自研Thus存算一体芯片+10麦克风阵列+带屏充电盒切入会议记录与翻译场景,定价1799元。分析性判断:在Plaud式AI录音硬件爆发后,安克选择"绑飞书生态+耳机形态"做办公入口,反映AI硬件从工具向生产力平台收敛。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商耳穿戴定义的启发——AI耳机应以"场景化录音/转写+自研端侧音频芯片+生态绑定"定义价值,带屏充电盒与多麦克风阵列可成为会议/翻译差异化支点。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">安克(ANKER) / 安克AI会议耳机 (D1204P12)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-12</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://new.qq.com/rain/a/20261012A06MU800" target="_blank">安克京东旗舰店</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">安克京东旗舰店、腾讯新闻、网易</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">预售价1799元,曜石黑/香槟金;飞书版为独家支持;本产品为安卓/iOS通用蓝牙耳机+飞书生态,与Siri/国行AI无关。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-8">
+        <div class="card-header" onclick="toggleCard('card-8')">
+          <div class="card-num">8</div>
+          <div class="card-title-area">
+            <div class="card-title">realme真我平板X</div>
+            <div class="card-badges">
+              <span class="source-tag source-d">D</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/音频/摄像头/手写笔/触控</span>
+              <span class="stars">★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">11英寸2K LCD(2000×1200)、骁龙695 5G、8340mAh+33W、499g/7.1mm、四扬声器杜比全景声、realme UI for Pad、4+64/6+128</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:11英寸2K LCD,2000×1200,84.6%屏占比,峰值450nit,莱茵低蓝光</li><li data-num="②">芯片:骁龙695 5G(6nm),2×A78+6×A55</li><li data-num="③">电池:8340mAh+33W Dart闪充,支持反向充电</li><li data-num="④">音频:四扬声器,杜比全景声,Hi-Res认证</li><li data-num="⑤">影像与互联:后置13MP+前8MP 105°广角人像居中,支持realme Pencil磁吸充电、跨屏互联</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">realme真我平板X是realme面向中端影音与轻办公的11英寸平板,以骁龙695 5G+8340mAh+杜比四扬声器主打性价比大屏体验,并配套磁吸手写笔。分析性判断:该机型实为较早发布的在售型号,当前竞争力主要来自价格与生态而非硬件迭代。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商的启示在于:中端平板应以"大屏影音+长续航+手写笔生态"打包,而非单点堆料;但老型号长期在售会稀释产品线的更新节奏与品牌技术形象。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">realme / 真我平板X (RMP2108)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-10</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.realme.com/realme-padx/specs" target="_blank">realme官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">realme官网、百度百科、realme海外官网</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">该机型实为较早发布的在售产品(海外2022年、国内约2024年上市),表中日期2026-10-10疑为在售/补录节点,非首发;当前仍以官方在售页可查,芯片与参数均为真实在售规格。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-9">
+        <div class="card-header" onclick="toggleCard('card-9')">
+          <div class="card-num">9</div>
+          <div class="card-title-area">
+            <div class="card-title">华为MateBook Fold</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/无线通信/音频/结构/工艺/折叠屏</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">18英寸双层OLED(3296×2472,1600nit,90Hz)、麒麟X90 Plus、HarmonyOS 6.1、32GB/2TB、74.69Wh、1.16kg、国行约19499元起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:18英寸展开/13英寸折叠双层OLED柔性屏,3296×2472,峰值1600nit,92%屏占比,自适应刷新</li><li data-num="②">芯片:麒麟X90 Plus处理器,鸿蒙HarmonyOS 6.1</li><li data-num="③">铰链:玄武水滴铰链,30°–150°多角度悬停,展开薄至7.3mm</li><li data-num="④">音频与交互:高低音分频6扬声器,鸿蒙AI(小艺慧记/文档助理),跨设备碰一碰</li><li data-num="⑤">续航与接口:74.69Wh电池,2×USB-C(DP),Wi-Fi 6,约1.16kg</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">华为MateBook Fold是华为鸿蒙折叠电脑旗舰,以18英寸双层OLED+玄武水滴铰链+麒麟X90 Plus定义国产折叠PC天花板,对标联想Yoga Book等折叠形态。分析性判断:鸿蒙+自研芯片+折叠形态的组合,是华为在PC受限环境下的全栈自主路线展示,也推动折叠屏从手机向生产力设备扩展。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商笔记本产品定义的启发——折叠PC需同时突破"柔性屏良率+铰链寿命+轻薄散热+系统适配"四道门槛,鸿蒙全场景协同可作为差异化体验锚点。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">华为 / HUAWEI MateBook Fold 非凡大师 (HPR-W72/SLM-W32)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-08</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://consumer.huawei.com/cn/harmonyos-computer/matebook-fold-ultimate-design/specs" target="_blank">华为官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">华为官网、京东、天猫</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">该机首发于2025-05-19、2025-06-06上市,表中2026-10-08疑为在售/补录节点;新款搭载麒麟X90 Plus,旧款为麒麟X90。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-10">
+        <div class="card-header" onclick="toggleCard('card-10')">
+          <div class="card-num">10</div>
+          <div class="card-title-area">
+            <div class="card-title">vivo Pad SE 2s</div>
+            <div class="card-badges">
+              <span class="source-tag source-c">C</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/音频/无线通信</span>
+              <span class="stars">★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">12.3英寸2.5K LCD护眼柔光屏(90Hz)、骁龙4 Gen2、8500mAh、15W充电、559g/6.8mm、Android15/OriginOS 5、6+128至8+256、国行约1559-1699元</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:12.3英寸2.5K LCD护眼柔光屏,90Hz刷新率</li><li data-num="②">芯片:高通骁龙4 Gen2八核(4nm)</li><li data-num="③">电池:8500mAh,标配15W充电</li><li data-num="④">音频:4扬声器+多场景音效调试</li><li data-num="⑤">连接与系统:Wi-Fi 5、蓝牙4.2、Type-C接口,搭载OriginOS 5平板定制系统</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">vivo Pad SE 2s定位学生与家庭入门大屏平板,以12.3英寸2.5K柔光屏+8500mAh长续航+远程家长管控切入教育场景,延续SE系列性价比路线。分析性判断:在千元级学习平板市场,护眼柔光屏与系统级家长管控是比芯片更直接的卖点。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商的入门平板有参照意义——以"护眼柔光+长续航+家长管控"组合做家庭学习场景定义,弱化芯片参数、强化耐用与系统管控,贴合下沉与教育体系需求。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">vivo / vivo Pad SE 2s (认证型号PA2511)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-06</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://shop.vivo.com.cn/product/10069388?spuId=10069388&amp;skuId=257917" target="_blank">vivo官方商城</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">vivo官方商城、京东、51menmen</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">能效网备案上市时间为2026-09,与表中2026-10-06略有差异;充电规格15W、蓝牙4.2为入门配置,已上市可购。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-11">
+        <div class="card-header" onclick="toggleCard('card-11')">
+          <div class="card-num">11</div>
+          <div class="card-title-area">
+            <div class="card-title">华为WATCH FIT 5 联名款</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示/OLED/电池/快充/传感器/结构/工艺</span>
+              <span class="stars">★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市(联名款)</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">1.82英寸AMOLED(2500nit)、27g/9.5mm、10天续航+无线快充、×泡泡玛特Hirono小野联名、情绪健康联动表盘、国行1199元</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:1.82英寸AMOLED高清屏,峰值2500nit</li><li data-num="②">轻薄:约27g机身,9.5mm纤薄</li><li data-num="③">续航:10天轻度/7天常规/4天AOD,支持无线快充</li><li data-num="④">联名:与POP MART旗下Hirono小野推出专属联名款,表带表盘融入小野元素,联动情绪健康监测</li><li data-num="⑤">健康:腕上微运动(10部位30组动作)、睡眠/心率/血氧监测,兼容iOS与Android</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">华为WATCH FIT 5小野联名款是华为在轻智能手表品类用IP联名撬动年轻与女性用户的典型打法,将Hirono小野情绪IP与情绪健康表盘结合,延续FIT系列"轻薄长续航+大屏"的大众定位。分析性判断:智能手表增长趋缓下,IP联名与情绪健康叙事成为差异化与溢价的新抓手。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商可穿戴产品定义的启发——入门/轻智能手表可通过IP联名+情绪/女性健康叙事提升溢价与年轻化触达,而非仅靠硬件参数竞争。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">华为 / HUAWEI WATCH FIT 5(小野联名款)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-01</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://consumer.huawei.com/cn/wearables/watch-fit5/" target="_blank">华为官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">华为官网、华为支持购买指引</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">联名款预售2026.9.24、正式开售时间以华为官网为准;表中2026-10-01更接近FIT 5 Pro开售节点;基础款1099元、小野联名1199元。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-12">
+        <div class="card-header" onclick="toggleCard('card-12')">
+          <div class="card-num">12</div>
+          <div class="card-title-area">
+            <div class="card-title">vivo X500 Pro Max</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/摄像头/无线通信/结构/工艺/生物识别/AI/NPU</span>
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（4）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">6.85英寸2K LTPO AMOLED(1440×3168,144Hz,4400nit)、天玑9600 Pro(2nm)、8000mAh+90W有线/40W无线、200MP潜望长焦+50MP主摄+50MP超广角、50MP前摄、国行6999元起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:6.85英寸BOE Q11 2K LTPO AMOLED,1-144Hz自适应,峰值4400nit,Armor Glass</li><li data-num="②">芯片:联发科天玑9600 Pro(2nm),Mali-G2-Ultra-NX,搭载V3+/VS1自研影像芯片</li><li data-num="③">影像:50MP 1/1.28"主摄+200MP 1/1.4"蔡司APO潜望长焦(3.5x/CIPA7.0)+50MP超广角,8K视频</li><li data-num="④">电池:8000mAh,90W有线+40W无线</li><li data-num="⑤">其他:IP68/69、超声波屏下指纹、Wi-Fi 7、卫星通信(1TB版)、OriginOS 7(Android 17)</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">vivo X500 Pro Max是X500系列旗舰,全球首发联发科2nm天玑9600 Pro,以8000mAh大电池+200MP蔡司APO潜望长焦+2K LTPO屏定义2026年影像旗舰天花板,直接对标华为、小米、苹果Ultra机型。分析性判断:2nm芯片+8000mAh的组合反映旗舰机在算力与续航上的双突破,蔡司光学与8K视频强化影像专业定位。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等终端厂商的旗舰定义有标杆意义——影像旗舰需同时押注"大底主摄+高倍潜望+自研影像芯片+大电池",并将2nm平台与长续航作为下一代旗舰核心卖点。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">vivo / vivo X500 Pro Max (V2602A)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-21</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.vivo.com.cn/vivo/param/x500promax" target="_blank">vivo官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">vivo官网、GSMArena、太平洋科技</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">卫星通信仅限1TB版本;国行价格6999元起,创作者套装版12999元;发布2026-09-21,开售2026-09-24。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-13">
+        <div class="card-header" onclick="toggleCard('card-13')">
+          <div class="card-num">13</div>
+          <div class="card-title-area">
+            <div class="card-title">荣耀平板GT</div>
+            <div class="card-badges">
+              <span class="source-tag source-d">D</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充</span>
+              <span class="stars">★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">11.5英寸2.8K LCD(2800×1840)、144Hz、天玑8350至尊版、10100mAh、MagicOS 9、480g/6.12mm、8+128至12+512</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">屏幕:11.5英寸2.8K LCD,2800×1840,144Hz刷新率,500nit,1500:1对比度</li><li data-num="②">芯片:联发科天玑8350至尊版(8核)</li><li data-num="③">电池:10100mAh典型容量,支持快充</li><li data-num="④">系统:MagicOS 9.0(Android 15)</li><li data-num="⑤">连接:Wi-Fi 6、蓝牙5.2(LDAC/aptX HD)</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">荣耀平板GT以11.5英寸2.8K 144Hz电竞屏+天玑8350至尊版+10100mAh切入游戏/性能平板细分,对标红魔、iQOO等。分析性判断:该型号实为2025年4月上市的在售产品,表中日期疑为补录/在售节点,性能平板赛道靠高刷屏+大电池+中端芯走量,性价比仍是核心。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商的启示:游戏平板可用"高刷LCD+大电池+中端旗舰芯"组合做差异化,避免与旗舰OLED平板正面价格战,覆盖学生游戏与影音混合需求。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">荣耀 / 荣耀平板GT (ROL-W60)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-16</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.honor.com/cn/tablets/honor-pad-gt/spec/" target="_blank">荣耀官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">荣耀官网、京东、天猫</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">该机实际上市时间为2025-04-23,表中2026-09-16疑为在售/补录节点;参数为官方在售真实规格。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-14">
+        <div class="card-header" onclick="toggleCard('card-14')">
+          <div class="card-num">14</div>
+          <div class="card-title-area">
+            <div class="card-title">科大讯飞AI眼镜</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">显示/OLED/AI/NPU/摄像头/音频</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">双目单色显示、40g、122种语言翻译、8核AI芯片(30 TOPS)、1200万像素摄像、6麦克风+骨传导、64GB、4299元</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示:双目单色树脂波导显示,入眼亮度1500nit,视场角25°,分辨率640×480</li><li data-num="②">AI芯片:内置8核AI芯片,约30 TOPS算力,端侧多模态降噪</li><li data-num="③">翻译:支持122种语言(含口音)实时翻译,中英同传延迟0.8秒,内置17个行业词库</li><li data-num="④">影像与音频:1200万像素摄像头,6麦克风阵列+骨传导/定向传声,综合续航6小时</li><li data-num="⑤">充电与重量:整机约40g,支持数据线直充/充电胶囊/充电镜盒三种方式</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">科大讯飞AI眼镜是其"自主可控、软硬一体、多语种"战略在消费端的落子,以40g超轻机身+122种语言实时翻译+GlassClaw AI助理主打跨国会议与商务场景,是国内AI眼镜中翻译能力最完整的产品之一。分析性判断:在Meta/雷朋引领的AI眼镜浪潮下,讯飞凭借语音与大模型优势走"翻译+提词+助理"差异化,避开纯显示内卷。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商AI眼镜定义的启发——应优先以自身AI能力(语音/翻译/助理)定义场景价值,而非盲目堆显示参数;轻量化(40g级)与多模态降噪是佩戴可接受的前提。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">科大讯飞 / 科大讯飞AI眼镜 (XF-AIGlasses-01)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-08</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://ah.people.com.cn/BIG5/n2/2026/0528/c227767-41594157.html" target="_blank">人民网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">人民网、百度百科、京东</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">实际于2026-05-28在BEYOND Expo发布、6月15日预售,表中2026-09-08疑为国行渠道大规模上市节点;售价4299元。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card cn" id="card-15">
+        <div class="card-header" onclick="toggleCard('card-15')">
+          <div class="card-num">15</div>
+          <div class="card-title-area">
+            <div class="card-title">乐充V32/V32PRO</div>
+            <div class="card-badges">
+              <span class="source-tag source-c">C</span>
+              <span class="card-domain">电池/快充/BMS/电源/认证/合规</span>
+              <span class="stars">★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新品曝光</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">二合一磁吸无线充、Qi2 25W(MPP25)+5W手表充、板线分离散热设计、LECHONG品牌、Qi ID 27708、已获WPC认证</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">协议:通过WPC Qi2 25W(MPP25)认证,Qi ID 27708,认证版本2.2.1</li><li data-num="②">结构:板线分离设计,部分PCB移至线材中段金属壳,分散热源降低手机背部温升</li><li data-num="③">组合:手机磁吸无线充(Qi2 25W)+5W手表无线充二合一</li><li data-num="④">输入:USB-C统一输入</li><li data-num="⑤">定位:深圳乐充科技出品,面向低温快充/高效稳定/成本优化,提供OEM/ODM服务</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">乐充V32/V32PRO是首批采用"板线分离"结构落地Qi2 25W的二合一磁吸无线充,通过把部分电路移到线材中段金属壳来分散热源,解决高功率磁吸无线充发热降速痛点。分析性判断:Qi2 25W(由15W提升)普及下,散热结构与成本控制成为配件厂差异化关键,板线分离是务实工程解法。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对TCL等厂商配件/终端定义的启发——在为手机/手表配套无线充时,可借鉴板线分离思路解决高功率散热,并以Qi2 25W+手表二合一提升桌面充电整合度。(分析性判断)</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">乐充(LECHONG) / V32/V32PRO</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-02</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.chongdiantou.com/archives/1788252309609.html" target="_blank">充电头网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">充电头网、WPC无线充电联盟认证库</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">WPC认证日期为2026-08-28(Qi ID 27708);表中2026-09-02疑为媒体曝光/上市节点;具体零售价与是否含充电头待印证。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+
+  <!-- International Intelligence -->
+  <div class="intel-section">
+    <div class="section-title">二、国际情报（15条）</div>
+      <div class="intel-cards">
+      <div class="intel-card intl" id="card-16">
+        <div class="card-header" onclick="toggleCard('card-16')">
+          <div class="card-num">16</div>
+          <div class="card-title-area">
+            <div class="card-title">OPPO Pad Mini 国际版</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/摄像头/手写笔/触控</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">8.8英寸AMOLED 2.5K(2520×1680) 144Hz屏(国行数据)；骁龙8 Gen 5；8000mAh+67W；13MP+8MP；将于2026-10-22在马来西亚等市场全球发布；国行约3999元起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：高通骁龙8 Gen 5旗舰平台(国行版)</li><li data-num="②">显示：8.8英寸AMOLED，2520×1680，144Hz，柔光/抗反射版</li><li data-num="③">电池：8000mAh，支持67W有线快充</li><li data-num="④">影像：13MP后置+8MP前置</li><li data-num="⑤">互联：支持OPPO Pencil 3 / Pencil 3 Pro主动笔，多市场认证(SIRIM/BIS/IMDA)</li><li data-num="⑥">系统：ColorOS，国行搭载AI能力(全球版待印证)</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">OPPO把骁龙8 Gen 5旗舰芯塞进8.8英寸小屏平板，直接对标iPad mini，是安卓阵营罕见的高性能小尺寸平板；全球版10月22日发售说明国产旗舰平板加速出海，与三星、Lenovo Legion Tab争夺“小屏高性能”细分市场。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该机定义“小尺寸+旗舰芯+柔光屏”的产品形态，证明紧凑型高性能安卓平板仍有需求缺口，对同类厂商在小屏平板上的芯片与显示投入有直接启发。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">OPPO / Pad Mini (Matte Display Edition / 国际版)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-22</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.notebookcheck.net/Oppo-confirms-global-release-for-compact-high-end-tablet.1419249.0.html" target="_blank">NotebookCheck</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">NotebookCheck、GizmoIndo、OPPO马来西亚官网</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">全球版最终规格/价格尚未完全公布，芯片与电池沿用国行数据；柔光版型号OPD2516</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-17">
+        <div class="card-header" onclick="toggleCard('card-17')">
+          <div class="card-num">17</div>
+          <div class="card-title-area">
+            <div class="card-title">Lenovo Idea Tab Plus</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/音频/无线通信/AI/NPU</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">12.1英寸 2.5K(2560×1600) IPS 90Hz屏；联发科天玑6400(2×A76@2.5GHz+6×A55@2.0GHz)；Android 15；最高12GB LPDDR4X+256GB UFS 2.2；10200mAh电池+45W快充；Dolby Atmos四扬声器；5G版可选；约530g/6.29mm</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：联发科天玑6400八核处理器，Mali-G57 MC2 GPU</li><li data-num="②">显示：12.1英寸2.5K(2560×1600) IPS触控屏，90Hz刷新，600/800nit(HBM)，96% DCI-P3</li><li data-num="③">电池：10200mAh双电芯，45W快充，YouTube续航约13小时</li><li data-num="④">音频：Dolby Atmos调校四扬声器，双麦克风</li><li data-num="⑤">连接：Wi-Fi 5(802.11ac)+蓝牙5.2，可选5G LTE，microSD扩展至2TB</li><li data-num="⑥">AI：内置Lenovo AI Notes与Google Gemini，支持Smart Connect</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Lenovo在平价学生平板市场以“AI+5G+轻薄”组合切入，12.1英寸2.5K屏配天玑6400与AI笔记，正面竞争三星Galaxy Tab A系列与国产平价平板；将旗舰级AI写作/摘要能力下放到中端价位，反映2026年平板“AI普惠化”趋势。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对学生平板形态而言，正从“大屏影音”转向“AI学习伴侣”，Tab Pen+键盘+AI Notes的组合定义了中端安卓平板“生产力+学习”双场景产品定义，值得同类厂商借鉴。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Lenovo / Idea Tab Plus</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-20</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://psref.lenovo.com/Detail/Idea_Tab_Plus?M=ZAG71141PL" target="_blank">Lenovo官网PSREF</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Lenovo官网PSREF、Lenovo香港商城</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">已确认WLAN与5G两个SKU；具体国际上市价格与配置以各地官网为准</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-18">
+        <div class="card-header" onclick="toggleCard('card-18')">
+          <div class="card-num">18</div>
+          <div class="card-title-area">
+            <div class="card-title">微星 Prestige N16 Flip AI+</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/无线通信/结构/工艺/AI/NPU</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">16英寸UHD+(3840×2400) Tandem OLED触控屏30–120Hz VRR；NVIDIA RTX Spark N1X(6144核GPU+20核CPU)；最高128GB LPDDR5x；2TB SSD；99.9Wh+140W；Wi-Fi 7+BT5.4；Windows 11 Pro；翻转二合一；约1.9kg；NT$139,900起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：NVIDIA RTX Spark N1X平台(6144核Blackwell GPU+20核CPU)</li><li data-num="②">显示：16英寸UHD+ Tandem OLED，3840×2400，30–120Hz VRR，100% DCI-P3，DisplayHDR True Black 1000，支持Nano Pen</li><li data-num="③">内存/存储：板载LPDDR5x最高128GB，2TB NVMe PCIe Gen4 SSD</li><li data-num="④">电池：99.9Wh大容量，140W USB-C PD 3.1快充</li><li data-num="⑤">连接：Wi-Fi 7、蓝牙5.4；2×USB4(雷电4兼容)+2×USB-A+HDMI 2.1(8K120)+SD</li><li data-num="⑥">形态/安全：360°翻转二合一，dTPM 2.0+指纹+IR摄像头+Copilot键</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">微星Prestige N16 Flip AI+是首批搭载NVIDIA RTX Spark的笔记本，把“Blackwell GPU+20核CPU”整合进1.9kg翻转本，代表2026年AI PC从“NPU轻量”迈向“独立GPU级本地算力”的转折，直接服务创作者/开发者离线大模型工作流。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该机以“翻转二合一+桌面级RTX Spark”重新定义高端创作本形态，证明轻薄本也可承载本地大模型训练/推理，为同类厂商在AI笔记本的算力与形态融合提供新范式。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">MSI / Prestige N16 Flip AI+</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-08</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://tw.msi.com/news/detail/MSI-Unveils-Prestige-N16-Flip-AI---An-NVIDIA-RTX-Spark-Powered-2-in-1-Built-for-the-Agentic-AI-Era-150008" target="_blank">微星官网新闻稿</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">微星官网新闻稿、微星香港/全球页</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">RTX Spark N1X为新平台，具体CPU/GPU规格以NVIDIA官方为准；价格以台版NT$为准，各地区不同</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-19">
+        <div class="card-header" onclick="toggleCard('card-19')">
+          <div class="card-num">19</div>
+          <div class="card-title-area">
+            <div class="card-title">Garmin MARQ Gen 3</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">显示/OLED/电池/快充/无线通信/结构/工艺/传感器/生物识别</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">迭代更新</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">47mm Grade-5钛合金表壳；1.4英寸无边框AMOLED(454×454)峰值3000nit；128GB存储；内置LTE+卫星inReach；扬声器/麦克风；LED手电；Elevate Gen 5心率+ECG；10 ATM/40m潜水；续航智能模式18天；六款$2500–$3100</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片/存储：内置LTE与卫星inReach模块，128GB存储(较前代32GB翻倍)</li><li data-num="②">显示：1.4英寸无边框AMOLED，454×454，峰值3000nit，蓝宝石镜面</li><li data-num="③">材质：Grade-5钛合金表壳+陶瓷表圈+蓝宝石</li><li data-num="④">传感器：Elevate Gen 5心率、ECG、Pulse Ox、气压高度计、深度传感器(40m)</li><li data-num="⑤">续航：智能模式最长18天(常亮7天)，GPS模式32–87小时</li><li data-num="⑥">连接/安全：LTE+卫星inReach双向消息与24/7 SOS、Wi-Fi、BT、ANT+、NFC(Garmin Pay)、全球TopoActive地图</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">MARQ Gen 3将Fenix 9 Pro的LTE/卫星通信与钛合金奢华工艺结合，是Garmin把“脱离手机独立通信”下放到奢华腕表的里程碑；在Apple Watch Ultra与Coros竞速之外，开辟了高端户外+卫星通信的奢侈工具表赛道。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该表重新定义奢华智能腕表为“独立通信+专业导航”工具，证明高端手表的产品定义正从“材质奢侈”转向“离网生存能力+全功能导航”，对同类厂商有启发。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Garmin / MARQ (Gen 3)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-13</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.garmin.com/en-CA/blog/outdoor/whats-new-with-marq-gen-3" target="_blank">Garmin官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Garmin官网、Garmin News、the5krunner</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">全球铺货从2026-11-05起；inReach需订阅；各来源价格区间$2199.99–$3100略有差异</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-20">
+        <div class="card-header" onclick="toggleCard('card-20')">
+          <div class="card-num">20</div>
+          <div class="card-title-area">
+            <div class="card-title">Blackview Tab 20 WiFi</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/音频/AI/NPU</span>
+              <span class="stars">★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">10.1英寸HD+(800×1280) IPS 60Hz屏；紫光展锐UNISOC T310四核；4GB+64GB(可扩展至12GB RAM/2TB TF)；DokeOS_P 4.1(Android 15)；6000mAh+10W；双扬声器Smart-K；Wi-Fi 5；前置5MP+后置8MP</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：紫光展锐UNISOC T310四核(1×A75@2.0GHz+3×A55@1.8GHz)</li><li data-num="②">显示：10.1英寸HD+ IPS，800×1280，60Hz，350nit，79%屏占比</li><li data-num="③">电池：6000mAh，10W充电，标称视频约6.3小时</li><li data-num="④">音频：双扬声器，Smart-K音效</li><li data-num="⑤">AI：内置Gemini AI 2.0与跨应用智能、声纹识别、AI全屏助手</li><li data-num="⑥">系统：DokeOS_P 4.1，基于Android 15，支持Widevine L1</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Blackview以“AI平板+超低入门价”切入，UNISOC T310配Gemini 2.0体现入门平板也开始搭载端侧AI助理；其AI声纹识别与跨应用智能是低价位段少见的卖点，反映AI功能向百元级设备下沉。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该机定义入门平板为“AI学习/轻办公工具”，以Gemini 2.0+PC Mode 2.0+分屏提供超低价位的智能体验，为同类白牌/入门厂商指明“AI是新的差异化点”。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Blackview / Tab 20 WiFi</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-10</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://support.blackview.hk/product/tab20wifi" target="_blank">Blackview官网支持页</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Blackview官网支持页、Blackview官方商城</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">具体国际版上市地区与价格待印证；“AI Gemini 2.0”说法源自厂商宣传，能力边界待印证</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-21">
+        <div class="card-header" onclick="toggleCard('card-21')">
+          <div class="card-num">21</div>
+          <div class="card-title-area">
+            <div class="card-title">Poco F9 Ultra</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/摄像头/音频/无线通信/结构/工艺</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">6.9英寸AMOLED 2608×1200 185Hz屏(峰值10000nit)；骁龙8 Elite Gen 5(3nm)；12/16GB LPDDR5X+256GB/512GB/1TB UFS 4.1；200MP+50MP 5x潜望+50MP超广角；8050mAh+100W有线+50W无线；IP68；Android 16；欧洲€1099起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：高通骁龙8 Elite Gen 5(3nm，2×Prime 4.6GHz+6×Perf 3.62GHz)+Adreno 840+VisionBoost D8独显芯片</li><li data-num="②">显示：6.9英寸AMOLED，2608×1200，185Hz，峰值10000nit(1%区域)/4500nit(25%区域)，Gorilla Glass 7i</li><li data-num="③">电池：8050mAh硅碳电池，100W有线+50W无线+反向充电</li><li data-num="④">影像：2亿主摄OIS+5000万5x潜望长焦+5000万超广角，前置3200万，支持8K录制</li><li data-num="⑤">音频：Bose调校2.1声道双扬声器+悬浮灯环</li><li data-num="⑥">连接：Wi-Fi 7、蓝牙6.0、IP68、USB-C 3.2</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">POCO F9 Ultra以REDMI K100 Pro Max海外版身份把2亿像素、185Hz超高刷与100W快充带到欧洲/东南亚，是小米系“旗舰性能出海”的典型；在€1099价位提供越级堆料，加剧中高价安卓性能机竞争。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该机代表“海外市场旗舰”的产品定义：以极致参数(高刷/大电池/影像)而非品牌溢价取胜，为出海厂商提供以规格碾压建立认知的产品策略参考。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">POCO (Xiaomi) / F9 Ultra</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-03</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.mi.com/hk/product/poco-f9-ultra/specs" target="_blank">小米</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">小米/POCO官网、PhoneArena、百度百科</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">为REDMI K100 Pro Max海外版；海外电池8050mAh(国行9070mAh)，差异源于运输合规</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-22">
+        <div class="card-header" onclick="toggleCard('card-22')">
+          <div class="card-num">22</div>
+          <div class="card-title-area">
+            <div class="card-title">UGREEN MagFlow Pro</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">电池/快充/散热/BMS/电源/认证/合规</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">3合1磁吸无线充电站(Qi2.2 25W)；iPhone 17/16系列0→50%约26分钟；TEC主动制冷(表面低至约11°C/51.8°F)；Smart LED显示功率/温度；含45W适配器；€159.99</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">充电：Qi2.2认证，最高25W磁吸无线快充(iPhone 12–17，16需iOS 26)</li><li data-num="②">制冷：TEC主动半导体散热，充电表面较普通低至32.4°F更凉爽，噪音&lt;15dB</li><li data-num="③">显示：Smart LED实时显示各设备功率/温度/状态，可调节</li><li data-num="④">形态：3合1立式支架，可同时充iPhone/Watch/AirPods，90°可调视角</li><li data-num="⑤">兼容：iPhone 17–12、AirPods、Apple Watch及Qi设备，支持3mm内MagSafe壳</li><li data-num="⑥">配件：随附45W USB-C适配器与1m C2C线</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">UGREEN MagFlow Pro把Qi2.2的25W与TEC主动制冷结合，解决了高功率无线充电发热降速的痛点，是配件厂在苹果磁吸生态中“散热+信息可视化”的高端化尝试，反映2026年无线充进入“主动散热+智能显示”阶段。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该产品定义无线充电器为“主动散热+智能状态显示”的高性能配件形态，提示充电配件正从隐形体向“可控、可视、低温”的智能终端演进，为同类厂商提供差异化方向。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">UGREEN / MagFlow Pro (3-in-1)</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-01</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://eu.ugreen.com/en-pt/products/magflow-pro-magnetic-wireless-charging-stand-3-in-1-qi2-25w" target="_blank">UGREEN官网(欧盟</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">UGREEN官网(欧盟/中东)、UGREEN产品页</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">提供立式/充电板/车充多种形态；25W需iPhone 16+iOS 26或iPhone 17，旧机型限15W</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-23">
+        <div class="card-header" onclick="toggleCard('card-23')">
+          <div class="card-num">23</div>
+          <div class="card-title-area">
+            <div class="card-title">HTC VIVE XR Elite 2</div>
+            <div class="card-badges">
+              <span class="source-tag source-c">C</span>
+              <span class="card-domain">显示/OLED/电池/快充/无线通信/结构/工艺</span>
+              <span class="stars">★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">单源（1）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">单眼4320×2160、刷新率144Hz、PPI 1202；整机约278g；可换电池；支持无线SteamVR串流与一体机模式(据2026-09发布会报道)；芯片据报道为骁龙XR2 Gen 2(待印证)</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示：单眼分辨率4320×2160，最高144Hz刷新率，PPI约1202，显著改善纱窗效应</li><li data-num="②">重量：整机约278g(较上代309g减轻)，亲肤透气衬垫</li><li data-num="③">供电：保留可更换电池设计</li><li data-num="④">模式：支持无线SteamVR串流，亦可作独立一体机使用</li><li data-num="⑤">芯片：据报道搭载骁龙XR2 Gen 2平台(待印证)</li><li data-num="⑥">追踪：inside-out 6DoF追踪(据对比文章)</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">VIVE XR Elite 2延续HTC转向XR后的消费级旗舰路线，以超高单眼分辨率与轻量化直面Meta Quest与PSVR竞争；“可换电池+无线PC串流”兼顾硬核玩家与轻度用户，是HTC在VR红海中维持差异化的关键。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该头显定义“高分辨率+轻量+可换电+双模式”的PC/一体融合形态，对同类厂商在VR头显的佩戴舒适度与供电方案有参考意义。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">HTC / VIVE XR Elite 2</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-30</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.18183.hl.cn/launch/2026htcqjxrxpfbhpzzdsjptwjzdrsm/" target="_blank">18183发布会报道</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">18183发布会报道、VIVE官网(未列出XR Elite 2专页)</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">除单一中文发布会报道外，未在VIVE官网或一线媒体找到独立专文确认；单眼分辨率/芯片/重量为报道数据，建议二次核实</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-24">
+        <div class="card-header" onclick="toggleCard('card-24')">
+          <div class="card-num">24</div>
+          <div class="card-title-area">
+            <div class="card-title">Sonos Beam Ultra</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">无线通信/音频/结构/工艺/传感器</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">紧凑型回音壁；9只单元(5高音含2上射+2侧射+4低音)；真实7.1.2 Dolby Atmos；AI语音增强(4级)；Trueplay(支持Android)；Wi-Fi 6+BT5.3+HDMI eARC；750×65×105mm/2.88kg；€699</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">单元：9只Class-D放大器驱动单元(5高音含2上射Atmos+2侧射+1中置，4低音)</li><li data-num="②">空间音频：真实7.1.2 Dolby Atmos，双上射单元支持Dolby Atmos Music</li><li data-num="③">AI语音：AI Speech Enhancement四档人声增强，智能提升对白清晰度</li><li data-num="④">调音：Trueplay房间声学校正(兼容iOS与Android)</li><li data-num="⑤">连接：Wi-Fi 6、蓝牙5.3、HDMI eARC、AirPlay 2、TV Audio Swap(电视音频转耳机)</li><li data-num="⑥">处理：四核A55 1.9GHz CPU，远场麦克风阵列波束成形</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Sonos Beam Ultra把上代4单元升级到9单元与真实7.1.2 Atmos，并以AI对白增强和Android Trueplay补齐体验短板，是紧凑回音壁向“小体积+沉浸环绕+AI清晰”演进的代表，正面竞争三星/ Bose中端声霸。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该条形音箱定义“紧凑机身+真Atmos+AI对白”的家庭影院入门形态，说明智能音箱/声霸正以AI音频处理(而非单纯堆单元)提升体验，为同类厂商提供“AI音频”产品定义参考。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Sonos / Beam Ultra</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-29</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://sonos.com/en/shop/beam-ultra" target="_blank">Sonos官网</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Sonos官网、HiFi BLOG、Sonos香港</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">2026-09-29上市，预购自9-01；部分地区由代理商(TC Acoustic等)销售</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-25">
+        <div class="card-header" onclick="toggleCard('card-25')">
+          <div class="card-num">25</div>
+          <div class="card-title-area">
+            <div class="card-title">Valve Steam Frame</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/无线通信/音频/摄像头/传感器</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">单源（1）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">$1059起(1TB $1299)；骁龙8 Gen 3；SteamOS 3；单眼2160×2160 LCD 72–144Hz；Wi-Fi 7；BT5.4；16GB RAM；inside-out追踪；无线PC串流</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：高通骁龙8 Gen 3</li><li data-num="②">显示：单眼2160×2160 LCD，72–144Hz可变刷新</li><li data-num="③">内存：16GB RAM</li><li data-num="④">无线：Wi-Fi 7、蓝牙5.4</li><li data-num="⑤">追踪：inside-out(由内向外)追踪</li><li data-num="⑥">串流/系统：SteamOS 3，支持无线PC串流；1TB版$1299</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Steam Frame是Valve将Steam Deck的SteamOS生态延伸到独立头显/娱乐终端的尝试，$1059起的定价把“无线PC串流+独立SteamOS”带入客厅，直接挑战Meta Quest的PCVR与串流方案。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该设备重新定义“客厅Steam终端”形态——以SteamOS+无线串流替代传统游戏主机与高端PCVR，为客厅娱乐终端的产品定义提供Valve式答案。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Valve / Steam Frame</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-14</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.dexerto.com/gaming/valve-reveals-steam-frame-price-and-release-date-starting-at-1059-3408909/" target="_blank">Dexerto专文</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Dexerto专文</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">规格来自Dexerto专文，Valve官方独立页面待印证</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-26">
+        <div class="card-header" onclick="toggleCard('card-26')">
+          <div class="card-num">26</div>
+          <div class="card-title-area">
+            <div class="card-title">LG gram Book AI 2026</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/音频/无线通信/AI/NPU</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">14/15.6英寸FHD IPS屏；Intel Core Ultra 5 115U / Core 5 315；8/16GB LPDDR5X+256/512GB SSD(双M.2)；51–61Wh；Wi-Fi 6/6E+BT5.3/5.4；Dolby Atmos；Windows 11；约1.7kg</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：Intel Core Ultra 5 115U 或 Core 5 315，支持AI任务</li><li data-num="②">显示：14"/15.6" FHD IPS，300–350nit，防眩光，可选触控</li><li data-num="③">内存/存储：8/16GB LPDDR5X，256/512GB NVMe Gen4 SSD(双M.2可扩展)</li><li data-num="④">电池：51Wh(15.6")/61Wh(14")，65W适配器</li><li data-num="⑤">AI：LG Dual AI(端侧EXAONE 3.5 gram chat On-Device+云端Copilot)，gram Link多设备互联</li><li data-num="⑥">连接：Wi-Fi 6/6E、蓝牙5.3/5.4、USB4/USB-C、HDMI、Dolby Atmos</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">LG gram Book AI 2026把“轻薄+双AI(端侧+云)”下放到主流价位笔记本，EXAONE端侧模型实现离线文档检索与摘要，是PC厂商在Copilot PC之外的“本地大模型”路线代表，呼应2026年AI PC普及化。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该机定义轻薄本为“端云双AI生产力工具”，以本地EXAONE模型+gram Link生态强调离线隐私与跨设备协同，为同类轻薄本的产品定义提供“端侧AI优先”思路。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">LG / gram Book AI 2026</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-07</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.lg.com/us/laptops/lg-14u40v-g.ar51u3-gram-laptop" target="_blank">LG官网(美</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">LG官网(美/意/韩)、LG gram全球页</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">提供多种配置(Intel/AMD Ryzen AI)，需以具体型号页为准；“AI 2026”为系列统称</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-27">
+        <div class="card-header" onclick="toggleCard('card-27')">
+          <div class="card-num">27</div>
+          <div class="card-title-area">
+            <div class="card-title">Lenovo Tab Plus Gen 2</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/音频/电池/快充/无线通信/结构/工艺</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">迭代更新</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（2）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">12.1英寸2.5K(2560×1600) IPS 120Hz屏；联发科天玑7400；Android 16；最高12GB LPDDR5+256GB UFS 3.1；10200mAh+45W；JBL 9单元扬声器(Dolby Atmos)；Wi-Fi 6+BT5.4；IP52</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：联发科天玑7400(4×A78@2.6GHz+4×A55@2.0GHz)，Mali-G615 MC2</li><li data-num="②">显示：12.1英寸2.5K IPS，120Hz，600/800nit(HBM)，98% DCI-P3，10bit</li><li data-num="③">音频：JBL 9单元Pro扬声器(4高音+3低音+2被动辐射器)，Dolby Atmos，蓝牙音箱模式</li><li data-num="④">电池：10200mAh+45W快充(PPS)，YouTube续航约15小时</li><li data-num="⑤">连接：Wi-Fi 6(802.11ax)+蓝牙5.4，microSD至2TB，IP52</li><li data-num="⑥">系统：Android 16，承诺升级至Android 18及4年安全更新</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">作为Gen 2迭代，把上代60Hz屏升级到120Hz、JBL 9单元音响与Wi-Fi 6下放到中端，是Lenovo对“平价影音平板”的重新定义；在千元级平板中以音频与刷新率差异化对抗iPad与华为平板的降维竞争。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">Tab Plus Gen 2以“音响+高刷”作为平板产品定义核心卖点，说明中端安卓平板正以多媒体沉浸体验而非单纯性能来区隔，为同类厂商提供“音频优先”的产品定义思路。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Lenovo / Tab Plus Gen 2</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-01</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://psref.lenovo.com/Detail/Tab_Plus_Gen_2?M=ZAHT0189ES" target="_blank">Lenovo官网PSREF</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Lenovo官网PSREF、Lenovo香港商城</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">无</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-28">
+        <div class="card-header" onclick="toggleCard('card-28')">
+          <div class="card-num">28</div>
+          <div class="card-title-area">
+            <div class="card-title">Google Pixel 11</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/摄像头/无线通信/AI/NPU</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">新机发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">6.3英寸FHD+ OLED 1080×2424 60–120Hz屏；Google Tensor G6；12GB LPDDR5X；256/512GB UFS 4.0；4985mAh+30W有线+25W Qi2.2无线；三摄48MP+10.8MP 5x长焦+13MP超广角；Android 17，7年更新；IP68</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：Google Tensor G6，7核(1×C1-Ultra 4.1GHz+4×C1-Pro 3.4GHz+2×C1-Pro 2.65GHz)，PowerVR CXTP-48-1536 GPU</li><li data-num="②">显示：6.3英寸FHD+ OLED，1080×2424，120Hz，峰值3000nit，Gorilla Glass Victus 2</li><li data-num="③">电池：4985mAh，30W有线(PD3.0/PPS，30分钟55%)+25W Qi2.2磁吸无线+反向充电</li><li data-num="④">影像：48MP主摄OIS+10.8MP 5x光变长焦+13MP超广角；10.5MP前置；4K60</li><li data-num="⑤">连接：Wi-Fi 6E、蓝牙6.0、UWB、NFC、USB-C 3.2、双频GNSS、卫星SOS</li><li data-num="⑥">AI：Gemini Intelligence智能体框架，七年系统/安全更新</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Pixel 11是Google将端侧生成式AI(Agentic Gemini)与七年长支持周期推向主流价位的标杆，Tensor G6的NPU/TPU算力提升标志安卓旗舰进入“AI代理”时代；899美元起定价直接对标iPhone基础版。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">对手机形态而言，Pixel 11以“七年更新+本地Gemini代理”重新定义安卓旗舰的软件生命周期与AI交互范式，为行业长周期支持与端侧智能树立新基准。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Google / Pixel 11</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-08-20</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.gsmarena7.com/google/google_pixel_11-27497" target="_blank">GSMArena</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">GSMArena、腾讯新闻、Gizmochina</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">无</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-29">
+        <div class="card-header" onclick="toggleCard('card-29')">
+          <div class="card-num">29</div>
+          <div class="card-title-area">
+            <div class="card-title">Google Pixel Watch 5</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/显示/OLED/电池/快充/无线通信/传感器/生物识别/AI/NPU</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">迭代更新</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">41/45mm铝壳；AMOLED LTPO 1–60Hz(41mm 408×408 / 45mm 456×456)峰值3000nit；骁龙W5 Gen 2+Cortex-M55协处理器；64GB；332/465mAh(续航30/40h)；Wear OS 7；5ATM/IP68；BT6.0/Wi-Fi 6/UWB/可选LTE+卫星SOS</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：高通骁龙W5 Gen 2+Cortex-M55加速协处理器</li><li data-num="②">显示：AMOLED LTPO 1–60Hz，320ppi，峰值3000nit，Gorilla Glass 5，AOD</li><li data-num="③">电池：41mm 332mAh/45mm 465mAh，AOD下30/40小时，省电模式48/72小时，快充15分钟50%</li><li data-num="④">健康：多路径光学心率、ECG、SpO2、皮肤电(cEDA)、远场体温、气压计</li><li data-num="⑤">连接：蓝牙6.0、Wi-Fi 6、UWB、NFC、可选LTE+卫星SOS、双频GNSS</li><li data-num="⑥">新功能：胰岛素阻抗/血压趋势、睡眠呼吸质量趋势、呼吸急救检测(SensorLM基础模型)</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Pixel Watch 5在Wear OS 7与骁龙W5 Gen 2基础上强化健康传感与“离网”能力(卫星SOS、UWB)，是Google对标Apple Watch的健康+生态闭环关键一步；把血压/胰岛素趋势等AI健康模型带入消费级腕表。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该表以Wear OS生态+本地健康基础模型重新定义安卓智能手表的健康深度，提示手表产品定义正从“通知中心”转向“主动健康管理终端”。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Google / Pixel Watch 5</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-08-20</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://support.google.com/googlepixelwatch/answer/12651869?hl=zh-Hans" target="_blank">Google支持页</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Google支持页、Google Store、Wikiwand</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">无</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intel-card intl" id="card-30">
+        <div class="card-header" onclick="toggleCard('card-30')">
+          <div class="card-num">30</div>
+          <div class="card-title-area">
+            <div class="card-title">Google Pixel Buds Pro 2</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">无线通信/音频/传感器/电池/快充/AI/NPU</span>
+              <span class="stars">★★★★</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">迭代更新</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（3）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">入耳式；Google Tensor A1芯片；定制11mm动圈；Silent Seal 2.0 ANC；蓝牙5.4超宽频；IP54(盒IPX4)；ANC关12h/开8h(含盒48/30h)；USB-C+Qi无线充；£219/$229</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片：每只耳塞内置Google Tensor A1音频芯片</li><li data-num="②">音频：定制11mm动圈单元，Silent Seal 2.0主动降噪，通透模式，主动耳压缓解</li><li data-num="③">连接：蓝牙5.4+Super Wideband超宽频通话，多点连接</li><li data-num="④">续航：ANC关12h(含盒48h)/ANC开8h(含盒30h)，充5分钟得1.5h</li><li data-num="⑤">防护/充电：耳塞IP54、充电盒IPX4；USB-C+Qi无线充</li><li data-num="⑥">传感/AI：3麦+IR入耳检测+加速度/陀螺仪，对话侦测、清晰通话、Gemini交互</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Pixel Buds Pro 2以Tensor A1与Silent Seal 2.0把Google的端侧AI音频(清晰通话、对话侦测、Gemini语音)带入耳穿戴，是安卓阵营对标AirPods Pro的AI化标杆，强化Pixel生态的音频入口。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">该耳机能定义“AI耳穿戴”为本地智能音频终端——以端侧芯片实现降噪/通话/语音助手一体化，提示耳穿戴产品正从“听音”转向“Always-on AI助理”，对同类厂商有启发。</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Google / Pixel Buds Pro 2</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-08-12</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://store.google.com/gb/product/pixel_buds_pro_2_specs?hl=en-gb" target="_blank">Google</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Google Store、Google支持页、ZDNET</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">无</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+
+</div>
+<script>
+function toggleCard(id) {
+  var el = document.getElementById(id);
+  if (el.classList.contains('expanded')) { el.classList.remove('expanded'); }
+  else { el.classList.add('expanded'); }
+}
+</script>
+</body>
+</html>
