@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能终端硬件情报日报 · 2026-10-18</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --card-bg: #fff; --border: #e4e7ed;
+    --text: #303133; --text-secondary: #606266; --text-tertiary: #909399;
+    --primary: #409eff; --success: #67c23a; --warning: #e6a23c; --danger: #f56c6c; --info: #909399;
+    --tag-a: #67c23a; --tag-b: #409eff; --tag-c: #e6a23c; --tag-d: #f56c6c; --tag-e: #aa55ff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06); --shadow-hover: 0 4px 20px rgba(0,0,0,0.1); --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:20px; }
+  .container { max-width:1200px; margin:0 auto; }
+  .header { background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff; border-radius:var(--radius); padding:28px 32px; margin-bottom:20px; box-shadow:var(--shadow); }
+  .header h1 { font-size:24px; margin-bottom:8px; }
+  .header .subtitle { font-size:14px; opacity:0.9; }
+  .header .meta { display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+  .meta-badge { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:4px 14px; font-size:13px; }
+  .stats-bar { display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
+  .stat-item { background:var(--card-bg); border-radius:var(--radius); padding:14px 20px; box-shadow:var(--shadow); flex:1; min-width:140px; text-align:center; }
+  .stat-num { font-size:22px; font-weight:700; color:var(--primary); }
+  .stat-label { font-size:12px; color:var(--text-tertiary); margin-top:4px; }
+  .dim-panel { background:var(--card-bg); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .dim-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .dim-title { font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .dim-title::before { content:''; width:4px; height:18px; background:var(--success); border-radius:2px; }
+  .dim-counter { font-size:14px; color:var(--text-secondary); }
+  .dim-counter .dim-num { font-size:18px; font-weight:600; color:var(--success); }
+  .dim-counter .dim-total { color:var(--text-tertiary); }
+  .dim-bar { width:100%; height:8px; background:#f0f2f5; border-radius:4px; margin-bottom:16px; overflow:hidden; }
+  .dim-bar-fill { height:100%; background:linear-gradient(90deg,#67c23a,#95d475); border-radius:4px; transition:width 0.5s; }
+  .dim-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .dim-chip { padding:8px 12px; border-radius:8px; font-size:13px; font-weight:500; display:flex; justify-content:space-between; align-items:center; }
+  .dim-chip.on { background:#f0f9eb; border:1px solid #c2e7b0; color:#67c23a; }
+  .dim-chip.off { background:#f5f7fa; border:1px solid #e4e7ed; color:#c0c4cc; }
+  .dim-chip .dim-count { font-size:11px; opacity:0.7; font-weight:400; }
+  .summary-section { background:var(--card-bg); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .section-title { font-size:16px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .section-title::before { content:''; width:4px; height:18px; background:var(--primary); border-radius:2px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { background:#f0f2f5; padding:10px 12px; text-align:left; font-weight:600; color:var(--text-secondary); border-bottom:2px solid var(--border); white-space:nowrap; }
+  tbody td { padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:top; }
+  tbody tr:hover { background:#f5f7fa; }
+  tbody tr:last-child td { border-bottom:none; }
+  .td-title { font-weight:600; color:var(--text); }
+  .td-region { font-size:12px; font-weight:600; padding:2px 8px; border-radius:4px; white-space:nowrap; }
+  .region-cn { background:#ecf5ff; color:#409eff; }
+  .region-intl { background:#fdf6ec; color:#e6a23c; }
+  .source-tag { display:inline-block; font-size:12px; font-weight:700; padding:2px 10px; border-radius:12px; white-space:nowrap; }
+  .source-a { background:#f0f9eb; color:var(--tag-a); border:1px solid #c2e7b0; }
+  .source-b { background:#ecf5ff; color:var(--tag-b); border:1px solid #b3d8ff; }
+  .source-c { background:#fdf6ec; color:var(--tag-c); border:1px solid #f5dab1; }
+  .source-d { background:#fef0f0; color:var(--tag-d); border:1px solid #fbc4c4; }
+  .source-e { background:#f3f0ff; color:var(--tag-e); border:1px solid #d3c2ff; }
+  .status-tag { display:inline-block; font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; white-space:nowrap; margin-left:8px; }
+  .td-status .status-tag { margin-left:0; font-size:10px; padding:1px 6px; }
+  .status-coming { background:#ecf5ff; color:#409eff; border:1px solid #b3d8ff; }
+  .status-released { background:#f0f9eb; color:#67c23a; border:1px solid #c2e7b0; }
+  .status-progress { background:#f4f4f5; color:#909399; border:1px solid #e4e7ed; }
+  .intel-section { margin-bottom:24px; }
+  .intel-cards { display:grid; grid-template-columns:1fr; gap:16px; }
+  .intel-card { background:var(--card-bg); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:box-shadow 0.3s; border-left:4px solid var(--primary); }
+  .intel-card.cn { border-left-color:var(--tag-b); }
+  .intel-card.intl { border-left-color:var(--tag-c); }
+  .intel-card:hover { box-shadow:var(--shadow-hover); }
+  .card-header { padding:16px 20px; cursor:pointer; display:flex; align-items:flex-start; gap:12px; user-select:none; }
+  .card-num { flex-shrink:0; width:28px; height:28px; border-radius:50%; background:#f0f2f5; color:var(--text-secondary); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:2px; }
+  .intel-card.cn .card-num { background:#ecf5ff; color:var(--tag-b); }
+  .intel-card.intl .card-num { background:#fdf6ec; color:var(--tag-c); }
+  .card-title-area { flex:1; }
+  .card-title { font-size:15px; font-weight:600; color:var(--text); margin-bottom:6px; }
+  .card-badges { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .card-badges .stars { font-size:12px; color:var(--warning); letter-spacing:1px; }
+  .card-domain { font-size:12px; color:var(--text-tertiary); background:#f5f7fa; padding:2px 8px; border-radius:4px; }
+  .card-toggle { flex-shrink:0; color:var(--text-tertiary); font-size:14px; transition:transform 0.3s; margin-top:4px; }
+  .intel-card.expanded .card-toggle { transform:rotate(180deg); }
+  .card-body { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+  .intel-card.expanded .card-body { max-height:3000px; }
+  .card-content { padding:0 20px 18px 20px; border-top:1px solid var(--border); padding-top:16px; }
+  .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 20px; }
+  .field { display:flex; flex-direction:column; gap:4px; }
+  .field.full { grid-column:1 / -1; }
+  .field-label { font-size:12px; font-weight:600; color:var(--text-tertiary); letter-spacing:0.5px; }
+  .field-value { font-size:13px; color:var(--text-secondary); line-height:1.7; }
+  .field-value a { color:var(--primary); text-decoration:none; word-break:break-all; }
+  .field-value a:hover { text-decoration:underline; }
+  .field-value .tech-list { padding-left:0; list-style:none; }
+  .field-value .tech-list li { padding:2px 0; padding-left:18px; position:relative; }
+  .field-value .tech-list li::before { content:attr(data-num); position:absolute; left:0; font-weight:700; color:var(--primary); }
+  @media (max-width:768px) { .field-grid { grid-template-columns:1fr; } .dim-grid { grid-template-columns:repeat(2,1fr); } table { font-size:12px; } thead th,tbody td { padding:8px 6px; } }
+
+  html { scroll-behavior: smooth; }
+  .td-title a { color: inherit; text-decoration: none; }
+  .td-title a:hover { color: var(--primary); text-decoration: underline; }
+  .top-signals-panel { background:var(--card-bg); border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .top-signals-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .top-signals-title { font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px; }
+  .top-signals-title::before { content:''; width:4px; height:18px; background:var(--warning); border-radius:2px; }
+  .top-signals-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
+  .signal-card { background:linear-gradient(135deg,#f5f7fa,#fafafa); border-radius:8px; padding:12px 14px; border-left:3px solid var(--success); transition:box-shadow 0.3s; }
+  .signal-card:hover { box-shadow:var(--shadow-hover); }
+  .signal-card .sig-rank { display:inline-block; font-size:11px; font-weight:700; color:#fff; background:var(--success); border-radius:50%; width:18px; height:18px; text-align:center; line-height:18px; margin-right:6px; }
+  .signal-card .sig-title { font-size:13px; font-weight:600; color:var(--text); line-height:1.4; }
+  .signal-card .sig-tags { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px; margin-top:6px; }
+  .signal-card .sig-dim { font-size:11px; background:#f0f9eb; color:#67c23a; border-radius:4px; padding:1px 6px; }
+  .signal-card .sig-stars { font-size:12px; color:#e6a23c; }
+  .signal-card .sig-key { font-size:11px; color:var(--text-secondary); line-height:1.5; margin-top:4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>智能终端硬件情报日报 · 2026-10-18</h1>
+    <div class="subtitle">采集口径：8类智能终端（平板/手机/智能手表/AR-VR眼镜/无线充/智能音箱/笔记本电脑/AI耳机·耳穿戴） | 搜索窗口60天 | 国内15条 + 国际15条</div>
+    <div class="meta">
+      <span class="meta-badge">总情报 30条</span>
+      <span class="meta-badge">国内 15条</span>
+      <span class="meta-badge">国际 15条</span>
+      <span class="meta-badge">信源 A-E级</span>
+      <span class="meta-badge">搜索窗口 60天</span>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">30</div><div class="stat-label">总情报数</div></div>
+    <div class="stat-item"><div class="stat-num">16</div><div class="stat-label">A级信源</div></div>
+    <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">B级信源</div></div>
+    <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">覆盖产品类别</div></div>
+    <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">五星条数</div></div>
+  </div>
+
+  <!-- Dimension Coverage Panel -->
+  <div class="dim-panel">
+    <div class="dim-header">
+      <div class="dim-title">技术维度覆盖面板</div>
+      <div class="dim-counter"><span class="dim-num">15</span><span class="dim-total"> / 16 维度</span></div>
+    </div>
+    <div class="dim-bar"><div class="dim-bar-fill" style="width:93.75%"></div></div>
+    <div class="dim-grid">
+      <div class="dim-chip on">SoC/芯片 <span class="dim-count">19条</span></div><div class="dim-chip on">显示/OLED <span class="dim-count">16条</span></div><div class="dim-chip on">电池/快充 <span class="dim-count">23条</span></div><div class="dim-chip on">散热 <span class="dim-count">5条</span></div><div class="dim-chip on">无线通信 <span class="dim-count">5条</span></div><div class="dim-chip on">音频 <span class="dim-count">16条</span></div><div class="dim-chip on">摄像头 <span class="dim-count">10条</span></div><div class="dim-chip on">结构/工艺 <span class="dim-count">4条</span></div><div class="dim-chip on">传感器 <span class="dim-count">1条</span></div><div class="dim-chip on">手写笔/触控 <span class="dim-count">4条</span></div><div class="dim-chip on">生物识别 <span class="dim-count">1条</span></div><div class="dim-chip on">AI/NPU <span class="dim-count">24条</span></div><div class="dim-chip off">马达/触觉 <span class="dim-count">0条</span></div><div class="dim-chip on">折叠屏 <span class="dim-count">1条</span></div><div class="dim-chip on">BMS/电源 <span class="dim-count">2条</span></div><div class="dim-chip on">认证/合规 <span class="dim-count">11条</span></div>
+    </div>
+  </div>
+
+  <!-- Top 5 Key Signals -->
+  <div class="top-signals-panel">
+    <div class="top-signals-header">
+      <div class="top-signals-title">今日重点信号 Top 5</div>
+      <div style="font-size:12px;color:var(--text-tertiary);">排序：星级降序→信源等级→状态优先→时间倒序</div>
+    </div>
+    <div class="top-signals-grid">
+            <div class="signal-card">
+        <div><span class="sig-rank">1</span><span class="sig-title">amazfit T-Rex Dual Solar（双面对面太阳能）</span></div>
+        <div class="sig-tags"><span class="sig-dim">AI/NPU</span><span class="sig-stars">★★★★★</span></div>
+        <div class="sig-key">1.32″ AMOLED 3000nit；5级钛合金 + 蓝宝石镜面；9项军规认证；10ATM（50m潜水）；-30℃低</div>
+      </div>      <div class="signal-card">
+        <div><span class="sig-rank">2</span><span class="sig-title">vivo X Fold6（全球版）</span></div>
+        <div class="sig-tags"><span class="sig-dim">SoC/芯片</span><span class="sig-stars">★★★★★</span></div>
+        <div class="sig-key">8.02″ LTPO AMOLED 内屏 + 6.51″ LTPO AMOLED 外屏（均 1-120Hz，5000ni</div>
+      </div>      <div class="signal-card">
+        <div><span class="sig-rank">3</span><span class="sig-title">荣耀WIN2系列电竞手机官宣10月21日发布</span></div>
+        <div class="sig-tags"><span class="sig-dim">散热</span><span class="sig-stars">★★★★</span></div>
+        <div class="sig-key">主动风冷散热风扇；RGB电竞灯效；横向矩阵Deco+立边机身；疑似旗舰级移动平台；发布当日同步首销</div>
+      </div>      <div class="signal-card">
+        <div><span class="sig-rank">4</span><span class="sig-title">Vuzix Ultralite Pro（OEM 智能眼镜平台）</span></div>
+        <div class="sig-tags"><span class="sig-dim">AI/NPU</span><span class="sig-stars">★★★★</span></div>
+        <div class="sig-key">轻量透视波导 OEM 智能眼镜平台；双目波导 + Micro LED；面向军工医疗训练/远程指导（与 Shiny Box</div>
+      </div>      <div class="signal-card">
+        <div><span class="sig-rank">5</span><span class="sig-title">Juniper Alta Rugged Tablet（三防平板）</span></div>
+        <div class="sig-tags"><span class="sig-dim">AI/NPU</span><span class="sig-stars">★★★★</span></div>
+        <div class="sig-key">8″ 1000nit 显示屏；高通 QCM6690；Android 16；端侧 AI（计算机视觉/语音/传感）；可热插拔</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="summary-section">
+    <div class="section-title">今日概要表</div>
+    <table>
+      <thead><tr><th>#</th><th>标题</th><th>区域</th><th>领域</th><th>上市状态</th><th>信源</th><th>时间</th><th>重要度</th></tr></thead>
+      <tbody>
+<tr><td>1</td><td class="td-title"><a href="#card-1">vivo Pad 6e现身：骁龙8s Gen4+12.1英寸AMOLED，10月17日</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/电池/快充/音频/手写笔/触控/显示/OLED</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-c">C</span></td><td>2026-10-17</td><td>★★★</td></tr>
+<tr><td>2</td><td class="td-title"><a href="#card-2">荣耀WIN2系列电竞手机官宣10月21日发布</a></td><td><span class="td-region region-cn">国内</span></td><td>散热/SoC/芯片/电池/快充/摄像头/音频</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>2026-10-12</td><td>★★★★</td></tr>
+<tr><td>3</td><td class="td-title"><a href="#card-3">荣耀WIN耳机定档10月21日随WIN2系列同台发布</a></td><td><span class="td-region region-cn">国内</span></td><td>音频/无线通信</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>2026-10-12</td><td>★★★</td></tr>
+<tr><td>4</td><td class="td-title"><a href="#card-4">联想小新平板11双11大促开启，到手976.7元起</a></td><td><span class="td-region region-cn">国内</span></td><td>显示/OLED/SoC/芯片/AI/NPU/电池/快充/手写笔/触控</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-10-16</td><td>★★★★</td></tr>
+<tr><td>5</td><td class="td-title"><a href="#card-5">真我Neo8发布：骁龙8 Gen5+8000mAh，2399元起</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/散热/电池/快充/认证/合规/显示/OLED</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-10-16</td><td>★★★★</td></tr>
+<tr><td>6</td><td class="td-title"><a href="#card-6">高驰 COROS PACE 4 Pro 运动手表发布：38g钛金属+蓝宝石+21天续航+AI语音</a></td><td><span class="td-region region-cn">国内</span></td><td>AI/NPU/SoC/芯片/BMS/电源/电池/快充/音频</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-23</td><td>★★★★</td></tr>
+<tr><td>7</td><td class="td-title"><a href="#card-7">INMO GO3发布：双目MicroLED波导AI眼镜，98种语言翻译</a></td><td><span class="td-region region-cn">国内</span></td><td>显示/OLED/AI/NPU/电池/快充/摄像头/音频</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-21</td><td>★★★★</td></tr>
+<tr><td>8</td><td class="td-title"><a href="#card-8">INMO Magic AI Glasses J发布：40g时尚AI眼镜，8MP第一视角</a></td><td><span class="td-region region-cn">国内</span></td><td>摄像头/AI/NPU/音频/手写笔/触控/生物识别</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-21</td><td>★★★</td></tr>
+<tr><td>9</td><td class="td-title"><a href="#card-9">联想小新Pad Pro 13英寸开售：3.5K屏+骁龙8s，2599元</a></td><td><span class="td-region region-cn">国内</span></td><td>显示/OLED/SoC/芯片/AI/NPU/电池/快充/音频</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-20</td><td>★★★★</td></tr>
+<tr><td>10</td><td class="td-title"><a href="#card-10">Anker MagGo 2 Pro上市：主动散热Qi2磁吸充电宝，25W无线</a></td><td><span class="td-region region-cn">国内</span></td><td>电池/快充/AI/NPU/BMS/电源/散热/认证/合规</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-18</td><td>★★★★</td></tr>
+<tr><td>11</td><td class="td-title"><a href="#card-11">联想ThinkBook 14x Gen 2发布：12.9mm/990g轻薄本，Intel Core 7</a></td><td><span class="td-region region-cn">国内</span></td><td>结构/工艺/SoC/芯片/AI/NPU/散热/电池/快充</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09</td><td>★★★★</td></tr>
+<tr><td>12</td><td class="td-title"><a href="#card-12">小度智能屏X9 Ultra发布：AI主动看护，首发629元</a></td><td><span class="td-region region-cn">国内</span></td><td>AI/NPU/SoC/芯片/摄像头/音频/显示/OLED</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-08</td><td>★★★★</td></tr>
+<tr><td>13</td><td class="td-title"><a href="#card-13">OPPO Pad 6在售：天玑9500s+12.1英寸3K屏，3999元起</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/AI/NPU/电池/快充/摄像头/认证/合规</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-07</td><td>★★★★</td></tr>
+<tr><td>14</td><td class="td-title"><a href="#card-14">华为WATCH GT 7系列慕尼黑发布：陶瓷表圈+钛中框，健康洞察升级</a></td><td><span class="td-region region-cn">国内</span></td><td>传感器/SoC/芯片/AI/NPU/电池/快充/认证/合规</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-02</td><td>★★★★</td></tr>
+<tr><td>15</td><td class="td-title"><a href="#card-15">COLORFIRE MEOW X16 Pro游戏本发售：8745HX+RTX5060，10499元</a></td><td><span class="td-region region-cn">国内</span></td><td>SoC/芯片/AI/NPU/散热/音频/手写笔/触控</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-01</td><td>★★★★</td></tr>
+<tr><td>16</td><td class="td-title"><a href="#card-16">OnePlus 15</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/电池/快充/SoC/芯片/显示/OLED</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-d">D</span></td><td>2026-11-13</td><td>★★★</td></tr>
+<tr><td>17</td><td class="td-title"><a href="#card-17">GOSIGHT P1 AR Glasses announced: 25° Micro-OLED waveguide + on-glasses Android compute</a></td><td><span class="td-region region-intl">国际</span></td><td>显示/OLED/AI/NPU/电池/快充/摄像头/认证/合规</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-c">C</span></td><td>2026-10-27</td><td>★★★</td></tr>
+<tr><td>18</td><td class="td-title"><a href="#card-18">Vuzix Ultralite Pro（OEM 智能眼镜平台）</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/SoC/芯片/认证/合规/结构/工艺/无线通信</td><td class="td-status"><span class="status-tag status-coming">即将上市</span></td><td><span class="source-tag source-a">A</span></td><td>2026-10-06</td><td>★★★★</td></tr>
+<tr><td>19</td><td class="td-title"><a href="#card-19">Juniper Alta Rugged Tablet（三防平板）</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/电池/快充/音频/认证/合规/显示/OLED</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-12</td><td>★★★★</td></tr>
+<tr><td>20</td><td class="td-title"><a href="#card-20">Google Fitbit Edge（健身手环）</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/电池/快充/音频/认证/合规/显示/OLED</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-12</td><td>★★★★</td></tr>
+<tr><td>21</td><td class="td-title"><a href="#card-21">amazfit T-Rex Dual Solar（双面对面太阳能）</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/电池/快充/认证/合规/显示/OLED/结构/工艺</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-08</td><td>★★★★★</td></tr>
+<tr><td>22</td><td class="td-title"><a href="#card-22">OnePlus Buds 4</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/电池/快充/音频/无线通信</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-08</td><td>★★★★</td></tr>
+<tr><td>23</td><td class="td-title"><a href="#card-23">ASUS Zenbook 14 (UX3480)</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/SoC/芯片/电池/快充/认证/合规/显示/OLED</td><td class="td-status"></td><td><span class="source-tag source-c">C</span></td><td>2026-10-07</td><td>★★★★</td></tr>
+<tr><td>24</td><td class="td-title"><a href="#card-24">vivo X Fold6（全球版）</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/折叠屏/电池/快充/摄像头/显示/OLED</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-01</td><td>★★★★★</td></tr>
+<tr><td>25</td><td class="td-title"><a href="#card-25">HP OmniBook 5（新一代 AI PC）</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/AI/NPU/摄像头/显示/OLED/结构/工艺</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-10-01</td><td>★★★★</td></tr>
+<tr><td>26</td><td class="td-title"><a href="#card-26">TCL TAB A1 NXTPAPER（11″ 类纸屏）</a></td><td><span class="td-region region-intl">国际</span></td><td>显示/OLED/SoC/芯片/AI/NPU/电池/快充/音频</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-04</td><td>★★★</td></tr>
+<tr><td>27</td><td class="td-title"><a href="#card-27">TCL TAB A1 Plus NXTPAPER（12.2″ 类纸屏）</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/SoC/芯片/电池/快充/摄像头/显示/OLED</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-04</td><td>★★★★</td></tr>
+<tr><td>28</td><td class="td-title"><a href="#card-28">TCL TAB A1 Plus（12.2″ 标准屏）</a></td><td><span class="td-region region-intl">国际</span></td><td>SoC/芯片/AI/NPU/电池/快充/摄像头/音频</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-04</td><td>★★★</td></tr>
+<tr><td>29</td><td class="td-title"><a href="#card-29">Sharp CP-DS10 4-in-1 充电音频坞</a></td><td><span class="td-region region-intl">国际</span></td><td>认证/合规/电池/快充/音频/无线通信</td><td class="td-status"></td><td><span class="source-tag source-a">A</span></td><td>2026-09-04</td><td>★★★★</td></tr>
+<tr><td>30</td><td class="td-title"><a href="#card-30">JBL Cove（Wi-Fi 家庭音箱系列）</a></td><td><span class="td-region region-intl">国际</span></td><td>AI/NPU/音频/无线通信</td><td class="td-status"></td><td><span class="source-tag source-b">B</span></td><td>2026-09-01</td><td>★★★★</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Domestic Intelligence -->
+  <div class="intel-section">
+    <div class="section-title">一、国内情报（15条）</div>
+      <div class="intel-cards">
+<!-- Card 1: vivo Pad 6e现身：骁龙8s Gen4+12.1英寸AMOLED，10月17日 -->
+      <div class="intel-card cn expanded" id="card-1">
+        <div class="card-header" onclick="toggleCard('card-1')">
+          <div class="card-num">1</div>
+          <div class="card-title-area">
+            <div class="card-title">vivo Pad 6e现身：骁龙8s Gen4+12.1英寸AMOLED，10月17日</div>
+            <div class="card-badges">
+              <span class="source-tag source-c">C</span>
+              <span class="card-domain">SoC/芯片/电池/快充/音频/手写笔/触控/显示/OLED</span>
+              <span class="stars">★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">入网/上新</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">骁龙8s Gen4；12.1英寸AMOLED/144Hz/HDR10+/1000nit；10000mAh；65W有线+10W反向；四扬声器；支持手写笔；580g/6.5mm</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">骁</li><li data-num="⑤">龙</li><li data-num="⑥">8</li><li data-num="⑦">s</li><li data-num="⑧"> </li><li data-num="⑨">G</li><li data-num="⑩">e</li><li data-num="⑪">n</li><li data-num="⑫">4</li><li data-num="⑬">（</li><li data-num="⑭">4</li><li data-num="⑮">n</li><li data-num="⑯">m</li><li data-num="⑰">）</li><li data-num="⑱">处</li><li data-num="⑲">理</li><li data-num="⑳">器</li><li data-num="⑴">，</li><li data-num="⑵">1</li><li data-num="⑶">×</li><li data-num="⑷">3</li><li data-num="⑸">.</li><li data-num="⑹">2</li><li data-num="⑺">G</li><li data-num="⑻">H</li><li data-num="⑼">z</li><li data-num="⑽"> </li><li data-num="⑾">X</li><li data-num="⑿">4</li><li data-num="⒀">+</li><li data-num="⒁">4</li><li data-num="⒂">×</li><li data-num="⒃">3</li><li data-num="⒄">.</li><li data-num="⒅">0</li><li data-num="⒆">G</li><li data-num="⒇">H</li><li data-num="⒈">z</li><li data-num="⒉"> </li><li data-num="⒊">A</li><li data-num="⒋">7</li><li data-num="⒌">2</li><li data-num="⒍">0</li><li data-num="⒎">+</li><li data-num="⒏">3</li><li data-num="⒐">×</li><li data-num="⒑">2</li><li data-num="⒒">.</li><li data-num="⒓">2</li><li data-num="⒔">G</li><li data-num="⒕">H</li><li data-num="⒖">z</li><li data-num="⒗"> </li><li data-num="⒘">A</li><li data-num="⒙">5</li><li data-num="⒚">2</li><li data-num="⒛">0</li><li data-num="⒜">
+</li><li data-num="⒝">2</li><li data-num="⒞">.</li><li data-num="⒟"> </li><li data-num="⒠">1</li><li data-num="⒡">2</li><li data-num="⒢">.</li><li data-num="⒣">1</li><li data-num="⒤">英</li><li data-num="⒥">寸</li><li data-num="⒦">A</li><li data-num="⒧">M</li><li data-num="⒨">O</li><li data-num="⒩">L</li><li data-num="⒪">E</li><li data-num="⒫">D</li><li data-num="⒬">，</li><li data-num="⒭">1</li><li data-num="⒮">B</li><li data-num="⒯">色</li><li data-num="⒰">，</li><li data-num="⒱">1</li><li data-num="⒲">4</li><li data-num="⒳">4</li><li data-num="⒴">H</li><li data-num="⒵">z</li><li data-num="Ⓐ">，</li><li data-num="Ⓑ">H</li><li data-num="Ⓒ">D</li><li data-num="Ⓓ">R</li><li data-num="Ⓔ">1</li><li data-num="Ⓕ">0</li><li data-num="Ⓖ">+</li><li data-num="Ⓗ">，</li><li data-num="Ⓘ">峰</li><li data-num="Ⓙ">值</li><li data-num="Ⓚ">1</li><li data-num="Ⓛ">0</li><li data-num="Ⓜ">0</li><li data-num="Ⓝ">0</li><li data-num="Ⓞ">n</li><li data-num="Ⓟ">i</li><li data-num="Ⓠ">t</li><li data-num="Ⓡ">
+</li><li data-num="Ⓢ">3</li><li data-num="Ⓣ">.</li><li data-num="Ⓤ"> </li><li data-num="Ⓥ">1</li><li data-num="Ⓦ">0</li><li data-num="Ⓧ">0</li><li data-num="Ⓨ">0</li><li data-num="Ⓩ">0</li><li data-num="ⓐ">m</li><li data-num="ⓑ">A</li><li data-num="ⓒ">h</li><li data-num="ⓓ">电</li><li data-num="ⓔ">池</li><li data-num="ⓕ">+</li><li data-num="ⓖ">6</li><li data-num="ⓗ">5</li><li data-num="ⓘ">W</li><li data-num="ⓙ">有</li><li data-num="ⓚ">线</li><li data-num="ⓛ">快</li><li data-num="ⓜ">充</li><li data-num="ⓝ">，</li><li data-num="ⓞ">支</li><li data-num="ⓟ">持</li><li data-num="ⓠ">1</li><li data-num="ⓡ">0</li><li data-num="ⓢ">W</li><li data-num="ⓣ">反</li><li data-num="ⓤ">向</li><li data-num="ⓥ">充</li><li data-num="ⓦ">电</li><li data-num="ⓧ">
+</li><li data-num="ⓨ">4</li><li data-num="ⓩ">.</li><li data-num="⓪"> </li><li data-num="⓫">四</li><li data-num="⓬">扬</li><li data-num="⓭">声</li><li data-num="⓮">器</li><li data-num="⓯">+</li><li data-num="⓰">H</li><li data-num="⓱">i</li><li data-num="⓲">-</li><li data-num="⓳">R</li><li data-num="⓴">e</li><li data-num="⓵">s</li><li data-num="⓶">音</li><li data-num="⓷">频</li><li data-num="⓸">，</li><li data-num="⓹">支</li><li data-num="⓺">持</li><li data-num="⓻">手</li><li data-num="⓼">写</li><li data-num="⓽">笔</li><li data-num="⓾">，</li><li data-num="⓿">玻</li><li data-num="─">璃</li><li data-num="━">前</li><li data-num="│">盖</li><li data-num="┃">+</li><li data-num="┄">铝</li><li data-num="┅">合</li><li data-num="┆">金</li><li data-num="┇">机</li><li data-num="┈">身</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">vivo在中端大屏平板补充AMOLED高刷机型，与Pad6 Pro形成高低搭配，12.1英寸AMOLED+万元级电池强化影音/学习场景覆盖。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">v、i、v、o、 、P、a、d、6、 、P、r、o、（、旗、舰、）、、、v、i、v、o、 、P、a、d、 、5、e</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">vivo</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-17</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.igeekphone.com/?p=457516/" target="_blank">Igeekphone（国际参数站）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">国际参数数据库披露vivo Pad 6e规格与10月17日上市日，未检索到国内官方发布稿，参数以数据库为准</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">信源为国际参数聚合站，属'即将发售'阶段情报，建议以vivo国内发布为准复核</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 2: 荣耀WIN2系列电竞手机官宣10月21日发布 -->
+      <div class="intel-card cn" id="card-2">
+        <div class="card-header" onclick="toggleCard('card-2')">
+          <div class="card-num">2</div>
+          <div class="card-title-area">
+            <div class="card-title">荣耀WIN2系列电竞手机官宣10月21日发布</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">散热/SoC/芯片/电池/快充/摄像头/音频</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">官宣</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">主动风冷散热风扇；RGB电竞灯效；横向矩阵Deco+立边机身；疑似旗舰级移动平台；发布当日同步首销</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">内</li><li data-num="⑤">置</li><li data-num="⑥">主</li><li data-num="⑦">动</li><li data-num="⑧">散</li><li data-num="⑨">热</li><li data-num="⑩">风</li><li data-num="⑪">扇</li><li data-num="⑫">，</li><li data-num="⑬">针</li><li data-num="⑭">对</li><li data-num="⑮">高</li><li data-num="⑯">负</li><li data-num="⑰">载</li><li data-num="⑱">游</li><li data-num="⑲">戏</li><li data-num="⑳">场</li><li data-num="⑴">景</li><li data-num="⑵">深</li><li data-num="⑶">度</li><li data-num="⑷">优</li><li data-num="⑸">化</li><li data-num="⑹">，</li><li data-num="⑺">规</li><li data-num="⑻">避</li><li data-num="⑼">长</li><li data-num="⑽">时</li><li data-num="⑾">间</li><li data-num="⑿">游</li><li data-num="⒀">戏</li><li data-num="⒁">降</li><li data-num="⒂">频</li><li data-num="⒃">
+</li><li data-num="⒄">2</li><li data-num="⒅">.</li><li data-num="⒆"> </li><li data-num="⒇">后</li><li data-num="⒈">置</li><li data-num="⒉">模</li><li data-num="⒊">组</li><li data-num="⒋">集</li><li data-num="⒌">成</li><li data-num="⒍">R</li><li data-num="⒎">G</li><li data-num="⒏">B</li><li data-num="⒐">电</li><li data-num="⒑">竞</li><li data-num="⒒">灯</li><li data-num="⒓">效</li><li data-num="⒔">，</li><li data-num="⒕">强</li><li data-num="⒖">化</li><li data-num="⒗">沉</li><li data-num="⒘">浸</li><li data-num="⒙">式</li><li data-num="⒚">电</li><li data-num="⒛">竞</li><li data-num="⒜">氛</li><li data-num="⒝">围</li><li data-num="⒞">
+</li><li data-num="⒟">3</li><li data-num="⒠">.</li><li data-num="⒡"> </li><li data-num="⒢">横</li><li data-num="⒣">向</li><li data-num="⒤">矩</li><li data-num="⒥">阵</li><li data-num="⒦">摄</li><li data-num="⒧">像</li><li data-num="⒨">模</li><li data-num="⒩">组</li><li data-num="⒪">+</li><li data-num="⒫">立</li><li data-num="⒬">边</li><li data-num="⒭">机</li><li data-num="⒮">身</li><li data-num="⒯">+</li><li data-num="⒰">云</li><li data-num="⒱">纹</li><li data-num="⒲">纹</li><li data-num="⒳">理</li><li data-num="⒴">后</li><li data-num="⒵">盖</li><li data-num="Ⓐ">，</li><li data-num="Ⓑ">兼</li><li data-num="Ⓒ">顾</li><li data-num="Ⓓ">辨</li><li data-num="Ⓔ">识</li><li data-num="Ⓕ">度</li><li data-num="Ⓖ">与</li><li data-num="Ⓗ">辅</li><li data-num="Ⓘ">助</li><li data-num="Ⓙ">散</li><li data-num="Ⓚ">热</li><li data-num="Ⓛ">
+</li><li data-num="Ⓜ">4</li><li data-num="Ⓝ">.</li><li data-num="Ⓞ"> </li><li data-num="Ⓟ">定</li><li data-num="Ⓠ">位</li><li data-num="Ⓡ">'</li><li data-num="Ⓢ">年</li><li data-num="Ⓣ">度</li><li data-num="Ⓤ">T</li><li data-num="Ⓥ">0</li><li data-num="Ⓦ">电</li><li data-num="Ⓧ">竞</li><li data-num="Ⓨ">夯</li><li data-num="Ⓩ">机</li><li data-num="ⓐ">'</li><li data-num="ⓑ">，</li><li data-num="ⓒ">触</li><li data-num="ⓓ">控</li><li data-num="ⓔ">响</li><li data-num="ⓕ">应</li><li data-num="ⓖ">/</li><li data-num="ⓗ">帧</li><li data-num="ⓘ">率</li><li data-num="ⓙ">稳</li><li data-num="ⓚ">定</li><li data-num="ⓛ">性</li><li data-num="ⓜ">/</li><li data-num="ⓝ">网</li><li data-num="ⓞ">络</li><li data-num="ⓟ">时</li><li data-num="ⓠ">延</li><li data-num="ⓡ">专</li><li data-num="ⓢ">项</li><li data-num="ⓣ">升</li><li data-num="ⓤ">级</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">荣耀WIN电竞生态从单一手机向'手机+平板+耳机'多场景硬件矩阵延伸，主动风冷回归旗舰游戏手机赛道，对电竞手机散热方案竞争具风向标意义。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">荣、耀、W、I、N、平、板、、、荣、耀、W、I、N、耳、机、（、同、系、列、1、0、-、2、1、同、台、发、布、）</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">荣耀（HONOR）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-12</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://g.pconline.com.cn/x/2183/21834400.html" target="_blank">太平洋科技（PConline）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">荣耀官方10月12日官宣稿，太平洋科技报道；芯片与电池等核心参数尚未官方确认，以官方发布会为准</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">核心SoC/电池容量未官宣，参数属产业链爆料，待10-21发布会最终确认</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 3: 荣耀WIN耳机定档10月21日随WIN2系列同台发布 -->
+      <div class="intel-card cn" id="card-3">
+        <div class="card-header" onclick="toggleCard('card-3')">
+          <div class="card-num">3</div>
+          <div class="card-title-area">
+            <div class="card-title">荣耀WIN耳机定档10月21日随WIN2系列同台发布</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">音频/无线通信</span>
+              <span class="stars">★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">定档</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">低延迟性能表现；与WIN2手机/平板同台发布</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">主</li><li data-num="⑤">打</li><li data-num="⑥">低</li><li data-num="⑦">延</li><li data-num="⑧">迟</li><li data-num="⑨">音</li><li data-num="⑩">频</li><li data-num="⑪">表</li><li data-num="⑫">现</li><li data-num="⑬">，</li><li data-num="⑭">匹</li><li data-num="⑮">配</li><li data-num="⑯">W</li><li data-num="⑰">I</li><li data-num="⑱">N</li><li data-num="⑲">电</li><li data-num="⑳">竞</li><li data-num="⑴">生</li><li data-num="⑵">态</li><li data-num="⑶">
+</li><li data-num="⑷">2</li><li data-num="⑸">.</li><li data-num="⑹"> </li><li data-num="⑺">作</li><li data-num="⑻">为</li><li data-num="⑼">W</li><li data-num="⑽">I</li><li data-num="⑾">N</li><li data-num="⑿">2</li><li data-num="⒀">系</li><li data-num="⒁">列</li><li data-num="⒂">三</li><li data-num="⒃">件</li><li data-num="⒄">套</li><li data-num="⒅">之</li><li data-num="⒆">一</li><li data-num="⒇">同</li><li data-num="⒈">步</li><li data-num="⒉">发</li><li data-num="⒊">布</li><li data-num="⒋">，</li><li data-num="⒌">强</li><li data-num="⒍">调</li><li data-num="⒎">跨</li><li data-num="⒏">设</li><li data-num="⒐">备</li><li data-num="⒑">协</li><li data-num="⒒">同</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">荣耀首次将真无线耳机纳入WIN电竞硬件矩阵，补齐'手机+平板+耳机'闭环，低延迟是电竞音频关键卖点。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">荣、耀、W、I、N、2、手、机、、、荣、耀、W、I、N、平、板</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">荣耀（HONOR）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-12</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://g.pconline.com.cn/x/2183/21834335.html" target="_blank">太平洋科技（PConline）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">荣耀官方定档快讯，仅披露低延迟方向与同台发布信息，具体降噪/续航/芯片等参数未公布</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">参数披露极少，列为方向性情报，待发布会补充</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 4: 联想小新平板11双11大促开启，到手976.7元起 -->
+      <div class="intel-card cn" id="card-4">
+        <div class="card-header" onclick="toggleCard('card-4')">
+          <div class="card-num">4</div>
+          <div class="card-title-area">
+            <div class="card-title">联想小新平板11双11大促开启，到手976.7元起</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示/OLED/SoC/芯片/AI/NPU/电池/快充/手写笔/触控</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">促销/在售</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">11英寸2.5K护眼屏/90Hz/500nit；天玑6300；最高扩展2TB；约11小时网课续航；杜比四扬声器；国补到手976.7元起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">1</li><li data-num="⑤">1</li><li data-num="⑥">英</li><li data-num="⑦">寸</li><li data-num="⑧">2</li><li data-num="⑨">.</li><li data-num="⑩">5</li><li data-num="⑪">K</li><li data-num="⑫">高</li><li data-num="⑬">清</li><li data-num="⑭">护</li><li data-num="⑮">眼</li><li data-num="⑯">大</li><li data-num="⑰">屏</li><li data-num="⑱">，</li><li data-num="⑲">9</li><li data-num="⑳">0</li><li data-num="⑴">H</li><li data-num="⑵">z</li><li data-num="⑶">高</li><li data-num="⑷">刷</li><li data-num="⑸">，</li><li data-num="⑹">双</li><li data-num="⑺">重</li><li data-num="⑻">莱</li><li data-num="⑼">茵</li><li data-num="⑽">护</li><li data-num="⑾">眼</li><li data-num="⑿">认</li><li data-num="⒀">证</li><li data-num="⒁">
+</li><li data-num="⒂">2</li><li data-num="⒃">.</li><li data-num="⒄"> </li><li data-num="⒅">天</li><li data-num="⒆">玑</li><li data-num="⒇">6</li><li data-num="⒈">3</li><li data-num="⒉">0</li><li data-num="⒊">0</li><li data-num="⒋">处</li><li data-num="⒌">理</li><li data-num="⒍">器</li><li data-num="⒎">，</li><li data-num="⒏">自</li><li data-num="⒐">研</li><li data-num="⒑">灵</li><li data-num="⒒">境</li><li data-num="⒓">引</li><li data-num="⒔">擎</li><li data-num="⒕">，</li><li data-num="⒖">性</li><li data-num="⒗">能</li><li data-num="⒘">较</li><li data-num="⒙">上</li><li data-num="⒚">代</li><li data-num="⒛">提</li><li data-num="⒜">升</li><li data-num="⒝">3</li><li data-num="⒞">2</li><li data-num="⒟">%</li><li data-num="⒠">
+</li><li data-num="⒡">3</li><li data-num="⒢">.</li><li data-num="⒣"> </li><li data-num="⒤">内</li><li data-num="⒥">置</li><li data-num="⒦">天</li><li data-num="⒧">禧</li><li data-num="⒨">个</li><li data-num="⒩">人</li><li data-num="⒪">超</li><li data-num="⒫">级</li><li data-num="⒬">智</li><li data-num="⒭">能</li><li data-num="⒮">体</li><li data-num="⒯">+</li><li data-num="⒰">天</li><li data-num="⒱">骄</li><li data-num="⒲">学</li><li data-num="⒳">堂</li><li data-num="⒴">A</li><li data-num="⒵">I</li><li data-num="Ⓐ">伴</li><li data-num="Ⓑ">学</li><li data-num="Ⓒ">（</li><li data-num="Ⓓ">A</li><li data-num="Ⓔ">I</li><li data-num="Ⓕ">讲</li><li data-num="Ⓖ">题</li><li data-num="Ⓗ">/</li><li data-num="Ⓘ">实</li><li data-num="Ⓙ">时</li><li data-num="Ⓚ">字</li><li data-num="Ⓛ">幕</li><li data-num="Ⓜ">/</li><li data-num="Ⓝ">智</li><li data-num="Ⓞ">慧</li><li data-num="Ⓟ">识</li><li data-num="Ⓠ">屏</li><li data-num="Ⓡ">）</li><li data-num="Ⓢ">
+</li><li data-num="Ⓣ">4</li><li data-num="Ⓤ">.</li><li data-num="Ⓥ"> </li><li data-num="Ⓦ">支</li><li data-num="Ⓧ">持</li><li data-num="Ⓨ">灵</li><li data-num="Ⓩ">感</li><li data-num="ⓐ">手</li><li data-num="ⓑ">写</li><li data-num="ⓒ">笔</li><li data-num="ⓓ">与</li><li data-num="ⓔ">智</li><li data-num="ⓕ">能</li><li data-num="ⓖ">键</li><li data-num="ⓗ">盘</li><li data-num="ⓘ">，</li><li data-num="ⓙ">家</li><li data-num="ⓚ">长</li><li data-num="ⓛ">远</li><li data-num="ⓜ">程</li><li data-num="ⓝ">守</li><li data-num="ⓞ">护</li><li data-num="ⓟ">管</li><li data-num="ⓠ">控</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">千元内2.5K高刷护眼大屏+全套AI伴学，精准卡位学生/家庭入门平板市场，叠加国补凸显性价比，反映平板上探AI学习场景趋势。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">联、想、小、新、P、a、d、 、P、r、o、 、1、3、（、同、系、旗、舰、）</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">联想（Lenovo）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-16</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.163.com/dy/article/L9CI95NG0511CPVM.html" target="_blank">快科技（IT之家）/网易</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">快科技10月16日双11促销报道，引用联想商城定价与国补到手价</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">低价走量机型，AI伴学为差异化卖点</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 5: 真我Neo8发布：骁龙8 Gen5+8000mAh，2399元起 -->
+      <div class="intel-card cn" id="card-5">
+        <div class="card-header" onclick="toggleCard('card-5')">
+          <div class="card-num">5</div>
+          <div class="card-title-area">
+            <div class="card-title">真我Neo8发布：骁龙8 Gen5+8000mAh，2399元起</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/散热/电池/快充/认证/合规/显示/OLED</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">第五代骁龙8（骁龙8 Gen5）；LPDDR5X 8533Mbps+UFS4.1；8000mAh单电芯+80W；6.78英寸1.5K OLED直屏/165Hz/全亮度DC调光/莱茵无频闪；IMX896主摄+3.5倍潜望长焦；IP66/68/69；2399元起（12+256），顶配3699元（16+1TB）</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">骁</li><li data-num="⑤">龙</li><li data-num="⑥">8</li><li data-num="⑦"> </li><li data-num="⑧">G</li><li data-num="⑨">e</li><li data-num="⑩">n</li><li data-num="⑪">5</li><li data-num="⑫">+</li><li data-num="⑬">L</li><li data-num="⑭">P</li><li data-num="⑮">D</li><li data-num="⑯">D</li><li data-num="⑰">R</li><li data-num="⑱">5</li><li data-num="⑲">X</li><li data-num="⑳">+</li><li data-num="⑴">U</li><li data-num="⑵">F</li><li data-num="⑶">S</li><li data-num="⑷">4</li><li data-num="⑸">.</li><li data-num="⑹">1</li><li data-num="⑺">'</li><li data-num="⑻">性</li><li data-num="⑼">能</li><li data-num="⑽">铁</li><li data-num="⑾">三</li><li data-num="⑿">角</li><li data-num="⒀">'</li><li data-num="⒁">，</li><li data-num="⒂">安</li><li data-num="⒃">兔</li><li data-num="⒄">兔</li><li data-num="⒅">约</li><li data-num="⒆">3</li><li data-num="⒇">5</li><li data-num="⒈">8</li><li data-num="⒉">万</li><li data-num="⒊">
+</li><li data-num="⒋">2</li><li data-num="⒌">.</li><li data-num="⒍"> </li><li data-num="⒎">8</li><li data-num="⒏">0</li><li data-num="⒐">0</li><li data-num="⒑">0</li><li data-num="⒒">m</li><li data-num="⒓">A</li><li data-num="⒔">h</li><li data-num="⒕">单</li><li data-num="⒖">电</li><li data-num="⒗">芯</li><li data-num="⒘">电</li><li data-num="⒙">池</li><li data-num="⒚">+</li><li data-num="⒛">8</li><li data-num="⒜">0</li><li data-num="⒝">W</li><li data-num="⒞">快</li><li data-num="⒟">充</li><li data-num="⒠">，</li><li data-num="⒡">主</li><li data-num="⒢">打</li><li data-num="⒣">两</li><li data-num="⒤">天</li><li data-num="⒥">一</li><li data-num="⒦">充</li><li data-num="⒧">；</li><li data-num="⒨">支</li><li data-num="⒩">持</li><li data-num="⒪">I</li><li data-num="⒫">P</li><li data-num="⒬">6</li><li data-num="⒭">6</li><li data-num="⒮">/</li><li data-num="⒯">6</li><li data-num="⒰">8</li><li data-num="⒱">/</li><li data-num="⒲">6</li><li data-num="⒳">9</li><li data-num="⒴">防</li><li data-num="⒵">水</li><li data-num="Ⓐ">
+</li><li data-num="Ⓑ">3</li><li data-num="Ⓒ">.</li><li data-num="Ⓓ"> </li><li data-num="Ⓔ">6</li><li data-num="Ⓕ">.</li><li data-num="Ⓖ">7</li><li data-num="Ⓗ">8</li><li data-num="Ⓘ">英</li><li data-num="Ⓙ">寸</li><li data-num="Ⓚ">三</li><li data-num="Ⓛ">星</li><li data-num="Ⓜ">M</li><li data-num="Ⓝ">1</li><li data-num="Ⓞ">4</li><li data-num="Ⓟ"> </li><li data-num="Ⓠ">1</li><li data-num="Ⓡ">.</li><li data-num="Ⓢ">5</li><li data-num="Ⓣ">K</li><li data-num="Ⓤ"> </li><li data-num="Ⓥ">O</li><li data-num="Ⓦ">L</li><li data-num="Ⓧ">E</li><li data-num="Ⓨ">D</li><li data-num="Ⓩ">直</li><li data-num="ⓐ">屏</li><li data-num="ⓑ">，</li><li data-num="ⓒ">1</li><li data-num="ⓓ">6</li><li data-num="ⓔ">5</li><li data-num="ⓕ">H</li><li data-num="ⓖ">z</li><li data-num="ⓗ">，</li><li data-num="ⓘ">全</li><li data-num="ⓙ">亮</li><li data-num="ⓚ">度</li><li data-num="ⓛ">D</li><li data-num="ⓜ">C</li><li data-num="ⓝ">调</li><li data-num="ⓞ">光</li><li data-num="ⓟ">+</li><li data-num="ⓠ">莱</li><li data-num="ⓡ">茵</li><li data-num="ⓢ">无</li><li data-num="ⓣ">频</li><li data-num="ⓤ">闪</li><li data-num="ⓥ">认</li><li data-num="ⓦ">证</li><li data-num="ⓧ">
+</li><li data-num="ⓨ">4</li><li data-num="ⓩ">.</li><li data-num="⓪"> </li><li data-num="⓫">'</li><li data-num="⓬">大</li><li data-num="⓭">气</li><li data-num="⓮">流</li><li data-num="⓯">冷</li><li data-num="⓰">锋</li><li data-num="⓱">散</li><li data-num="⓲">热</li><li data-num="⓳">'</li><li data-num="⓴">总</li><li data-num="⓵">散</li><li data-num="⓶">热</li><li data-num="⓷">面</li><li data-num="⓸">积</li><li data-num="⓹">3</li><li data-num="⓺">9</li><li data-num="⓻">2</li><li data-num="⓼">2</li><li data-num="⓽">5</li><li data-num="⓾">m</li><li data-num="⓿">m</li><li data-num="─">²</li><li data-num="━">（</li><li data-num="│">V</li><li data-num="┃">C</li><li data-num="┄">均</li><li data-num="┅">热</li><li data-num="┆">板</li><li data-num="┇">7</li><li data-num="┈">0</li><li data-num="┉">0</li><li data-num="┊">0</li><li data-num="┋">m</li><li data-num="┌">m</li><li data-num="┍">²</li><li data-num="┎">）</li><li data-num="┏">，</li><li data-num="┐">5</li><li data-num="┑">档</li><li data-num="┒">温</li><li data-num="┓">控</li><li data-num="└">；</li><li data-num="┕">I</li><li data-num="┖">M</li><li data-num="┗">X</li><li data-num="┘">8</li><li data-num="┙">9</li><li data-num="┚">6</li><li data-num="┛">主</li><li data-num="├">摄</li><li data-num="┝">+</li><li data-num="┞">3</li><li data-num="┟">.</li><li data-num="┠">5</li><li data-num="┡">倍</li><li data-num="┢">潜</li><li data-num="┣">望</li><li data-num="┤">长</li><li data-num="┥">焦</li><li data-num="┦">，</li><li data-num="┧">8</li><li data-num="┨">K</li><li data-num="┩">直</li><li data-num="┪">出</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">2000-3500元档'性能+大电池'标杆，骁龙8 Gen5下放+8000mAh改写中端续航预期，对红米/一加同价位机型形成直接压力。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">一、加、T、u、r、b、o、 、6、、、R、e、d、m、i、 、K、1、0、0、、、i、Q、O、O、 、N、e、o、1、1</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">realme（真我）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-16</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://k.sina.com.cn/article_7880068405_1d5b04d35068020iau.html" target="_blank">新浪数码</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">realme 10月16日发布会后数码媒体评测稿，列明完整规格与定价档位</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">215g偏重，影像非顶级，定位性价比性能续航机</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 6: 高驰 COROS PACE 4 Pro 运动手表发布：38g钛金属+蓝宝石+21天续航+AI语音 -->
+      <div class="intel-card cn" id="card-6">
+        <div class="card-header" onclick="toggleCard('card-6')">
+          <div class="card-num">6</div>
+          <div class="card-title-area">
+            <div class="card-title">高驰 COROS PACE 4 Pro 运动手表发布：38g钛金属+蓝宝石+21天续航+AI语音</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">AI/NPU/SoC/芯片/BMS/电源/电池/快充/音频</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">2（多源印证）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">5级钛金属表圈+蓝宝石镜面；38g/11.8mm；1.47" AMOLED 2-3500nit；21天续航(单频60h/双频40h)；AI语音操控；COROS MCP接入豆包/WorkBuddy/ChatGPT/Claude；¥2999（国补2549）</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">①5级钛金属表圈+蓝宝石镜面，38g轻量机身/11.8mm</li><li data-num="②">②1.47英寸AMOLED，2-3500nit亮度范围</li><li data-num="③">③AI语音操控+语音标记，COROS MCP接入豆包/WorkBuddy/ChatGPT/Claude等主流AI平台</li><li data-num="④">④单频-高精度60h/双频40h/日常21天续航，导入全球离线地形图</li><li data-num="⑤">⑤新一代光电心率+双频全星座GPS，50米防水</li><li data-num="⑥">⑥扬声器+麦克风，遥控GoPro/Insta360/DJI，支付宝离线支付</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">高驰以AI语音+开放MCP生态切入运动手表，38g钛金属轻量化与21天续航对标Garmin，对平板/手机协同的运动健康终端有参考。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">轻量化钛金属+蓝宝石结构方案、长续航电池管理(21天)、AI语音+MCP开放生态、双频GPS+运动相机遥控协同</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">高驰/COROS PACE 4 Pro</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-23</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.ithome.com/1/006/029.htm" target="_blank">IT之家</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">IT之家 2026-09-23 报道高驰发布PACE 4 Pro运动手表(¥2999，国补2549)</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">AI Coach功能四季度上线；海外版本与定价待确认。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 7: INMO GO3发布：双目MicroLED波导AI眼镜，98种语言翻译 -->
+      <div class="intel-card cn" id="card-7">
+        <div class="card-header" onclick="toggleCard('card-7')">
+          <div class="card-num">7</div>
+          <div class="card-title-area">
+            <div class="card-title">INMO GO3发布：双目MicroLED波导AI眼镜，98种语言翻译</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">显示/OLED/AI/NPU/电池/快充/摄像头/音频</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">双目MicroLED波导显示/640×480/30°FOV/1500nit；58g；8mm纤薄镜腿；5秒热插拔电池；98在线语言+9离线包实时翻译；INMO Speaker模式；HUD提词/会议摘要/AR导航；MSRP $699</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">双</li><li data-num="⑤">目</li><li data-num="⑥">M</li><li data-num="⑦">i</li><li data-num="⑧">c</li><li data-num="⑨">r</li><li data-num="⑩">o</li><li data-num="⑪">L</li><li data-num="⑫">E</li><li data-num="⑬">D</li><li data-num="⑭">波</li><li data-num="⑮">导</li><li data-num="⑯">显</li><li data-num="⑰">示</li><li data-num="⑱">，</li><li data-num="⑲">6</li><li data-num="⑳">4</li><li data-num="⑴">0</li><li data-num="⑵">×</li><li data-num="⑶">4</li><li data-num="⑷">8</li><li data-num="⑸">0</li><li data-num="⑹">分</li><li data-num="⑺">辨</li><li data-num="⑻">率</li><li data-num="⑼">，</li><li data-num="⑽">3</li><li data-num="⑾">0</li><li data-num="⑿">°</li><li data-num="⒀">视</li><li data-num="⒁">场</li><li data-num="⒂">角</li><li data-num="⒃">，</li><li data-num="⒄">峰</li><li data-num="⒅">值</li><li data-num="⒆">1</li><li data-num="⒇">5</li><li data-num="⒈">0</li><li data-num="⒉">0</li><li data-num="⒊">n</li><li data-num="⒋">i</li><li data-num="⒌">t</li><li data-num="⒍">户</li><li data-num="⒎">外</li><li data-num="⒏">可</li><li data-num="⒐">读</li><li data-num="⒑">
+</li><li data-num="⒒">2</li><li data-num="⒓">.</li><li data-num="⒔"> </li><li data-num="⒕">5</li><li data-num="⒖">8</li><li data-num="⒗">g</li><li data-num="⒘">机</li><li data-num="⒙">身</li><li data-num="⒚">+</li><li data-num="⒛">8</li><li data-num="⒜">m</li><li data-num="⒝">m</li><li data-num="⒞">纤</li><li data-num="⒟">薄</li><li data-num="⒠">镜</li><li data-num="⒡">腿</li><li data-num="⒢">，</li><li data-num="⒣">5</li><li data-num="⒤">秒</li><li data-num="⒥">热</li><li data-num="⒦">插</li><li data-num="⒧">拔</li><li data-num="⒨">电</li><li data-num="⒩">池</li><li data-num="⒪">解</li><li data-num="⒫">决</li><li data-num="⒬">续</li><li data-num="⒭">航</li><li data-num="⒮">痛</li><li data-num="⒯">点</li><li data-num="⒰">
+</li><li data-num="⒱">3</li><li data-num="⒲">.</li><li data-num="⒳"> </li><li data-num="⒴">支</li><li data-num="⒵">持</li><li data-num="Ⓐ">9</li><li data-num="Ⓑ">8</li><li data-num="Ⓒ">种</li><li data-num="Ⓓ">在</li><li data-num="Ⓔ">线</li><li data-num="Ⓕ">语</li><li data-num="Ⓖ">言</li><li data-num="Ⓗ">+</li><li data-num="Ⓘ">9</li><li data-num="Ⓙ">种</li><li data-num="Ⓚ">离</li><li data-num="Ⓛ">线</li><li data-num="Ⓜ">包</li><li data-num="Ⓝ">的</li><li data-num="Ⓞ">照</li><li data-num="Ⓟ">片</li><li data-num="Ⓠ">/</li><li data-num="Ⓡ">通</li><li data-num="Ⓢ">话</li><li data-num="Ⓣ">/</li><li data-num="Ⓤ">对</li><li data-num="Ⓥ">话</li><li data-num="Ⓦ">实</li><li data-num="Ⓧ">时</li><li data-num="Ⓨ">翻</li><li data-num="Ⓩ">译</li><li data-num="ⓐ">
+</li><li data-num="ⓑ">4</li><li data-num="ⓒ">.</li><li data-num="ⓓ"> </li><li data-num="ⓔ">内</li><li data-num="ⓕ">置</li><li data-num="ⓖ">H</li><li data-num="ⓗ">U</li><li data-num="ⓘ">D</li><li data-num="ⓙ">：</li><li data-num="ⓚ">A</li><li data-num="ⓛ">I</li><li data-num="ⓜ">提</li><li data-num="ⓝ">词</li><li data-num="ⓞ">、</li><li data-num="ⓟ">A</li><li data-num="ⓠ">I</li><li data-num="ⓡ">会</li><li data-num="ⓢ">议</li><li data-num="ⓣ">摘</li><li data-num="ⓤ">要</li><li data-num="ⓥ">、</li><li data-num="ⓦ">视</li><li data-num="ⓧ">觉</li><li data-num="ⓨ">A</li><li data-num="ⓩ">R</li><li data-num="⓪">步</li><li data-num="⓫">行</li><li data-num="⓬">/</li><li data-num="⓭">骑</li><li data-num="⓮">行</li><li data-num="⓯">导</li><li data-num="⓰">航</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">将MicroLED波导与消费级实时翻译/企业HUD结合，定义'生产力向'AI眼镜形态，与时尚摄像类（Magic AI Glasses J）形成双线布局。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">I、N、M、O、 、M、a、g、i、c、 、A、I、 、G、l、a、s、s、e、s、 、J、（、同、场、发、布、）、、、雷、鸟、i、O、、、R、o、k、i、d</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">INMO（影目）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-21</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://technewscentury.co.uk/2026/09/21/inmo-launches-jackson-wang-smart-glasses-and-microled-go3/" target="_blank">TechNewsCentury</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">INMO 9月21日双品发布会报道，同篇涵盖Magic AI Glasses J与GO3，参数详尽</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">国际媒体首发报道，国内可参照INMO官方信息复核</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 8: INMO Magic AI Glasses J发布：40g时尚AI眼镜，8MP第一视角 -->
+      <div class="intel-card cn" id="card-8">
+        <div class="card-header" onclick="toggleCard('card-8')">
+          <div class="card-num">8</div>
+          <div class="card-title-area">
+            <div class="card-title">INMO Magic AI Glasses J发布：40g时尚AI眼镜，8MP第一视角</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">摄像头/AI/NPU/音频/手写笔/触控/生物识别</span>
+              <span class="stars">★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">~40g；8MP第一视角POV摄像头；'Hey Magic'语音助手；实体触控+AI快捷键；开放式蓝牙双扬声器；实时语音翻译+步行/骑行导航；早鸟$199/MSRP $299</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">标</li><li data-num="⑤">准</li><li data-num="⑥">时</li><li data-num="⑦">尚</li><li data-num="⑧">镜</li><li data-num="⑨">框</li><li data-num="⑩">约</li><li data-num="⑪">4</li><li data-num="⑫">0</li><li data-num="⑬">g</li><li data-num="⑭">，</li><li data-num="⑮">全</li><li data-num="⑯">天</li><li data-num="⑰">佩</li><li data-num="⑱">戴</li><li data-num="⑲">无</li><li data-num="⑳">面</li><li data-num="⑴">部</li><li data-num="⑵">疲</li><li data-num="⑶">劳</li><li data-num="⑷">，</li><li data-num="⑸">联</li><li data-num="⑹">名</li><li data-num="⑺">J</li><li data-num="⑻">a</li><li data-num="⑼">c</li><li data-num="⑽">k</li><li data-num="⑾">s</li><li data-num="⑿">o</li><li data-num="⒀">n</li><li data-num="⒁"> </li><li data-num="⒂">W</li><li data-num="⒃">a</li><li data-num="⒄">n</li><li data-num="⒅">g</li><li data-num="⒆">设</li><li data-num="⒇">计</li><li data-num="⒈">
+</li><li data-num="⒉">2</li><li data-num="⒊">.</li><li data-num="⒋"> </li><li data-num="⒌">8</li><li data-num="⒍">M</li><li data-num="⒎">P</li><li data-num="⒏">第</li><li data-num="⒐">一</li><li data-num="⒑">视</li><li data-num="⒒">角</li><li data-num="⒓">摄</li><li data-num="⒔">像</li><li data-num="⒕">头</li><li data-num="⒖">，</li><li data-num="⒗">语</li><li data-num="⒘">音</li><li data-num="⒙">指</li><li data-num="⒚">令</li><li data-num="⒛">免</li><li data-num="⒜">手</li><li data-num="⒝">操</li><li data-num="⒞">作</li><li data-num="⒟">，</li><li data-num="⒠">即</li><li data-num="⒡">时</li><li data-num="⒢">同</li><li data-num="⒣">步</li><li data-num="⒤"> </li><li data-num="⒥">c</li><li data-num="⒦">o</li><li data-num="⒧">m</li><li data-num="⒨">p</li><li data-num="⒩">a</li><li data-num="⒪">n</li><li data-num="⒫">i</li><li data-num="⒬">o</li><li data-num="⒭">n</li><li data-num="⒮"> </li><li data-num="⒯">A</li><li data-num="⒰">p</li><li data-num="⒱">p</li><li data-num="⒲">
+</li><li data-num="⒳">3</li><li data-num="⒴">.</li><li data-num="⒵"> </li><li data-num="Ⓐ">'</li><li data-num="Ⓑ">H</li><li data-num="Ⓒ">e</li><li data-num="Ⓓ">y</li><li data-num="Ⓔ"> </li><li data-num="Ⓕ">M</li><li data-num="Ⓖ">a</li><li data-num="Ⓗ">g</li><li data-num="Ⓘ">i</li><li data-num="Ⓙ">c</li><li data-num="Ⓚ">'</li><li data-num="Ⓛ">语</li><li data-num="Ⓜ">音</li><li data-num="Ⓝ">助</li><li data-num="Ⓞ">手</li><li data-num="Ⓟ">：</li><li data-num="Ⓠ">物</li><li data-num="Ⓡ">体</li><li data-num="Ⓢ">识</li><li data-num="Ⓣ">别</li><li data-num="Ⓤ">、</li><li data-num="Ⓥ">事</li><li data-num="Ⓦ">件</li><li data-num="Ⓧ">提</li><li data-num="Ⓨ">醒</li><li data-num="Ⓩ">、</li><li data-num="ⓐ">实</li><li data-num="ⓑ">时</li><li data-num="ⓒ">问</li><li data-num="ⓓ">答</li><li data-num="ⓔ">
+</li><li data-num="ⓕ">4</li><li data-num="ⓖ">.</li><li data-num="ⓗ"> </li><li data-num="ⓘ">开</li><li data-num="ⓙ">放</li><li data-num="ⓚ">式</li><li data-num="ⓛ">蓝</li><li data-num="ⓜ">牙</li><li data-num="ⓝ">双</li><li data-num="ⓞ">扬</li><li data-num="ⓟ">声</li><li data-num="ⓠ">器</li><li data-num="ⓡ">，</li><li data-num="ⓢ">双</li><li data-num="ⓣ">向</li><li data-num="ⓤ">实</li><li data-num="ⓥ">时</li><li data-num="ⓦ">翻</li><li data-num="ⓧ">译</li><li data-num="ⓨ">与</li><li data-num="ⓩ">步</li><li data-num="⓪">行</li><li data-num="⓫">/</li><li data-num="⓬">骑</li><li data-num="⓭">行</li><li data-num="⓮">语</li><li data-num="⓯">音</li><li data-num="⓰">导</li><li data-num="⓱">航</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">INMO以时尚轻量+第一视角摄像+语音AI切入大众日常佩戴场景，与GO3形成'生活方式vs生产力'双产品矩阵，对标Ray-Ban Meta路线。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">I、N、M、O、 、G、O、3、（、同、场、发、布、）、、、R、a、y、-、B、a、n、 、M、e、t、a、、、闪、极、l、o、o、m、o、s、 、L、1</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">INMO（影目）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-21</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://technewscentury.co.uk/2026/09/21/inmo-launches-jackson-wang-smart-glasses-and-microled-go3/" target="_blank">TechNewsCentury</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">与INMO GO3同篇发布报道，Magic AI Glasses J参数节选自该文；国内发布可参照INMO官网</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">与GO3共用同一发布报道URL，参数均来自该文</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 9: 联想小新Pad Pro 13英寸开售：3.5K屏+骁龙8s，2599元 -->
+      <div class="intel-card cn" id="card-9">
+        <div class="card-header" onclick="toggleCard('card-9')">
+          <div class="card-num">9</div>
+          <div class="card-title-area">
+            <div class="card-title">联想小新Pad Pro 13英寸开售：3.5K屏+骁龙8s，2599元</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">显示/OLED/SoC/芯片/AI/NPU/电池/快充/音频</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">开售</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">13英寸3.5K护眼超清屏；骁龙8s；Android 16；8GB+256GB；WIFI版；2599元；9月20日8:00开售</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">1</li><li data-num="⑤">3</li><li data-num="⑥">英</li><li data-num="⑦">寸</li><li data-num="⑧">3</li><li data-num="⑨">.</li><li data-num="⑩">5</li><li data-num="⑪">K</li><li data-num="⑫">超</li><li data-num="⑬">清</li><li data-num="⑭">护</li><li data-num="⑮">眼</li><li data-num="⑯">大</li><li data-num="⑰">屏</li><li data-num="⑱">，</li><li data-num="⑲">面</li><li data-num="⑳">向</li><li data-num="⑴">影</li><li data-num="⑵">音</li><li data-num="⑶">与</li><li data-num="⑷">轻</li><li data-num="⑸">创</li><li data-num="⑹">作</li><li data-num="⑺">
+</li><li data-num="⑻">2</li><li data-num="⑼">.</li><li data-num="⑽"> </li><li data-num="⑾">骁</li><li data-num="⑿">龙</li><li data-num="⒀">8</li><li data-num="⒁">s</li><li data-num="⒂">移</li><li data-num="⒃">动</li><li data-num="⒄">平</li><li data-num="⒅">台</li><li data-num="⒆">，</li><li data-num="⒇">预</li><li data-num="⒈">装</li><li data-num="⒉">A</li><li data-num="⒊">n</li><li data-num="⒋">d</li><li data-num="⒌">r</li><li data-num="⒍">o</li><li data-num="⒎">i</li><li data-num="⒏">d</li><li data-num="⒐"> </li><li data-num="⒑">1</li><li data-num="⒒">6</li><li data-num="⒓">
+</li><li data-num="⒔">3</li><li data-num="⒕">.</li><li data-num="⒖"> </li><li data-num="⒗">A</li><li data-num="⒘">I</li><li data-num="⒙">学</li><li data-num="⒚">习</li><li data-num="⒛">平</li><li data-num="⒜">板</li><li data-num="⒝">定</li><li data-num="⒞">位</li><li data-num="⒟">，</li><li data-num="⒠">适</li><li data-num="⒡">配</li><li data-num="⒢">手</li><li data-num="⒣">写</li><li data-num="⒤">笔</li><li data-num="⒥">与</li><li data-num="⒦">智</li><li data-num="⒧">能</li><li data-num="⒨">键</li><li data-num="⒩">盘</li><li data-num="⒪">
+</li><li data-num="⒫">4</li><li data-num="⒬">.</li><li data-num="⒭"> </li><li data-num="⒮">张</li><li data-num="⒯">凌</li><li data-num="⒰">赫</li><li data-num="⒱">同</li><li data-num="⒲">款</li><li data-num="⒳">营</li><li data-num="⒴">销</li><li data-num="⒵">，</li><li data-num="Ⓐ">主</li><li data-num="Ⓑ">打</li><li data-num="Ⓒ">年</li><li data-num="Ⓓ">轻</li><li data-num="Ⓔ">/</li><li data-num="Ⓕ">学</li><li data-num="Ⓖ">生</li><li data-num="Ⓗ">人</li><li data-num="Ⓘ">群</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">联想在3000元内大屏AI学习平板市场的主力机型，3.5K屏+骁龙8s组合强化'学习平板'赛道竞争力，与荣耀/OPPO同档正面竞争。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">联、想、小、新、平、板、1、1、（、入、门、）、、、联、想、Y、o、g、a、 、T、a、b、系、列</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">联想（Lenovo）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-20</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://item.lenovo.com.cn/product/1053087.html" target="_blank">联想商城（官方）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">联想官方商城商品页，显示9月20日开售、2599元定价与核心配置</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">官方在售页，参数权威；内存/电池等细节以页面为准</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 10: Anker MagGo 2 Pro上市：主动散热Qi2磁吸充电宝，25W无线 -->
+      <div class="intel-card cn" id="card-10">
+        <div class="card-header" onclick="toggleCard('card-10')">
+          <div class="card-num">10</div>
+          <div class="card-title-area">
+            <div class="card-title">Anker MagGo 2 Pro上市：主动散热Qi2磁吸充电宝，25W无线</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">电池/快充/AI/NPU/BMS/电源/散热/认证/合规</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">Qi2 25W无线+45W USB-C有线；10000mAh；内置涡轮风扇+双风道+三层石墨烯，无线充电温控<36℃；智能屏显；品牌识别自动调输出；磁吸支架；2.79×4.14×0.7英寸/7.7oz；$109.99（美）</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">Q</li><li data-num="⑤">i</li><li data-num="⑥">2</li><li data-num="⑦">认</li><li data-num="⑧">证</li><li data-num="⑨">磁</li><li data-num="⑩">吸</li><li data-num="⑪">，</li><li data-num="⑫">主</li><li data-num="⑬">动</li><li data-num="⑭">散</li><li data-num="⑮">热</li><li data-num="⑯">（</li><li data-num="⑰">涡</li><li data-num="⑱">轮</li><li data-num="⑲">风</li><li data-num="⑳">扇</li><li data-num="⑴">+</li><li data-num="⑵">双</li><li data-num="⑶">风</li><li data-num="⑷">道</li><li data-num="⑸">+</li><li data-num="⑹">三</li><li data-num="⑺">层</li><li data-num="⑻">石</li><li data-num="⑼">墨</li><li data-num="⑽">烯</li><li data-num="⑾">）</li><li data-num="⑿">将</li><li data-num="⒀">2</li><li data-num="⒁">5</li><li data-num="⒂">W</li><li data-num="⒃">无</li><li data-num="⒄">线</li><li data-num="⒅">充</li><li data-num="⒆">电</li><li data-num="⒇">温</li><li data-num="⒈">度</li><li data-num="⒉">压</li><li data-num="⒊">至</li><li data-num="⒋">3</li><li data-num="⒌">6</li><li data-num="⒍">℃</li><li data-num="⒎">以</li><li data-num="⒏">下</li><li data-num="⒐">，</li><li data-num="⒑">避</li><li data-num="⒒">免</li><li data-num="⒓">降</li><li data-num="⒔">速</li><li data-num="⒕">
+</li><li data-num="⒖">2</li><li data-num="⒗">.</li><li data-num="⒘"> </li><li data-num="⒙">1</li><li data-num="⒚">0</li><li data-num="⒛">0</li><li data-num="⒜">0</li><li data-num="⒝">0</li><li data-num="⒞">m</li><li data-num="⒟">A</li><li data-num="⒠">h</li><li data-num="⒡">容</li><li data-num="⒢">量</li><li data-num="⒣">，</li><li data-num="⒤">2</li><li data-num="⒥">5</li><li data-num="⒦">W</li><li data-num="⒧">无</li><li data-num="⒨">线</li><li data-num="⒩">+</li><li data-num="⒪">4</li><li data-num="⒫">5</li><li data-num="⒬">W</li><li data-num="⒭">有</li><li data-num="⒮">线</li><li data-num="⒯">U</li><li data-num="⒰">S</li><li data-num="⒱">B</li><li data-num="⒲">-</li><li data-num="⒳">C</li><li data-num="⒴">输</li><li data-num="⒵">出</li><li data-num="Ⓐ">
+</li><li data-num="Ⓑ">3</li><li data-num="Ⓒ">.</li><li data-num="Ⓓ"> </li><li data-num="Ⓔ">智</li><li data-num="Ⓕ">能</li><li data-num="Ⓖ">显</li><li data-num="Ⓗ">示</li><li data-num="Ⓘ">屏</li><li data-num="Ⓙ">实</li><li data-num="Ⓚ">时</li><li data-num="Ⓛ">显</li><li data-num="Ⓜ">示</li><li data-num="Ⓝ">输</li><li data-num="Ⓞ">出</li><li data-num="Ⓟ">/</li><li data-num="Ⓠ">电</li><li data-num="Ⓡ">池</li><li data-num="Ⓢ">健</li><li data-num="Ⓣ">康</li><li data-num="Ⓤ">/</li><li data-num="Ⓥ">充</li><li data-num="Ⓦ">电</li><li data-num="Ⓧ">模</li><li data-num="Ⓨ">式</li><li data-num="Ⓩ">，</li><li data-num="ⓐ">可</li><li data-num="ⓑ">识</li><li data-num="ⓒ">别</li><li data-num="ⓓ">手</li><li data-num="ⓔ">机</li><li data-num="ⓕ">品</li><li data-num="ⓖ">牌</li><li data-num="ⓗ">自</li><li data-num="ⓘ">动</li><li data-num="ⓙ">调</li><li data-num="ⓚ">输</li><li data-num="ⓛ">出</li><li data-num="ⓜ">
+</li><li data-num="ⓝ">4</li><li data-num="ⓞ">.</li><li data-num="ⓟ"> </li><li data-num="ⓠ">集</li><li data-num="ⓡ">成</li><li data-num="ⓢ">磁</li><li data-num="ⓣ">吸</li><li data-num="ⓤ">支</li><li data-num="ⓥ">架</li><li data-num="ⓦ">，</li><li data-num="ⓧ">符</li><li data-num="ⓨ">合</li><li data-num="ⓩ">1</li><li data-num="⓪">0</li><li data-num="⓫">0</li><li data-num="⓬">W</li><li data-num="⓭">h</li><li data-num="⓮">航</li><li data-num="⓯">空</li><li data-num="⓰">携</li><li data-num="⓱">带</li><li data-num="⓲">限</li><li data-num="⓳">制</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">以'主动风冷'解决磁吸无线充发热降速痛点，与绿联MagFlow Pro（液冷）形成主动散热路线对决，推动高功率Qi2移动电源进入实用区间。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">绿、联、M、a、g、F、l、o、w、 、P、r、o、（、液、冷、）、、、A、n、k、e、r、 、P、r、i、m、e、 、Q、i、2、.、2</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Anker（安克）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-18</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://news.lavx.hu/article/anker-maggo-2-pro-qi2-power-bank-with-active-cooling-launches-in-us-uk-and-germany" target="_blank">LavX News</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Anker于IFA 2026发布、9月18日在美英德上市，LavX英文报道列明规格与定价</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">国内行货上市时间需以Anker中国官方为准</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 11: 联想ThinkBook 14x Gen 2发布：12.9mm/990g轻薄本，Intel Core 7 -->
+      <div class="intel-card cn" id="card-11">
+        <div class="card-header" onclick="toggleCard('card-11')">
+          <div class="card-num">11</div>
+          <div class="card-title-area">
+            <div class="card-title">联想ThinkBook 14x Gen 2发布：12.9mm/990g轻薄本，Intel Core 7</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">结构/工艺/SoC/芯片/AI/NPU/散热/电池/快充</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">12.9mm厚/990g；Intel Core 7 Series 3；可选高分辨率OLED或触控LCD；金属机身4配色；9月上市，起价€1079（$999.99）</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">仅</li><li data-num="⑤">1</li><li data-num="⑥">2</li><li data-num="⑦">.</li><li data-num="⑧">9</li><li data-num="⑨">m</li><li data-num="⑩">m</li><li data-num="⑪">厚</li><li data-num="⑫">、</li><li data-num="⑬">9</li><li data-num="⑭">9</li><li data-num="⑮">0</li><li data-num="⑯">g</li><li data-num="⑰">重</li><li data-num="⑱">，</li><li data-num="⑲">定</li><li data-num="⑳">位</li><li data-num="⑴">最</li><li data-num="⑵">轻</li><li data-num="⑶">薄</li><li data-num="⑷">商</li><li data-num="⑸">用</li><li data-num="⑹">本</li><li data-num="⑺">之</li><li data-num="⑻">一</li><li data-num="⑼">
+</li><li data-num="⑽">2</li><li data-num="⑾">.</li><li data-num="⑿"> </li><li data-num="⒀">I</li><li data-num="⒁">n</li><li data-num="⒂">t</li><li data-num="⒃">e</li><li data-num="⒄">l</li><li data-num="⒅"> </li><li data-num="⒆">C</li><li data-num="⒇">o</li><li data-num="⒈">r</li><li data-num="⒉">e</li><li data-num="⒊"> </li><li data-num="⒋">7</li><li data-num="⒌"> </li><li data-num="⒍">S</li><li data-num="⒎">e</li><li data-num="⒏">r</li><li data-num="⒐">i</li><li data-num="⒑">e</li><li data-num="⒒">s</li><li data-num="⒓"> </li><li data-num="⒔">3</li><li data-num="⒕">处</li><li data-num="⒖">理</li><li data-num="⒗">器</li><li data-num="⒘">，</li><li data-num="⒙">适</li><li data-num="⒚">合</li><li data-num="⒛">多</li><li data-num="⒜">任</li><li data-num="⒝">务</li><li data-num="⒞">/</li><li data-num="⒟">远</li><li data-num="⒠">程</li><li data-num="⒡">协</li><li data-num="⒢">作</li><li data-num="⒣">
+</li><li data-num="⒤">3</li><li data-num="⒥">.</li><li data-num="⒦"> </li><li data-num="⒧">可</li><li data-num="⒨">选</li><li data-num="⒩">高</li><li data-num="⒪">分</li><li data-num="⒫">辨</li><li data-num="⒬">率</li><li data-num="⒭">O</li><li data-num="⒮">L</li><li data-num="⒯">E</li><li data-num="⒰">D</li><li data-num="⒱">屏</li><li data-num="⒲">或</li><li data-num="⒳">触</li><li data-num="⒴">控</li><li data-num="⒵">L</li><li data-num="Ⓐ">C</li><li data-num="Ⓑ">D</li><li data-num="Ⓒ">面</li><li data-num="Ⓓ">板</li><li data-num="Ⓔ">，</li><li data-num="Ⓕ">金</li><li data-num="Ⓖ">属</li><li data-num="Ⓗ">机</li><li data-num="Ⓘ">身</li><li data-num="Ⓙ">4</li><li data-num="Ⓚ">色</li><li data-num="Ⓛ">（</li><li data-num="Ⓜ">月</li><li data-num="Ⓝ">灰</li><li data-num="Ⓞ">/</li><li data-num="Ⓟ">天</li><li data-num="Ⓠ">白</li><li data-num="Ⓡ">/</li><li data-num="Ⓢ">神</li><li data-num="Ⓣ">秘</li><li data-num="Ⓤ">紫</li><li data-num="Ⓥ">/</li><li data-num="Ⓦ">纱</li><li data-num="Ⓧ">蓝</li><li data-num="Ⓨ">）</li><li data-num="Ⓩ">
+</li><li data-num="ⓐ">4</li><li data-num="ⓑ">.</li><li data-num="ⓒ"> </li><li data-num="ⓓ">同</li><li data-num="ⓔ">期</li><li data-num="ⓕ">T</li><li data-num="ⓖ">h</li><li data-num="ⓗ">i</li><li data-num="ⓘ">n</li><li data-num="ⓙ">k</li><li data-num="ⓚ">B</li><li data-num="ⓛ">o</li><li data-num="ⓜ">o</li><li data-num="ⓝ">k</li><li data-num="ⓞ"> </li><li data-num="ⓟ">1</li><li data-num="ⓠ">4</li><li data-num="ⓡ"> </li><li data-num="ⓢ">G</li><li data-num="ⓣ">e</li><li data-num="ⓤ">n</li><li data-num="ⓥ"> </li><li data-num="ⓦ">9</li><li data-num="ⓧ">搭</li><li data-num="ⓨ">载</li><li data-num="ⓩ">骁</li><li data-num="⓪">龙</li><li data-num="⓫">X</li><li data-num="⓬">2</li><li data-num="⓭"> </li><li data-num="⓮">P</li><li data-num="⓯">l</li><li data-num="⓰">u</li><li data-num="⓱">s</li><li data-num="⓲">（</li><li data-num="⓳">8</li><li data-num="⓴">0</li><li data-num="⓵"> </li><li data-num="⓶">T</li><li data-num="⓷">O</li><li data-num="⓸">P</li><li data-num="⓹">S</li><li data-num="⓺">）</li><li data-num="⓻">，</li><li data-num="⓼">2</li><li data-num="⓽">6</li><li data-num="⓾">小</li><li data-num="⓿">时</li><li data-num="─">本</li><li data-num="━">地</li><li data-num="│">视</li><li data-num="┃">频</li><li data-num="┄">续</li><li data-num="┅">航</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">联想在轻薄商用本以'12.9mm/990g'对标超极本标杆，与同场展示的Project AeroBlade（<10mm固态散热概念）共同展示商用本轻薄化与本地AI方向。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">T、h、i、n、k、B、o、o、k、 、1、4、 、G、e、n、 、9、（、骁、龙、X、2、 、P、l、u、s、）、、、P、r、o、j、e、c、t、 、A、e、r、o、B、l、a、d、e、概、念、机</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">联想（Lenovo）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.technetbooks.com/2026/09/lenovo-unveils-thinkbook-14-gen-9-14x.html" target="_blank">Technetbook</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">联想9月商用本发布会报道，涵盖ThinkBook 14 Gen 9与14x Gen 2及AeroBlade概念</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">14x Gen 2为Intel平台轻薄款，与骁龙版14 Gen 9形成双架构</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 12: 小度智能屏X9 Ultra发布：AI主动看护，首发629元 -->
+      <div class="intel-card cn" id="card-12">
+        <div class="card-header" onclick="toggleCard('card-12')">
+          <div class="card-num">12</div>
+          <div class="card-title-area">
+            <div class="card-title">小度智能屏X9 Ultra发布：AI主动看护，首发629元</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/SoC/芯片/摄像头/音频/显示/OLED</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布/开售</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">8英寸全贴合屏；顶部1/2.9英寸2MP宽动态传感器+红外夜视；云台自动转向追踪；四核处理器/32GB；Wi-Fi6+蓝牙5.4；红外遥控家电；上市839元/国补699元/首发629元</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">A</li><li data-num="⑤">I</li><li data-num="⑥">主</li><li data-num="⑦">动</li><li data-num="⑧">看</li><li data-num="⑨">护</li><li data-num="⑩">：</li><li data-num="⑪">顶</li><li data-num="⑫">部</li><li data-num="⑬">2</li><li data-num="⑭">M</li><li data-num="⑮">P</li><li data-num="⑯">宽</li><li data-num="⑰">动</li><li data-num="⑱">态</li><li data-num="⑲">图</li><li data-num="⑳">像</li><li data-num="⑴">传</li><li data-num="⑵">感</li><li data-num="⑶">器</li><li data-num="⑷">+</li><li data-num="⑸">红</li><li data-num="⑹">外</li><li data-num="⑺">夜</li><li data-num="⑻">视</li><li data-num="⑼">，</li><li data-num="⑽">主</li><li data-num="⑾">动</li><li data-num="⑿">感</li><li data-num="⒀">知</li><li data-num="⒁">视</li><li data-num="⒂">野</li><li data-num="⒃">外</li><li data-num="⒄">动</li><li data-num="⒅">态</li><li data-num="⒆">，</li><li data-num="⒇">云</li><li data-num="⒈">台</li><li data-num="⒉">自</li><li data-num="⒊">动</li><li data-num="⒋">转</li><li data-num="⒌">向</li><li data-num="⒍">追</li><li data-num="⒎">踪</li><li data-num="⒏">拍</li><li data-num="⒐">摄</li><li data-num="⒑">，</li><li data-num="⒒">全</li><li data-num="⒓">天</li><li data-num="⒔">候</li><li data-num="⒕">看</li><li data-num="⒖">护</li><li data-num="⒗">
+</li><li data-num="⒘">2</li><li data-num="⒙">.</li><li data-num="⒚"> </li><li data-num="⒛">8</li><li data-num="⒜">英</li><li data-num="⒝">寸</li><li data-num="⒞">全</li><li data-num="⒟">贴</li><li data-num="⒠">合</li><li data-num="⒡">屏</li><li data-num="⒢">，</li><li data-num="⒣">四</li><li data-num="⒤">核</li><li data-num="⒥">处</li><li data-num="⒦">理</li><li data-num="⒧">器</li><li data-num="⒨">+</li><li data-num="⒩">3</li><li data-num="⒪">2</li><li data-num="⒫">G</li><li data-num="⒬">B</li><li data-num="⒭">存</li><li data-num="⒮">储</li><li data-num="⒯">
+</li><li data-num="⒰">3</li><li data-num="⒱">.</li><li data-num="⒲"> </li><li data-num="⒳">W</li><li data-num="⒴">i</li><li data-num="⒵">-</li><li data-num="Ⓐ">F</li><li data-num="Ⓑ">i</li><li data-num="Ⓒ"> </li><li data-num="Ⓓ">6</li><li data-num="Ⓔ">+</li><li data-num="Ⓕ">蓝</li><li data-num="Ⓖ">牙</li><li data-num="Ⓗ">5</li><li data-num="Ⓘ">.</li><li data-num="Ⓙ">4</li><li data-num="Ⓚ">，</li><li data-num="Ⓛ">支</li><li data-num="Ⓜ">持</li><li data-num="Ⓝ">红</li><li data-num="Ⓞ">外</li><li data-num="Ⓟ">遥</li><li data-num="Ⓠ">控</li><li data-num="Ⓡ">家</li><li data-num="Ⓢ">电</li><li data-num="Ⓣ">
+</li><li data-num="Ⓤ">4</li><li data-num="Ⓥ">.</li><li data-num="Ⓦ"> </li><li data-num="Ⓧ">百</li><li data-num="Ⓨ">度</li><li data-num="Ⓩ">小</li><li data-num="ⓐ">度</li><li data-num="ⓑ">智</li><li data-num="ⓒ">能</li><li data-num="ⓓ">体</li><li data-num="ⓔ">赋</li><li data-num="ⓕ">能</li><li data-num="ⓖ">，</li><li data-num="ⓗ">结</li><li data-num="ⓘ">合</li><li data-num="ⓙ">A</li><li data-num="ⓚ">I</li><li data-num="ⓛ">开</li><li data-num="ⓜ">放</li><li data-num="ⓝ">日</li><li data-num="ⓞ">'</li><li data-num="ⓟ">A</li><li data-num="ⓠ">I</li><li data-num="ⓡ">主</li><li data-num="ⓢ">动</li><li data-num="ⓣ">看</li><li data-num="ⓤ">护</li><li data-num="ⓥ">'</li><li data-num="ⓦ">场</li><li data-num="ⓧ">景</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">将AI主动看护（云台追踪+红外夜视）下放到629元价位智能屏，推动带屏智能音箱从'娱乐入口'转向'家庭安防/照护'刚需场景。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">小、度、智、能、音、箱、P、r、o、 、M、a、x、、、R、e、d、m、i、小、爱、触、屏、音、箱、P、r、o</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">百度（小度）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-08</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://h5.ifeng.com/c/vivoArticle/v00247-_R2yvAErTYcAjqeEODeF7B8ucLBApM8UJohTEUIiY__" target="_blank">凤凰网（IT之家）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">百度9月8日'2026小度新品发布会'报道，确认X9 Ultra发布与定价</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">核心差异点为AI主动看护云台摄像头</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 13: OPPO Pad 6在售：天玑9500s+12.1英寸3K屏，3999元起 -->
+      <div class="intel-card cn" id="card-13">
+        <div class="card-header" onclick="toggleCard('card-13')">
+          <div class="card-num">13</div>
+          <div class="card-title-area">
+            <div class="card-title">OPPO Pad 6在售：天玑9500s+12.1英寸3K屏，3999元起</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/AI/NPU/电池/快充/摄像头/认证/合规</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">在售/导购</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">天玑9500s（安兔兔破300万）；12.1英寸3K LCD/144Hz/900nit/杜比视界；明眸护眼屏；10420mAh；67W闪充；5.99mm/约577g；3999元起</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">天</li><li data-num="⑤">玑</li><li data-num="⑥">9</li><li data-num="⑦">5</li><li data-num="⑧">0</li><li data-num="⑨">0</li><li data-num="⑩">s</li><li data-num="⑪">芯</li><li data-num="⑫">片</li><li data-num="⑬">，</li><li data-num="⑭">安</li><li data-num="⑮">兔</li><li data-num="⑯">兔</li><li data-num="⑰">跑</li><li data-num="⑱">分</li><li data-num="⑲">突</li><li data-num="⑳">破</li><li data-num="⑴">3</li><li data-num="⑵">0</li><li data-num="⑶">0</li><li data-num="⑷">万</li><li data-num="⑸">，</li><li data-num="⑹">多</li><li data-num="⑺">任</li><li data-num="⑻">务</li><li data-num="⑼">/</li><li data-num="⑽">文</li><li data-num="⑾">档</li><li data-num="⑿">处</li><li data-num="⒀">理</li><li data-num="⒁">流</li><li data-num="⒂">畅</li><li data-num="⒃">
+</li><li data-num="⒄">2</li><li data-num="⒅">.</li><li data-num="⒆"> </li><li data-num="⒇">1</li><li data-num="⒈">2</li><li data-num="⒉">.</li><li data-num="⒊">1</li><li data-num="⒋">英</li><li data-num="⒌">寸</li><li data-num="⒍">3</li><li data-num="⒎">K</li><li data-num="⒏"> </li><li data-num="⒐">L</li><li data-num="⒑">C</li><li data-num="⒒">D</li><li data-num="⒓"> </li><li data-num="⒔">1</li><li data-num="⒕">4</li><li data-num="⒖">4</li><li data-num="⒗">H</li><li data-num="⒘">z</li><li data-num="⒙">护</li><li data-num="⒚">眼</li><li data-num="⒛">屏</li><li data-num="⒜">，</li><li data-num="⒝">峰</li><li data-num="⒞">值</li><li data-num="⒟">9</li><li data-num="⒠">0</li><li data-num="⒡">0</li><li data-num="⒢">n</li><li data-num="⒣">i</li><li data-num="⒤">t</li><li data-num="⒥">，</li><li data-num="⒦">杜</li><li data-num="⒧">比</li><li data-num="⒨">视</li><li data-num="⒩">界</li><li data-num="⒪">认</li><li data-num="⒫">证</li><li data-num="⒬">
+</li><li data-num="⒭">3</li><li data-num="⒮">.</li><li data-num="⒯"> </li><li data-num="⒰">1</li><li data-num="⒱">0</li><li data-num="⒲">4</li><li data-num="⒳">2</li><li data-num="⒴">0</li><li data-num="⒵">m</li><li data-num="Ⓐ">A</li><li data-num="Ⓑ">h</li><li data-num="Ⓒ">大</li><li data-num="Ⓓ">电</li><li data-num="Ⓔ">池</li><li data-num="Ⓕ">+</li><li data-num="Ⓖ">6</li><li data-num="Ⓗ">7</li><li data-num="Ⓘ">W</li><li data-num="Ⓙ">闪</li><li data-num="Ⓚ">充</li><li data-num="Ⓛ">，</li><li data-num="Ⓜ">官</li><li data-num="Ⓝ">方</li><li data-num="Ⓞ">称</li><li data-num="Ⓟ">可</li><li data-num="Ⓠ">连</li><li data-num="Ⓡ">续</li><li data-num="Ⓢ">1</li><li data-num="Ⓣ">2</li><li data-num="Ⓤ">小</li><li data-num="Ⓥ">时</li><li data-num="Ⓦ">+</li><li data-num="Ⓧ">网</li><li data-num="Ⓨ">课</li><li data-num="Ⓩ">
+</li><li data-num="ⓐ">4</li><li data-num="ⓑ">.</li><li data-num="ⓒ"> </li><li data-num="ⓓ">系</li><li data-num="ⓔ">统</li><li data-num="ⓕ">A</li><li data-num="ⓖ">I</li><li data-num="ⓗ">功</li><li data-num="ⓘ">能</li><li data-num="ⓙ">：</li><li data-num="ⓚ">A</li><li data-num="ⓛ">I</li><li data-num="ⓜ">妙</li><li data-num="ⓝ">绘</li><li data-num="ⓞ">、</li><li data-num="ⓟ">全</li><li data-num="ⓠ">景</li><li data-num="ⓡ">自</li><li data-num="ⓢ">由</li><li data-num="ⓣ">窗</li><li data-num="ⓤ">、</li><li data-num="ⓥ">P</li><li data-num="ⓦ">C</li><li data-num="ⓧ">级</li><li data-num="ⓨ">W</li><li data-num="ⓩ">P</li><li data-num="⓪">S</li><li data-num="⓫">轻</li><li data-num="⓬">办</li><li data-num="⓭">公</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">OPPO在4000元档大屏平板的主力均衡机型，护眼屏+大电池+AI办公精准定位学生与轻办公，与vivo/华为同价区竞争。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">v、i、v、o、 、P、a、d、6、 、P、r、o、、、华、为、M、a、t、e、P、a、d、 、A、i、r、、、小、米、平、板、9</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">OPPO</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-07</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://mobile.zol.com.cn/1244/12447849.html" target="_blank">中关村在线（ZOL）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">ZOL 9月大屏旗舰平板导购，确认OPPO Pad 6已开售并列核心参数</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">导购文以在售机型横向对比形式呈现，参数可信</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 14: 华为WATCH GT 7系列慕尼黑发布：陶瓷表圈+钛中框，健康洞察升级 -->
+      <div class="intel-card cn" id="card-14">
+        <div class="card-header" onclick="toggleCard('card-14')">
+          <div class="card-num">14</div>
+          <div class="card-title-area">
+            <div class="card-title">华为WATCH GT 7系列慕尼黑发布：陶瓷表圈+钛中框，健康洞察升级</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">传感器/SoC/芯片/AI/NPU/电池/快充/认证/合规</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">GT 7（46/41mm，8配色）；GT 7 Pro（3配色）；纳米微晶陶瓷表圈+钛合金中框；EasyCross易扣表带；新增室内滑雪模式+全球3000+雪场；首发腕上转弯检测与G-Force过弯压力检测；健康洞察（身体状态准备度+智慧健康解读）</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">升</li><li data-num="⑤">级</li><li data-num="⑥">纳</li><li data-num="⑦">米</li><li data-num="⑧">微</li><li data-num="⑨">晶</li><li data-num="⑩">陶</li><li data-num="⑪">瓷</li><li data-num="⑫">表</li><li data-num="⑬">圈</li><li data-num="⑭">与</li><li data-num="⑮">钛</li><li data-num="⑯">合</li><li data-num="⑰">金</li><li data-num="⑱">中</li><li data-num="⑲">框</li><li data-num="⑳">，</li><li data-num="⑴">E</li><li data-num="⑵">a</li><li data-num="⑶">s</li><li data-num="⑷">y</li><li data-num="⑸">C</li><li data-num="⑹">r</li><li data-num="⑺">o</li><li data-num="⑻">s</li><li data-num="⑼">s</li><li data-num="⑽">易</li><li data-num="⑾">扣</li><li data-num="⑿">表</li><li data-num="⒀">带</li><li data-num="⒁">
+</li><li data-num="⒂">2</li><li data-num="⒃">.</li><li data-num="⒄"> </li><li data-num="⒅">运</li><li data-num="⒆">动</li><li data-num="⒇">健</li><li data-num="⒈">康</li><li data-num="⒉">：</li><li data-num="⒊">新</li><li data-num="⒋">增</li><li data-num="⒌">室</li><li data-num="⒍">内</li><li data-num="⒎">滑</li><li data-num="⒏">雪</li><li data-num="⒐">模</li><li data-num="⒑">式</li><li data-num="⒒">、</li><li data-num="⒓">覆</li><li data-num="⒔">盖</li><li data-num="⒕">全</li><li data-num="⒖">球</li><li data-num="⒗">3</li><li data-num="⒘">0</li><li data-num="⒙">0</li><li data-num="⒚">0</li><li data-num="⒛">+</li><li data-num="⒜">雪</li><li data-num="⒝">场</li><li data-num="⒞">地</li><li data-num="⒟">图</li><li data-num="⒠">，</li><li data-num="⒡">首</li><li data-num="⒢">发</li><li data-num="⒣">腕</li><li data-num="⒤">上</li><li data-num="⒥">转</li><li data-num="⒦">弯</li><li data-num="⒧">检</li><li data-num="⒨">测</li><li data-num="⒩">与</li><li data-num="⒪">G</li><li data-num="⒫">-</li><li data-num="⒬">F</li><li data-num="⒭">o</li><li data-num="⒮">r</li><li data-num="⒯">c</li><li data-num="⒰">e</li><li data-num="⒱">过</li><li data-num="⒲">弯</li><li data-num="⒳">压</li><li data-num="⒴">力</li><li data-num="⒵">检</li><li data-num="Ⓐ">测</li><li data-num="Ⓑ">
+</li><li data-num="Ⓒ">3</li><li data-num="Ⓓ">.</li><li data-num="Ⓔ"> </li><li data-num="Ⓕ">健</li><li data-num="Ⓖ">康</li><li data-num="Ⓗ">摘</li><li data-num="Ⓘ">要</li><li data-num="Ⓙ">升</li><li data-num="Ⓚ">级</li><li data-num="Ⓛ">为</li><li data-num="Ⓜ">健</li><li data-num="Ⓝ">康</li><li data-num="Ⓞ">洞</li><li data-num="Ⓟ">察</li><li data-num="Ⓠ">，</li><li data-num="Ⓡ">新</li><li data-num="Ⓢ">增</li><li data-num="Ⓣ">身</li><li data-num="Ⓤ">体</li><li data-num="Ⓥ">状</li><li data-num="Ⓦ">态</li><li data-num="Ⓧ">准</li><li data-num="Ⓨ">备</li><li data-num="Ⓩ">度</li><li data-num="ⓐ">与</li><li data-num="ⓑ">智</li><li data-num="ⓒ">慧</li><li data-num="ⓓ">健</li><li data-num="ⓔ">康</li><li data-num="ⓕ">解</li><li data-num="ⓖ">读</li><li data-num="ⓗ">
+</li><li data-num="ⓘ">4</li><li data-num="ⓙ">.</li><li data-num="ⓚ"> </li><li data-num="ⓛ">同</li><li data-num="ⓜ">期</li><li data-num="ⓝ">华</li><li data-num="ⓞ">为</li><li data-num="ⓟ">W</li><li data-num="ⓠ">A</li><li data-num="ⓡ">T</li><li data-num="ⓢ">C</li><li data-num="ⓣ">H</li><li data-num="ⓤ"> </li><li data-num="ⓥ">6</li><li data-num="ⓦ">系</li><li data-num="ⓧ">列</li><li data-num="ⓨ">重</li><li data-num="ⓩ">返</li><li data-num="⓪">欧</li><li data-num="⓫">洲</li><li data-num="⓬">、</li><li data-num="⓭">W</li><li data-num="⓮">A</li><li data-num="⓯">T</li><li data-num="⓰">C</li><li data-num="⓱">H</li><li data-num="⓲"> </li><li data-num="⓳">D</li><li data-num="⓴">3</li><li data-num="⓵">获</li><li data-num="⓶">欧</li><li data-num="⓷">洲</li><li data-num="⓸">C</li><li data-num="⓹">E</li><li data-num="⓺">-</li><li data-num="⓻">M</li><li data-num="⓼">D</li><li data-num="⓽">R</li><li data-num="⓾">医</li><li data-num="⓿">疗</li><li data-num="─">认</li><li data-num="━">证</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">华为GT系列旗舰在材质（陶瓷+钛）与运动健康算法（滑雪/过弯压力）双线升级，巩固高端运动健康手表地位，并借慕尼黑发布会加速欧洲市场回归。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">华、为、W、A、T、C、H、 、6、系、列、、、华、为、W、A、T、C、H、 、D、3、、、A、m、a、z、f、i、t、 、T、-、R、e、x、 、D、u、a、l、 、S、o、l、a、r</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">华为（Huawei）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-02</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://c.m.163.com/news/a/L6059HVH05509EKV.html" target="_blank">网易（全球TMT）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">华为9月2日慕尼黑'Chase the Wild'全球发布会报道，覆盖GT 7系列关键特性</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">报道以系列概览为主，GT 7 Pro具体芯片/续航未详列</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 15: COLORFIRE MEOW X16 Pro游戏本发售：8745HX+RTX5060，10499元 -->
+      <div class="intel-card cn" id="card-15">
+        <div class="card-header" onclick="toggleCard('card-15')">
+          <div class="card-num">15</div>
+          <div class="card-title-area">
+            <div class="card-title">COLORFIRE MEOW X16 Pro游戏本发售：8745HX+RTX5060，10499元</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">SoC/芯片/AI/NPU/散热/音频/手写笔/触控</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发售</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">1（单源）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">AMD锐龙7 8745HX；NVIDIA RTX 5060笔记本GPU；16GB DDR5-5200；512GB PCIe4 SSD；16" 2560×1600/180Hz/500nit/100%sRGB；80Wh；170W整机释放；Wi-Fi6E/2.5GbE；3A2C；10499元</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">1</li><li data-num="②">.</li><li data-num="③"> </li><li data-num="④">锐</li><li data-num="⑤">龙</li><li data-num="⑥">7</li><li data-num="⑦"> </li><li data-num="⑧">8</li><li data-num="⑨">7</li><li data-num="⑩">4</li><li data-num="⑪">5</li><li data-num="⑫">H</li><li data-num="⑬">X</li><li data-num="⑭"> </li><li data-num="⑮">+</li><li data-num="⑯"> </li><li data-num="⑰">R</li><li data-num="⑱">T</li><li data-num="⑲">X</li><li data-num="⑳"> </li><li data-num="⑴">5</li><li data-num="⑵">0</li><li data-num="⑶">6</li><li data-num="⑷">0</li><li data-num="⑸">，</li><li data-num="⑹">内</li><li data-num="⑺">置</li><li data-num="⑻">2</li><li data-num="⑼">风</li><li data-num="⑽">扇</li><li data-num="⑾">4</li><li data-num="⑿">热</li><li data-num="⒀">管</li><li data-num="⒁">4</li><li data-num="⒂">出</li><li data-num="⒃">风</li><li data-num="⒄">'</li><li data-num="⒅">酷</li><li data-num="⒆">冷</li><li data-num="⒇">2</li><li data-num="⒈">.</li><li data-num="⒉">0</li><li data-num="⒊">'</li><li data-num="⒋">散</li><li data-num="⒌">热</li><li data-num="⒍">，</li><li data-num="⒎">1</li><li data-num="⒏">7</li><li data-num="⒐">0</li><li data-num="⒑">W</li><li data-num="⒒">整</li><li data-num="⒓">机</li><li data-num="⒔">性</li><li data-num="⒕">能</li><li data-num="⒖">释</li><li data-num="⒗">放</li><li data-num="⒘">（</li><li data-num="⒙">5</li><li data-num="⒚">0</li><li data-num="⒛">d</li><li data-num="⒜">B</li><li data-num="⒝">）</li><li data-num="⒞">
+</li><li data-num="⒟">2</li><li data-num="⒠">.</li><li data-num="⒡"> </li><li data-num="⒢">1</li><li data-num="⒣">6</li><li data-num="⒤">英</li><li data-num="⒥">寸</li><li data-num="⒦">2</li><li data-num="⒧">.</li><li data-num="⒨">5</li><li data-num="⒩">K</li><li data-num="⒪"> </li><li data-num="⒫">1</li><li data-num="⒬">8</li><li data-num="⒭">0</li><li data-num="⒮">H</li><li data-num="⒯">z</li><li data-num="⒰"> </li><li data-num="⒱">5</li><li data-num="⒲">0</li><li data-num="⒳">0</li><li data-num="⒴">n</li><li data-num="⒵">i</li><li data-num="Ⓐ">t</li><li data-num="Ⓑ"> </li><li data-num="Ⓒ">1</li><li data-num="Ⓓ">0</li><li data-num="Ⓔ">0</li><li data-num="Ⓕ">%</li><li data-num="Ⓖ">s</li><li data-num="Ⓗ">R</li><li data-num="Ⓘ">G</li><li data-num="Ⓙ">B</li><li data-num="Ⓚ"> </li><li data-num="Ⓛ">I</li><li data-num="Ⓜ">P</li><li data-num="Ⓝ">S</li><li data-num="Ⓞ">屏</li><li data-num="Ⓟ">
+</li><li data-num="Ⓠ">3</li><li data-num="Ⓡ">.</li><li data-num="Ⓢ"> </li><li data-num="Ⓣ">猫</li><li data-num="Ⓤ">系</li><li data-num="Ⓥ">'</li><li data-num="Ⓦ">橘</li><li data-num="Ⓧ">影</li><li data-num="Ⓨ">白</li><li data-num="Ⓩ">'</li><li data-num="ⓐ">外</li><li data-num="ⓑ">观</li><li data-num="ⓒ">：</li><li data-num="ⓓ">冲</li><li data-num="ⓔ">压</li><li data-num="ⓕ">磨</li><li data-num="ⓖ">砂</li><li data-num="ⓗ">工</li><li data-num="ⓘ">艺</li><li data-num="ⓙ">、</li><li data-num="ⓚ">3</li><li data-num="ⓛ">D</li><li data-num="ⓜ">纹</li><li data-num="ⓝ">理</li><li data-num="ⓞ">丝</li><li data-num="ⓟ">印</li><li data-num="ⓠ">、</li><li data-num="ⓡ">橙</li><li data-num="ⓢ">白</li><li data-num="ⓣ">撞</li><li data-num="ⓤ">色</li><li data-num="ⓥ">珠</li><li data-num="ⓦ">光</li><li data-num="ⓧ">涂</li><li data-num="ⓨ">层</li><li data-num="ⓩ">、</li><li data-num="⓪">猫</li><li data-num="⓫">爪</li><li data-num="⓬">纹</li><li data-num="⓭">触</li><li data-num="⓮">控</li><li data-num="⓯">板</li><li data-num="⓰">
+</li><li data-num="⓱">4</li><li data-num="⓲">.</li><li data-num="⓳"> </li><li data-num="⓴">内</li><li data-num="⓵">置</li><li data-num="⓶">离</li><li data-num="⓷">线</li><li data-num="⓸">唤</li><li data-num="⓹">醒</li><li data-num="⓺">引</li><li data-num="⓻">擎</li><li data-num="⓼">+</li><li data-num="⓽">A</li><li data-num="⓾">I</li><li data-num="⓿">语</li><li data-num="─">音</li><li data-num="━">芯</li><li data-num="│">片</li><li data-num="┃">，</li><li data-num="┄">环</li><li data-num="┅">域</li><li data-num="┆">智</li><li data-num="┇">控</li><li data-num="┈">手</li><li data-num="┉">机</li><li data-num="┊">互</li><li data-num="┋">联</li><li data-num="┌">（</li><li data-num="┍">远</li><li data-num="┎">程</li><li data-num="┏">语</li><li data-num="┐">音</li><li data-num="┑">开</li><li data-num="┒">机</li><li data-num="┓">/</li><li data-num="└">无</li><li data-num="┕">感</li><li data-num="┖">解</li><li data-num="┗">锁</li><li data-num="┘">/</li><li data-num="┙">手</li><li data-num="┚">机</li><li data-num="┛">化</li><li data-num="├">身</li><li data-num="┝">翻</li><li data-num="┞">页</li><li data-num="┟">笔</li><li data-num="┠">或</li><li data-num="┡">手</li><li data-num="┢">柄</li><li data-num="┣">）</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">七彩虹COLORFIRE以'颜值+AI语音'差异化切入主流游戏本，AI语音芯片与手机互联生态是游戏本智能化新尝试，10499元卡位中端甜点区间。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">机、械、革、命、翼、龙、1、5、 、A、i、r、、、雷、神、A、I、 、M、a、s、t、e、r</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">COLORFIRE（七彩虹）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-01</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.toutiao.com/article/7680382740406993471" target="_blank">IT之家（今日头条）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">IT之家9月1日发售报道，列明核心配置与定价</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">AI语音芯片+手机互联为差异化亮点</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+
+  <!-- International Intelligence -->
+  <div class="intel-section">
+    <div class="section-title">二、国际情报（15条）</div>
+      <div class="intel-cards">
+<!-- Card 16: OnePlus 15 -->
+      <div class="intel-card intl" id="card-16">
+        <div class="card-header" onclick="toggleCard('card-16')">
+          <div class="card-num">16</div>
+          <div class="card-title-area">
+            <div class="card-title">OnePlus 15</div>
+            <div class="card-badges">
+              <span class="source-tag source-d">D</span>
+              <span class="card-domain">AI/NPU/电池/快充/SoC/芯片/显示/OLED</span>
+              <span class="stars">★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">全球发布预告</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（D级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">全球发布 2026-11-13（中国已先行推出）；预期骁龙8 Elite Gen 5；大容量硅碳电池(>5000mAh)；LTPO OLED 高刷；Android 16 / OxygenOS 16</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">芯片/SoC</li><li data-num="②">电池/快充</li><li data-num="③">显示/OLED</li><li data-num="④">AI/NPU</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">一加数字旗舰全球定档 11/13，硅碳大电池 + 旗舰平台，环球定价、配色与零售伙伴值得关注。除 11/13 全球发布日外，芯片/电池/屏幕均待发布会实机确认。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://umatechnology.org/oneplus-confirms-the-oneplus-15-will-go-global-on-november-13</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">OnePlus</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-11-13</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://umatechnology.org/oneplus-confirms-the-oneplus-15-will-go-global-on-november-13" target="_blank">UMATechnology</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">科技媒体；仅全球发布日期为厂商确认，其余规格为预期/传闻</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">按用户指示作为「即将上市」保留；全球发布日 11/13 在窗口之后（前瞻事件），日期字段如实保留。除发布日外，芯片/电池/屏幕均为媒体预期，需以发布会实机为准。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 17: GOSIGHT P1 AR Glasses announced: 25° Micro-OLED waveguide + on-glasses Android compute -->
+      <div class="intel-card intl" id="card-17">
+        <div class="card-header" onclick="toggleCard('card-17')">
+          <div class="card-num">17</div>
+          <div class="card-title-area">
+            <div class="card-title">GOSIGHT P1 AR Glasses announced: 25° Micro-OLED waveguide + on-glasses Android compute</div>
+            <div class="card-badges">
+              <span class="source-tag source-c">C</span>
+              <span class="card-domain">显示/OLED/AI/NPU/电池/快充/摄像头/认证/合规</span>
+              <span class="stars">★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">官宣</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">单源（C级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">双目全彩Micro-OLED波导(25° FOV)；12MP摄像头；on-glasses Android计算；64GB存储；热插拔电池；Indiegogo 10/27 launch</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">①双目全彩AR眼镜，25° Micro-OLED波导显示</li><li data-num="②">②12MP摄像头，支持拍摄与视觉AI</li><li data-num="③">③on-glasses Android计算+64GB存储，端侧AI</li><li data-num="④">④热插拔电池设计，长续航</li><li data-num="⑤">⑤Indiegogo 2026-10-27 众筹发售</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">GOSIGHT P1 以一体式Android计算+热插拔电池探索独立AR眼镜形态，对轻量化空间计算终端供应链有参考。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">Micro-OLED波导显示、端侧Android AI计算、热插拔电池架构、独立AR眼镜形态对平板/手机协同的启示</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">GOSIGHT / P1</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-27</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://wearableindex.com/devices/gosight-p1" target="_blank">WearableIndex</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">WearableIndex device page: GOSIGHT P1 announced, Indiegogo launch Oct 27, 2026 (last reviewed 2026-10-17)</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">Indiegogo众筹产品，量产与国行节奏待确认；为设备数据库单源。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 18: Vuzix Ultralite Pro（OEM 智能眼镜平台） -->
+      <div class="intel-card intl" id="card-18">
+        <div class="card-header" onclick="toggleCard('card-18')">
+          <div class="card-num">18</div>
+          <div class="card-title-area">
+            <div class="card-title">Vuzix Ultralite Pro（OEM 智能眼镜平台）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/SoC/芯片/认证/合规/结构/工艺/无线通信</span>
+              <span class="stars">★★★★</span>
+              <span class="status-tag status-coming">即将上市</span>
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">合作/平台落地</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">轻量透视波导 OEM 智能眼镜平台；双目波导 + Micro LED；面向军工医疗训练/远程指导（与 Shiny Box Interactive 合作，2026-10-06 公布）</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示/AR光学</li><li data-num="②">无线通信</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Vuzix 轻量波导平台落地军工医疗远程指导场景，验证 AI 智能眼镜在国防/医疗 B 端的实用价值。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://ir.vuzix.com/news-events/press-releases/detail/2184/vuzix-and-shiny-box-interactive-partner-to-advance-military</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Vuzix</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-06</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://ir.vuzix.com/news-events/press-releases/detail/2184/vuzix-and-shiny-box-interactive-partner-to-advance-military" target="_blank">Vuzix 投资者关系（PRNewswire）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Vuzix 官方 IR 新闻稿，2026-10-06</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">为合作/平台级公告，非消费级单机发布；Ultralite Pro 定位 OEM 平台。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 19: Juniper Alta Rugged Tablet（三防平板） -->
+      <div class="intel-card intl" id="card-19">
+        <div class="card-header" onclick="toggleCard('card-19')">
+          <div class="card-num">19</div>
+          <div class="card-title-area">
+            <div class="card-title">Juniper Alta Rugged Tablet（三防平板）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/电池/快充/音频/认证/合规/显示/OLED</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布/上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">8″ 1000nit 显示屏；高通 QCM6690；Android 16；端侧 AI（计算机视觉/语音/传感）；可热插拔电池（标准7-8h / 增程18-19h）；MIL-STD-810H / IP68；Wi-Fi 7；-29~60℃</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">AI/NPU</li><li data-num="②">结构/工艺</li><li data-num="③">无线通信</li><li data-num="④">传感器</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Juniper 新 Alta 三防平板把端侧 AI 下放到野外作业，可热插拔电池 + 硬件级无线管控，代表工业边缘 AI 平板的实用化方向。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://blog.junipersys.com/now-available-the-alta-rugged-tablet</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Juniper Systems</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-12</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://blog.junipersys.com/now-available-the-alta-rugged-tablet" target="_blank">Juniper Systems 官方博客</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">Juniper 官方博客/新闻稿，2026-10-12</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">官方发布（2026-10-12）；面向矿业/油气/野外 GIS 等工业场景，强调本地 AI 与可热插拔电池。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 20: Google Fitbit Edge（健身手环） -->
+      <div class="intel-card intl" id="card-20">
+        <div class="card-header" onclick="toggleCard('card-20')">
+          <div class="card-num">20</div>
+          <div class="card-title-area">
+            <div class="card-title">Google Fitbit Edge（健身手环）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/电池/快充/音频/认证/合规/显示/OLED</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">1.34″ AMOLED（椭圆形）；内置 GPS + Galileo；心率/ECG/SpO2/皮肤温度/HRV；可更换电池（首款可维修 Fitbit）；IP68 + 5ATM；蓝牙5.4；Gemini Health Coach；续航约7天；售价 $179.99</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">生物识别</li><li data-num="②">传感器</li><li data-num="③">电池/快充</li><li data-num="④">AI/NPU</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">谷歌新 Fitbit Edge 在 Charge 与 Pixel Watch 间卡位，首次采用可更换电池设计，并接入 Gemini Health Coach，是健康追踪 + AI 教练的大众化样本。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://tech.cnr.cn/gstj/20261013/t20261013_527840431.shtml</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Google（Fitbit）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-12</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://tech.cnr.cn/gstj/20261013/t20261013_527840431.shtml" target="_blank">央广网科技</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">央广网科技频道，2026-10-13（谷歌 10/12 发布报道）</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">2026-10-12 发布，10/27 起 20 国开售；无扬声器/麦克风，依赖手机端 Gemini。Stephen Curry 特别版 $219.99。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 21: amazfit T-Rex Dual Solar（双面对面太阳能） -->
+      <div class="intel-card intl" id="card-21">
+        <div class="card-header" onclick="toggleCard('card-21')">
+          <div class="card-num">21</div>
+          <div class="card-title-area">
+            <div class="card-title">amazfit T-Rex Dual Solar（双面对面太阳能）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/电池/快充/认证/合规/显示/OLED/结构/工艺</span>
+              <span class="stars">★★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布/上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">1.32″ AMOLED 3000nit；5级钛合金 + 蓝宝石镜面；9项军规认证；10ATM（50m潜水）；-30℃低温模式；双面太阳能充电（正面屏+玻璃陶瓷背板）；典型25天/最长51天；双频六星 GPS</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">结构/工艺</li><li data-num="②">传感器</li><li data-num="③">电池/快充</li><li data-num="④">显示/OLED</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">全球首款双面太阳能充电 AMOLED 智能手表，背板采光面积为正面两倍以上，把户外长续航与高清大屏兼得，重新定义探险表供能方式。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://www.zhonghongwang.com/show-140-474250-1.html</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">amazfit（华米）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-08</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.zhonghongwang.com/show-140-474250-1.html" target="_blank">中宏网（引美通社）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">品牌发布稿，2026-10-08；新浪财经/美通社同步</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">2026-10-08 正式发布并京东开售；双面太阳能 + 钛合金 + 10ATM 为最大差异化。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 22: OnePlus Buds 4 -->
+      <div class="intel-card intl" id="card-22">
+        <div class="card-header" onclick="toggleCard('card-22')">
+          <div class="card-num">22</div>
+          <div class="card-title-area">
+            <div class="card-title">OnePlus Buds 4</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/电池/快充/音频/无线通信</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">在售/大促</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">单源（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">11mm + 6mm 双单元 + 双 DAC；55dB 自适应 ANC；LHDC 5.0；47ms 低延迟游戏模式；AI 实时翻译；45h 总续航；IP55；蓝牙 5.4</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">音频</li><li data-num="②">AI/NPU</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">55dB ANC + 双 DAC + LHDC 5.0 + AI 实时翻译，是 TWS 旗舰性价比之选，AI 翻译成核心卖点。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://store.oppo.com/cn/web/products/34953.html</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">OnePlus</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-08</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://store.oppo.com/cn/web/products/34953.html" target="_blank">OPPO 官方商城（一加 Buds 4 商品页）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">官方商品页确认在售；规格经 Gadgets360 2026-10 大促报道等多源交叉核实</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">官方页确认在售（松影绿等配色）；详细规格由 Gadgets360(2026-10 印度大促) 等媒体交叉核实。产品为全球在售机型。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 23: ASUS Zenbook 14 (UX3480) -->
+      <div class="intel-card intl" id="card-23">
+        <div class="card-header" onclick="toggleCard('card-23')">
+          <div class="card-num">23</div>
+          <div class="card-title-area">
+            <div class="card-title">ASUS Zenbook 14 (UX3480)</div>
+            <div class="card-badges">
+              <span class="source-tag source-c">C</span>
+              <span class="card-domain">AI/NPU/SoC/芯片/电池/快充/认证/合规/显示/OLED</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">区域发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（C级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">14″ WUXGA OLED（16:10）；Intel Core Ultra9 386H / AMD Ryzen AI 7 345 / 骁龙X（均 Copilot+ PC，NPU 45–50 TOPS）；至 33h 续航；1.1kg；Ceraluminum 陶瓷铝</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">AI/NPU</li><li data-num="②">显示/OLED</li><li data-num="③">结构/工艺</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">三平台（Intel/AMD/骁龙）均标配 Copilot+ 与 NPU，50TOPS + OLED，是主流轻薄本 AI 化的代表性样本。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://www.techbeatph.com/asus-zenbook-14-ux3480-philippines-launch</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">ASUS</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-07</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.techbeatph.com/asus-zenbook-14-ux3480-philippines-launch" target="_blank">TechBeatPH</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">菲律宾科技媒体，2026-10-07 区域发布报道</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">菲律宾区域发布，起售 PHP 76,995；三平台 NPU 与 OLED 规格已确认。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 24: vivo X Fold6（全球版） -->
+      <div class="intel-card intl" id="card-24">
+        <div class="card-header" onclick="toggleCard('card-24')">
+          <div class="card-num">24</div>
+          <div class="card-title-area">
+            <div class="card-title">vivo X Fold6（全球版）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/折叠屏/电池/快充/摄像头/显示/OLED</span>
+              <span class="stars">★★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">全球发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">8.02″ LTPO AMOLED 内屏 + 6.51″ LTPO AMOLED 外屏（均 1-120Hz，5000nit）；天玑9500；12GB+512GB；2亿蔡司三摄（200MP+50MP长焦+50MP超广）；6900mAh/80W有线+40W无线；IPX8/IPX9；Android 17</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示/OLED</li><li data-num="②">芯片/SoC</li><li data-num="③">摄像头</li><li data-num="④">电池/快充</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">vivo 折叠旗舰全球版 10/1 登陆海外，2亿蔡司影像 + 双 120Hz LTPO 大屏 + 天玑9500，是国产折叠出海的代表机型。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://www.mymobileindia.com/?p=315151</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">vivo</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-01</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.mymobileindia.com/?p=315151" target="_blank">My Mobile India</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">科技媒体，vivo 奥地利官网确认全球发布日 2026-10-01</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">全球版 10/1 发布，电池较国行 7000mAh 微降至 6900mAh；其余与国行基本一致。定价未公布。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 25: HP OmniBook 5（新一代 AI PC） -->
+      <div class="intel-card intl" id="card-25">
+        <div class="card-header" onclick="toggleCard('card-25')">
+          <div class="card-num">25</div>
+          <div class="card-title-area">
+            <div class="card-title">HP OmniBook 5（新一代 AI PC）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/AI/NPU/摄像头/显示/OLED/结构/工艺</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布/上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">单源（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">14″/16″ 可选；至高 3K OLED；处理器 Intel Core Ultra 9 / AMD Ryzen AI 9 / 骁龙X 或 X2 Plus（均 AI PC，NPU 45–50 TOPS）；HP AI Companion 本地 AI；EPEAT Gold Climate+；再生材料</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">AI/NPU</li><li data-num="②">显示/OLED</li><li data-num="③">结构/工艺</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">HP 新一代 OmniBook 5 全系标配 OLED 与 NPU（Copilot+），把本地 AI 助手与环保设计下放到主流价位，是传统 PC 大厂 AI 化的重要样本。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://www.hp.com/emea_middle_east-en/laptops-and-2-in-1s/omnibook-5-ai-pc.html</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">HP</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-10-01</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.hp.com/emea_middle_east-en/laptops-and-2-in-1s/omnibook-5-ai-pc.html" target="_blank">HP 官方（EMEA 产品页）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">HP 官网 OmniBook 5 AI PC 系列页（2026-10 上市）</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">2026-10 起上市；三处理器平台均含 NPU，HP AI Companion 支持本地文件分析与隐私推理。美版起售约 $699。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 26: TCL TAB A1 NXTPAPER（11″ 类纸屏） -->
+      <div class="intel-card intl" id="card-26">
+        <div class="card-header" onclick="toggleCard('card-26')">
+          <div class="card-num">26</div>
+          <div class="card-title-area">
+            <div class="card-title">TCL TAB A1 NXTPAPER（11″ 类纸屏）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">显示/OLED/SoC/芯片/AI/NPU/电池/快充/音频</span>
+              <span class="stars">★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">全球发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">11″ 2.1K LCD 90Hz（NXTPAPER 类纸护眼）；联发科 Helio G100；6GB+128GB；8000mAh/20W；四扬声器；Android 16；IP54；T-Pen 2；美国 $249.99 / 欧洲 €270</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示/OLED</li><li data-num="②">芯片/SoC</li><li data-num="③">电池/快充</li><li data-num="④">AI/NPU</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">TCL 在 IFA 2026 推出 Tab A1 四机型阵容，NXTPAPER 类纸屏 + 硬件级蓝光抑制 + Gemini 套件，主打阅读/学习护眼与轻量生产力。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://www.wirefly.com/news/tcl-unveils-new-nxtpaper-tablet-and-a-kids-watch-turns-desk-robot</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">TCL</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-04</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.wirefly.com/news/tcl-unveils-new-nxtpaper-tablet-and-a-kids-watch-turns-desk-robot" target="_blank">Wirefly（引 GSMArena）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">科技媒体，TCL IFA 2026 发布报道，2026-09-04</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">IFA 2026（2026-09-03 PRNewswire）正式发布；NXTPAPER 为 TCL 类纸护眼屏，含 Color Paper / Ink Paper 模式。同系列另有标准版与 12.2″ Plus 版，均未被去重清单覆盖。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 27: TCL TAB A1 Plus NXTPAPER（12.2″ 类纸屏） -->
+      <div class="intel-card intl" id="card-27">
+        <div class="card-header" onclick="toggleCard('card-27')">
+          <div class="card-num">27</div>
+          <div class="card-title-area">
+            <div class="card-title">TCL TAB A1 Plus NXTPAPER（12.2″ 类纸屏）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">AI/NPU/SoC/芯片/电池/快充/摄像头/显示/OLED</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">全球发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">12.2″ 2.4K LCD 120Hz（3:2，NXTPAPER 类纸）；骁龙4 Gen 2；6GB+256GB；10000mAh/33W；专用 NXTPAPER 键（三模式）；Android 16 + Gemini；美国 $299.99</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示/OLED</li><li data-num="②">芯片/SoC</li><li data-num="③">电池/快充</li><li data-num="④">AI/NPU</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">Tab A1 Plus NXTPAPER 为同系列大屏旗舰，2.4K 120Hz + 专用类纸键三模式 + 万毫安电池，把护眼阅读与高刷生产力结合，是 IFA 2026 平板阵容的旗舰代表。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://memeburn.com/tcl-brings-two-nxtpaper-tablets-and-a-kids-watch-with-a-robot-cradle-to-ifa-2026</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">TCL</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-04</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://memeburn.com/tcl-brings-two-nxtpaper-tablets-and-a-kids-watch-with-a-robot-cradle-to-ifa-2026" target="_blank">Memeburn（引 GSMArena / PRNewswire）</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">科技媒体，TCL IFA 2026 发布报道</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">IFA 2026 正式发布；与 11″ NXTPAPER 版同属 Tab A1 系列，但在尺寸/芯片/电池上明显区分（骁龙4 Gen2 + 万毫安 + 33W）。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 28: TCL TAB A1 Plus（12.2″ 标准屏） -->
+      <div class="intel-card intl" id="card-28">
+        <div class="card-header" onclick="toggleCard('card-28')">
+          <div class="card-num">28</div>
+          <div class="card-title-area">
+            <div class="card-title">TCL TAB A1 Plus（12.2″ 标准屏）</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">SoC/芯片/AI/NPU/电池/快充/摄像头/音频</span>
+              <span class="stars">★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">全球发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">12.2″ 2.4K LCD 120Hz（3:2，标准屏）；骁龙4 Gen 2；6GB+128GB；8000mAh/20W；金属一体机身 IP54；四扬声器；T-Pen 2；Android 16 + Gemini；美国 $219.99</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">显示/OLED</li><li data-num="②">芯片/SoC</li><li data-num="③">电池/快充</li><li data-num="④">AI/NPU</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">同系列大屏标准版，以更低价格（$219.99）提供 2.4K 120Hz + 骁龙4 Gen2，主打高刷大屏性价比，与 NXTPAPER 版形成显示技术/价位梯度。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://www.gsmdome.com/tcl-brings-four-tab-a1-tablets-kids-watch-k5-and-tbot-concept-to-ifa-2026</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">TCL</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-04</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.gsmdome.com/tcl-brings-four-tab-a1-tablets-kids-watch-k5-and-tbot-concept-to-ifa-2026" target="_blank">GSMDome</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">科技媒体，TCL IFA 2026 全系四机型报道，2026-09-03</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">IFA 2026 发布；标准屏版与 NXTPAPER 版在护眼涂层/电池(8000/20W vs 10000/33W)/存储(128 vs 256GB)/价格上区分。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 29: Sharp CP-DS10 4-in-1 充电音频坞 -->
+      <div class="intel-card intl" id="card-29">
+        <div class="card-header" onclick="toggleCard('card-29')">
+          <div class="card-num">29</div>
+          <div class="card-title-area">
+            <div class="card-title">Sharp CP-DS10 4-in-1 充电音频坞</div>
+            <div class="card-badges">
+              <span class="source-tag source-a">A</span>
+              <span class="card-domain">认证/合规/电池/快充/音频/无线通信</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布/上市</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（A级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">Qi2 认证磁吸无线充 15W（MagSafe 兼容）；可拆 Apple Watch 充电头；USB-C 口（可充第三设备）；内置 40W 蓝牙立体声扬声器；StandBy 模式；欧洲 2026-10 上市；€99</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">无线充电</li><li data-num="②">音频</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">夏普把经典喇叭坞回归现代：Qi2 15W 无线充 + 蓝牙音箱 + Apple Watch 充三合一，€99 价位兼顾整洁与音质，是桌面/床头充电音频一站式的实用新品。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://www.toptechnews.de/2026/09/04/sharp-consumer-electronics-cp-ds10-4-in-1-dockingstation-mit-qi2-wireless-ladefunktion/</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">Sharp（夏普）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-04</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://www.toptechnews.de/2026/09/04/sharp-consumer-electronics-cp-ds10-4-in-1-dockingstation-mit-qi2-wireless-ladefunktion/" target="_blank">TopTechNews</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">科技媒体，Sharp IFA 2026 发布报道，2026-09-04</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">IFA 2026 发布，欧洲 2026-10 上市；Qi2 15W + 40W 蓝牙音箱 + 可拆卸 Watch 充，€99。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Card 30: JBL Cove（Wi-Fi 家庭音箱系列） -->
+      <div class="intel-card intl" id="card-30">
+        <div class="card-header" onclick="toggleCard('card-30')">
+          <div class="card-num">30</div>
+          <div class="card-title-area">
+            <div class="card-title">JBL Cove（Wi-Fi 家庭音箱系列）</div>
+            <div class="card-badges">
+              <span class="source-tag source-b">B</span>
+              <span class="card-domain">AI/NPU/音频/无线通信</span>
+              <span class="stars">★★★★</span>
+              
+            </div>
+          </div>
+          <span class="card-toggle">▼</span>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="field-grid">
+              <div class="field"><div class="field-label">信号类型</div><div class="field-value">发布</div></div>
+              <div class="field"><div class="field-label">印证源数</div><div class="field-value">多源印证（B级）</div></div>
+              <div class="field full"><div class="field-label">关键参数</div><div class="field-value">三机型 M1/P1/X1；Wi-Fi 多房间 + 蓝牙 + AirPlay 2 + Google Cast；P1/X1 支持 Dolby Atmos；自动房间校准 + AI Sound Boost；Alexa 内置（Alexa+ 后续）；€229.99/€449.99/€499.99；2026-10 上市</div></div>
+              <div class="field full"><div class="field-label">技术特性</div><div class="field-value"><ul class="tech-list"><li data-num="①">音频</li><li data-num="②">AI/NPU</li><li data-num="③">无线通信</li></ul></div></div>
+              <div class="field full"><div class="field-label">为什么重要</div><div class="field-value">JBL 以 Cove 切入高端家用 Wi-Fi 音响，对标 Sonos/Denon，Dolby Atmos + 多房间 + Alexa 集成，是传统便携音响品牌向智能家居中枢延展的代表。</div></div>
+              <div class="field full"><div class="field-label">智能终端关联点</div><div class="field-value">https://gizmojolt.com/post/jbls-new-cove-speakers-bring-the-party-indoors-with-wi-fi-multi-room-and-dolby-atmos</div></div>
+              <div class="field"><div class="field-label">厂商/型号</div><div class="field-value">JBL（HARMAN）</div></div>
+              <div class="field"><div class="field-label">时间</div><div class="field-value">2026-09-01</div></div>
+              <div class="field"><div class="field-label">URL</div><div class="field-value"><a href="https://gizmojolt.com/post/jbls-new-cove-speakers-bring-the-party-indoors-with-wi-fi-multi-room-and-dolby-atmos" target="_blank">GizmoJolt</a></div></div>
+              <div class="field"><div class="field-label">信源明细</div><div class="field-value">科技媒体，JBL Cove 2026-09-01 发布报道</div></div>
+              <div class="field full"><div class="field-label">备注待印证</div><div class="field-value">2026-09-01 发布，2026-10 上市；X1 为 200W 旗舰含 Dolby Atmos。去重清单内仅有 Sonos Beam Ultra，本条目未重复。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+
+</div>
+<script>
+function toggleCard(id) {
+  var el = document.getElementById(id);
+  if (el.classList.contains('expanded')) { el.classList.remove('expanded'); }
+  else { el.classList.add('expanded'); }
+}
+</script>
+</body>
+</html>
